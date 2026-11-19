@@ -367,6 +367,106 @@ html {overflow-y:auto} body {overflow-x:hidden}
             body > header { position: static !important; }
             #suiteOperations { margin-top: 0 !important; }
         }
+
+/* UNIFIED LOAN WORKSPACE: LedgerPro-matched night theme. Scoped to Loan
+   Origination so its daytime appearance and ledger accounting stay unchanged. */
+#moduleLoanWorkspace { transition: background-color .25s,color .25s; }
+.dark #moduleLoanWorkspace { background:#0b1223; color:#e2e8f0; }
+.dark #moduleLoanWorkspace [class~="bg-white"],
+.dark #moduleLoanWorkspace [class~="bg-white/80"],
+.dark #moduleLoanWorkspace [class~="bg-white/90"],
+.dark #moduleLoanWorkspace [class~="bg-white/95"],
+.dark #moduleLoanWorkspace [class~="bg-white/70"] { background-color:#111c30 !important; }
+.dark #moduleLoanWorkspace [class~="bg-slate-50"],
+.dark #moduleLoanWorkspace [class~="bg-slate-50/60"],
+.dark #moduleLoanWorkspace [class~="bg-slate-50/70"],
+.dark #moduleLoanWorkspace [class~="bg-slate-50/80"],
+.dark #moduleLoanWorkspace [class~="bg-slate-50/90"],
+.dark #moduleLoanWorkspace [class~="bg-slate-100"],
+.dark #moduleLoanWorkspace [class~="bg-slate-100/90"],
+.dark #moduleLoanWorkspace [class~="bg-slate-100/95"],
+.dark #moduleLoanWorkspace [class~="bg-slate-200"],
+.dark #moduleLoanWorkspace [class~="bg-slate-200/60"] { background-color:#1c2940 !important; }
+.dark #moduleLoanWorkspace [class~="bg-brand-50"],
+.dark #moduleLoanWorkspace [class~="bg-brand-50/70"],
+.dark #moduleLoanWorkspace [class~="bg-blue-50"],
+.dark #moduleLoanWorkspace [class~="bg-indigo-50"],
+.dark #moduleLoanWorkspace [class~="bg-indigo-50/90"] { background-color:#1b2952 !important; }
+.dark #moduleLoanWorkspace [class~="bg-emerald-50"],
+.dark #moduleLoanWorkspace [class~="bg-teal-50"] { background-color:#102e2d !important; }
+.dark #moduleLoanWorkspace [class~="bg-amber-50"],
+.dark #moduleLoanWorkspace [class~="bg-orange-50"] { background-color:#352719 !important; }
+.dark #moduleLoanWorkspace [class~="bg-rose-50"],
+.dark #moduleLoanWorkspace [class~="bg-red-50"] { background-color:#3a202c !important; }
+.dark #moduleLoanWorkspace [class~="text-slate-900"],
+.dark #moduleLoanWorkspace [class~="text-slate-800"],
+.dark #moduleLoanWorkspace [class~="text-slate-700"] { color:#f1f5f9 !important; }
+.dark #moduleLoanWorkspace [class~="text-slate-600"],
+.dark #moduleLoanWorkspace [class~="text-slate-500"] { color:#aebed2 !important; }
+.dark #moduleLoanWorkspace [class~="text-slate-400"] { color:#92a5bd !important; }
+.dark #moduleLoanWorkspace [class~="text-brand-900"],
+.dark #moduleLoanWorkspace [class~="text-brand-800"],
+.dark #moduleLoanWorkspace [class~="text-brand-700"],
+.dark #moduleLoanWorkspace [class~="text-brand-600"],
+.dark #moduleLoanWorkspace [class~="text-blue-700"],
+.dark #moduleLoanWorkspace [class~="text-indigo-700"] { color:#93b4ff !important; }
+.dark #moduleLoanWorkspace [class~="text-emerald-700"],
+.dark #moduleLoanWorkspace [class~="text-emerald-800"],
+.dark #moduleLoanWorkspace [class~="text-teal-700"] { color:#6ee7b7 !important; }
+.dark #moduleLoanWorkspace [class~="text-amber-700"],
+.dark #moduleLoanWorkspace [class~="text-amber-800"] { color:#fbbf72 !important; }
+.dark #moduleLoanWorkspace [class~="text-rose-700"],
+.dark #moduleLoanWorkspace [class~="text-rose-800"] { color:#fda4af !important; }
+.dark #moduleLoanWorkspace [class*="border-slate-"],
+.dark #moduleLoanWorkspace [class*="border-brand-"],
+.dark #moduleLoanWorkspace [class*="border-indigo-"],
+.dark #moduleLoanWorkspace [class*="border-blue-"],
+.dark #moduleLoanWorkspace [class*="border-emerald-"],
+.dark #moduleLoanWorkspace [class*="border-amber-"],
+.dark #moduleLoanWorkspace [class*="border-rose-"] { border-color:#33445d !important; }
+.dark #moduleLoanWorkspace input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
+.dark #moduleLoanWorkspace select,
+.dark #moduleLoanWorkspace textarea { background-color:#1e293b !important; color:#f1f5f9 !important; border-color:#475569 !important; color-scheme:dark; }
+.dark #moduleLoanWorkspace input::placeholder,
+.dark #moduleLoanWorkspace textarea::placeholder { color:#94a3b8 !important; opacity:1; }
+.dark #moduleLoanWorkspace input:focus,
+.dark #moduleLoanWorkspace select:focus,
+.dark #moduleLoanWorkspace textarea:focus { border-color:#818cf8 !important; box-shadow:0 0 0 3px rgba(99,102,241,.2); }
+.dark #moduleLoanWorkspace table tbody tr { border-color:#334155; }
+.dark #moduleLoanWorkspace table tbody tr:hover { background:rgba(51,65,85,.42) !important; }
+.dark #moduleLoanWorkspace table th, .dark #moduleLoanWorkspace table td { border-color:#334155; }
+.dark #moduleLoanWorkspace [class~="bg-white"]:hover { border-color:#475569; }
+.dark #moduleLoanWorkspace button[class~="bg-brand-600"],
+.dark #moduleLoanWorkspace button[class~="bg-indigo-600"],
+.dark #moduleLoanWorkspace button[class~="bg-emerald-600"],
+.dark #moduleLoanWorkspace button[class~="bg-rose-600"] { color:white !important; }
+.dark #moduleLoanWorkspace input[type="range"].fintech-slider { background:#334155; }
+.dark #moduleLoanWorkspace .fintech-slider::-webkit-slider-thumb { border-color:#0f172a; }
+/* Loan dialogs are mounted outside the loan workspace: style their own light-only surfaces. */
+.dark #loanDetailModal [class~="bg-white"], .dark #loanEditModal [class~="bg-white"],
+.dark #loanInstallmentPaymentModal [class~="bg-white"], .dark #rejectReasonModal [class~="bg-white"],
+.dark #deleteConfirmModal [class~="bg-white"] { background-color:#152137 !important; }
+.dark #loanDetailModal [class~="bg-slate-50"], .dark #loanEditModal [class~="bg-slate-50"],
+.dark #loanInstallmentPaymentModal [class~="bg-slate-50"], .dark #rejectReasonModal [class~="bg-slate-50"],
+.dark #deleteConfirmModal [class~="bg-slate-50"] { background-color:#1c2940 !important; }
+.dark #loanDetailModal [class~="text-slate-900"], .dark #loanEditModal [class~="text-slate-900"],
+.dark #loanInstallmentPaymentModal [class~="text-slate-900"], .dark #rejectReasonModal [class~="text-slate-900"],
+.dark #deleteConfirmModal [class~="text-slate-900"],
+.dark #loanDetailModal [class~="text-slate-800"], .dark #loanEditModal [class~="text-slate-800"],
+.dark #loanInstallmentPaymentModal [class~="text-slate-800"], .dark #rejectReasonModal [class~="text-slate-800"],
+.dark #deleteConfirmModal [class~="text-slate-800"] { color:#f1f5f9 !important; }
+.dark #loanDetailModal [class~="text-slate-700"], .dark #loanEditModal [class~="text-slate-700"],
+.dark #loanInstallmentPaymentModal [class~="text-slate-700"], .dark #rejectReasonModal [class~="text-slate-700"],
+.dark #deleteConfirmModal [class~="text-slate-700"] { color:#cbd5e1 !important; }
+.dark #loanEditModal input, .dark #loanEditModal select,
+.dark #loanInstallmentPaymentModal input, .dark #loanInstallmentPaymentModal select { background:#1e293b !important; color:#f8fafc !important; border-color:#475569 !important; color-scheme:dark; }
+@media print {
+  #moduleLoanWorkspace, #moduleLoanWorkspace [class] { color-adjust:exact; }
+  #moduleLoanWorkspace { background:#fff !important; color:#0f172a !important; }
+  .dark #moduleLoanWorkspace [class~="bg-white"] {background:#fff !important;}
+  .dark #moduleLoanWorkspace [class~="text-slate-900"], .dark #moduleLoanWorkspace [class~="text-slate-800"] {color:#0f172a !important;}
+}
+
     </style>
 </head>
 <body class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased flex flex-col ambient-bg selection:bg-brand-100 selection:text-brand-900 transition-colors duration-300">
@@ -412,12 +512,6 @@ html {overflow-y:auto} body {overflow-x:hidden}
                             <span>Cash-Flow & Wallet Ledger</span>
                         </button>
                     </div>
-
-                    <!-- Cross-workspace search and keyboard command center -->
-                    <button id="suiteCommandBtn" type="button" onclick="openCommandCenter()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-700 bg-white/85 dark:bg-slate-800 text-slate-700 dark:text-slate-100 hover:border-indigo-300 dark:hover:border-indigo-500 hover:shadow-md transition-all active:scale-95" title="Quick Find (Ctrl+K)" aria-keyshortcuts="Control+K Meta+K">
-                        <i data-lucide="search" class="w-4 h-4 text-indigo-500"></i><span>Quick Find</span>
-                        <kbd class="hidden lg:inline text-[10px] px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 font-mono">Ctrl K</kbd>
-                    </button>
 
                     <!-- Single administrator entry point shared by both workspaces -->
                     <button id="sharedAdminSettingsBtn" type="button" onclick="openUnifiedSettings()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-indigo-200 bg-indigo-50 text-indigo-800 dark:bg-indigo-950/50 dark:text-indigo-200 dark:border-indigo-800 text-xs sm:text-sm font-bold hover:bg-indigo-100 dark:hover:bg-indigo-900 transition cursor-pointer" title="Shared Administrator Settings">
@@ -2324,7 +2418,7 @@ html {overflow-y:auto} body {overflow-x:hidden}
         }
 
         function updateSharedAdminState() {
-            // There is intentionally NO persisted admin flag. Reloading relocks both modules.
+            // Admin Mode survives a refresh in this tab; an explicit Lock clears the session.
             lpIsAdmin = isAdminUnlocked;
             lpUpdateAdminUI();
             lpRenderTable();
@@ -2419,7 +2513,19 @@ html {overflow-y:auto} body {overflow-x:hidden}
         let activeModalLoanId = null;
         let pendingRejectLoanId = null;
         let pendingDeleteLoanId = null;
-        let isAdminUnlocked = false;
+        // Session-scoped access: survives refresh, but not an explicit Lock All Modules.
+        const ADMIN_SESSION_KEY = 'oss_suite_admin_unlocked_session_v1';
+        function readAdminSession() {
+            try { return sessionStorage.getItem(ADMIN_SESSION_KEY) === '1'; }
+            catch (_) { return false; }
+        }
+        function writeAdminSession(unlocked) {
+            try {
+                if (unlocked) sessionStorage.setItem(ADMIN_SESSION_KEY, '1');
+                else sessionStorage.removeItem(ADMIN_SESSION_KEY);
+            } catch (_) { /* Private browsing restrictions: keep in-memory access only. */ }
+        }
+        let isAdminUnlocked = readAdminSession();
 
         const chartInstances = {};
         const kpiValueCache = {};
@@ -3828,6 +3934,7 @@ html {overflow-y:auto} body {overflow-x:hidden}
             catch (error) { showToast('Password verification unavailable in this browser.', 'error'); return; }
             if (accepted) {
                 isAdminUnlocked = true;
+                writeAdminSession(true);
                 input.value = '';
                 closeAdminAuthPopup();
                 document.getElementById('adminUnlockedWorkspace').classList.remove('hidden');
@@ -3881,6 +3988,7 @@ html {overflow-y:auto} body {overflow-x:hidden}
                 ? 'Administrator locked the unified suite after requesting a full backup.'
                 : 'Administrator locked the unified suite without exporting a backup.');
             isAdminUnlocked = false;
+            writeAdminSession(false);
             document.getElementById('adminUnlockedWorkspace').classList.add('hidden');
             closeAdminAuthPopup();
             updateSharedAdminState();
@@ -4934,6 +5042,29 @@ html {overflow-y:auto} body {overflow-x:hidden}
             if (modalBadge) modalBadge.textContent = count;
         }
 
+        // Keep the Loan Origination charts readable in both shared themes.
+        function syncLoanChartTheme() {
+            if (typeof chartInstances === 'undefined') return;
+            const dark = document.documentElement.classList.contains('dark');
+            const labelColor = dark ? '#cbd5e1' : '#475569';
+            const tickColor = dark ? '#94a3b8' : '#64748b';
+            const gridColor = dark ? 'rgba(148,163,184,.18)' : '#e2e8f0';
+            for (const key of ['originationCurve', 'reportStatus', 'reportMethod', 'adminCashflow', 'adminRisk']) {
+                const c = chartInstances[key];
+                if (!c) continue;
+                const legend = c.options?.plugins?.legend?.labels;
+                if (legend) legend.color = labelColor;
+                for (const axis of Object.values(c.options.scales || {})) {
+                    if (axis.ticks) axis.ticks.color = tickColor;
+                    if (axis.grid && axis.grid.display !== false) axis.grid.color = gridColor;
+                }
+                if (key === 'reportStatus' && c.data.datasets[0]) {
+                    c.data.datasets[0].borderColor = dark ? '#152137' : '#ffffff';
+                }
+                c.update('none');
+            }
+        }
+
         function lpInitDarkMode() {
             const theme = localStorage.getItem('ledger_theme');
             const globalIcon = document.getElementById('lpThemeIconGlobal');
@@ -4944,6 +5075,7 @@ html {overflow-y:auto} body {overflow-x:hidden}
                     globalIcon.classList.add('fa-sun');
                 }
             }
+            requestAnimationFrame(syncLoanChartTheme);
         }
 
         function lpToggleDarkMode() {
@@ -4959,6 +5091,7 @@ html {overflow-y:auto} body {overflow-x:hidden}
                     globalIcon.classList.add('fa-moon');
                 }
             }
+            syncLoanChartTheme();
             if (activeSuiteModule === 'ledger') {
                 lpRenderCharts();
             }
@@ -6780,6 +6913,12 @@ html {overflow-y:auto} body {overflow-x:hidden}
             updateSharedAdminState();
             updateUnifiedLastBackupLabel();
             lpRefreshAll();
+            // Restore the unlocked workspace and green Admin Mode indicator after a refresh.
+            // Do not open Settings or navigate away from the current display.
+            if (isAdminUnlocked) {
+                document.getElementById('adminUnlockedWorkspace').classList.remove('hidden');
+                renderAdminPortal();
+            }
             initSuitePlus();
 
             // Global Escape key handler for all active modals
