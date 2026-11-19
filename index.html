@@ -292,12 +292,13 @@
                 </div>
             </div>
             <div id="suiteOverviewContent" class="space-y-3">
-                <div class="grid grid-cols-2 lg:grid-cols-5 gap-2.5 sm:gap-3">
+                <div class="grid grid-cols-2 lg:grid-cols-6 gap-2.5 sm:gap-3">
                     <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Pending Loan Reviews</p><p id="suitePendingCount" class="suite-stat-value text-2xl font-extrabold mt-1 text-amber-600">0</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Awaiting approval</p></div>
                     <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Active Loans</p><p id="suiteActiveCount" class="suite-stat-value text-2xl font-extrabold mt-1 text-indigo-600 dark:text-indigo-300">0</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Approved accounts</p></div>
-                    <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Wallet Balance</p><p id="suiteWalletBalance" class="suite-stat-value text-xl font-extrabold mt-1 text-indigo-700 dark:text-indigo-300">₱0.00</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Debit in − Cash-out · No charges</p></div>
-                    <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Cash on Hand</p><p id="suiteCashOnHand" class="suite-stat-value text-xl font-extrabold mt-1 text-teal-700 dark:text-teal-300">₱0.00</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Cash-out repayments collected</p></div>
-                    <div class="suite-stat p-3.5 suite-reveal col-span-2 lg:col-span-1"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Unpaid Cash-Outs</p><p id="suiteUnpaidCashout" class="suite-stat-value text-xl font-extrabold mt-1 text-rose-600 dark:text-rose-400">₱0.00</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Remaining amount + charges due</p></div>
+                    <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Wallet Balance</p><p id="suiteWalletBalance" class="suite-stat-value text-xl font-extrabold mt-1 text-indigo-700 dark:text-indigo-300">₱0.00</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Wallet in − Cash-out − wallet-funded loans + wallet repayments · No fees</p></div>
+                    <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Cash on Hand</p><p id="suiteCashOnHand" class="suite-stat-value text-xl font-extrabold mt-1 text-teal-700 dark:text-teal-300">₱0.00</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Cash collections + cash loan repayments − cash-funded loans</p></div>
+                    <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Unpaid Cash-Outs</p><p id="suiteUnpaidCashout" class="suite-stat-value text-xl font-extrabold mt-1 text-rose-600 dark:text-rose-400">₱0.00</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Remaining amount + charges due</p></div>
+                    <div class="suite-stat p-3.5 suite-reveal col-span-2 lg:col-span-1"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Cash Loans Outstanding</p><p id="suiteUnpaidCashLoans" class="suite-stat-value text-xl font-extrabold mt-1 text-amber-600 dark:text-amber-400">₱0.00</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Cash or wallet loans still owed</p></div>
                 </div>
                 <div class="rounded-xl border border-indigo-100 dark:border-indigo-900/60 bg-white/65 dark:bg-slate-900/60 px-3.5 py-2.5 flex items-center justify-between flex-wrap gap-3 suite-reveal" id="suiteAlertStrip">
                     <div class="flex items-start gap-2.5 min-w-0"><i data-lucide="bell-ring" class="w-4 h-4 text-indigo-600 dark:text-indigo-400 mt-0.5 shrink-0"></i><p class="text-xs text-slate-700 dark:text-slate-200" id="suiteAlertText">Your loan and wallet updates will appear here.</p></div>
@@ -1211,6 +1212,14 @@
                         <i class="fa-solid fa-plus text-xs"></i> Add Entry
                     </button>
 
+                    <button id="lpReleaseCashLoanBtn" type="button" onclick="lpOpenCashLoanModal()" class="hidden bg-amber-100 hover:bg-amber-200 dark:bg-amber-950/60 dark:hover:bg-amber-900 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-800 px-3.5 py-2 rounded-xl font-semibold text-xs transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer" title="Release a loan from either Cash on Hand or Wallet">
+                        <i class="fa-solid fa-hand-holding-dollar text-xs"></i> Release Cash Loan
+                    </button>
+
+                    <button id="lpReleaseWalletLoanBtn" type="button" onclick="lpOpenWalletLoanModal()" class="hidden bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-950/60 dark:hover:bg-indigo-900 text-indigo-900 dark:text-indigo-200 border border-indigo-300 dark:border-indigo-800 px-3.5 py-2 rounded-xl font-semibold text-xs transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer" title="Transfer a loan from wallet funds; Cash on Hand stays unchanged">
+                        <i class="fa-solid fa-wallet text-xs"></i> Release Wallet Loan
+                    </button>
+
                     <button id="lpPrintReportBtn" onclick="lpPrintReport()" class="hidden bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-3.5 py-2 rounded-xl font-medium text-xs transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
                         <i class="fa-solid fa-print text-xs"></i> Print
                     </button>
@@ -1465,6 +1474,7 @@
                         <button onclick="lpSetTypeFilter('all')" id="lpTypeBtnAll" class="lp-type-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-2xs transition-all cursor-pointer">All Types</button>
                         <button onclick="lpSetTypeFilter('debit')" id="lpTypeBtnDebit" class="lp-type-btn px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-emerald-600 transition-all cursor-pointer">Debit In</button>
                         <button onclick="lpSetTypeFilter('credit')" id="lpTypeBtnCredit" class="lp-type-btn px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-rose-600 transition-all cursor-pointer">Cash-Out</button>
+                        <button onclick="lpSetTypeFilter('loan')" id="lpTypeBtnLoan" class="lp-type-btn px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-amber-600 transition-all cursor-pointer">Loans</button>
                     </div>
 
                     <div class="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
@@ -1472,7 +1482,7 @@
                         <button onclick="lpSetFilter('paid')" id="lpFilterBtnPaid" class="lp-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition-all cursor-pointer">Paid</button>
                         <button onclick="lpSetFilter('partial')" id="lpFilterBtnPartial" class="lp-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition-all cursor-pointer">Partial</button>
                         <button onclick="lpSetFilter('unpaid')" id="lpFilterBtnUnpaid" class="lp-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition-all cursor-pointer">Unpaid</button>
-                        <button onclick="lpSetFilter('outstanding')" id="lpFilterBtnOutstanding" class="lp-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition-all cursor-pointer" title="Show unpaid and partially paid cash-outs">Outstanding</button>
+                        <button onclick="lpSetFilter('outstanding')" id="lpFilterBtnOutstanding" class="lp-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition-all cursor-pointer" title="Show unpaid and partially paid cash-outs and loans">Outstanding</button>
                     </div>
 
                     <select id="lpMonthFilter" onchange="lpFilterTransactions()" class="px-3 py-1.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer">
@@ -1490,6 +1500,8 @@
                 </div>
             </div>
 
+            <div class="animate-card rounded-xl px-4 py-3 bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/70 text-xs font-semibold text-amber-900 dark:text-amber-300" id="lpCashLoanSummary" aria-live="polite">Loans released: ₱0.00 · Repaid: ₱0.00 · Still owed: ₱0.00</div>
+
             <!-- Transaction Ledger Table Section -->
             <div class="animate-card stagger-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-soft overflow-hidden">
                 <div class="px-5 py-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50 no-print">
@@ -1499,7 +1511,7 @@
                     </div>
                     <div class="flex flex-wrap items-center justify-end gap-3">
                         <span class="text-[11px] text-slate-400 hidden md:block">
-                            Cash on Hand = cash-out repayments collected only (wallet excluded)
+                            Cash = cash collected + cash loan repayments − cash-funded loans · Wallet = wallet in − cash-out − wallet loans + wallet repayments
                         </span>
                         <!-- Admin-only bulk clear; keeps loan records and audit history untouched. -->
                         <button type="button" id="lpClearLedgerEntryBtn" onclick="lpPromptClearAllTransactions()" class="hidden text-[11px] font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 hover:underline items-center gap-1 cursor-pointer" title="Clear all Cash-Flow & Wallet Ledger entries" aria-label="Clear all Cash-Flow and Wallet Ledger entries">
@@ -1520,6 +1532,7 @@
                                 <th class="py-3.5 px-4">Name / Description</th>
                                 <th class="py-3.5 px-4 text-right">Wallet Debit</th>
                                 <th class="py-3.5 px-4 text-right">Cash-Out (Credit)</th>
+                                <th class="py-3.5 px-4 text-right">Loan Released (Cash/Wallet)</th>
                                 <th class="py-3.5 px-4 text-right">Charge</th>
                                 <th class="py-3.5 px-4 text-right">Unpaid (Credit + Charge)</th>
                                 <th class="py-3.5 px-4 text-right">Running Balance</th>
@@ -1533,6 +1546,7 @@
                                 <td colspan="2" class="py-3 px-4 text-slate-600 dark:text-slate-300 uppercase tracking-wider">Filtered Totals</td>
                                 <td id="lpFootTotalDebit" class="py-3 px-4 text-right font-mono text-emerald-600 dark:text-emerald-400 tabular-nums">₱0.00</td>
                                 <td id="lpFootTotalCredit" class="py-3 px-4 text-right font-mono text-rose-600 dark:text-rose-400 tabular-nums">₱0.00</td>
+                                <td id="lpFootTotalLoans" class="py-3 px-4 text-right font-mono text-orange-600 dark:text-orange-400 tabular-nums">₱0.00</td>
                                 <td id="lpFootTotalCharges" class="py-3 px-4 text-right font-mono text-slate-700 dark:text-slate-300 tabular-nums">₱0.00</td>
                                 <td id="lpFootTotalUnpaid" class="py-3 px-4 text-right font-mono text-amber-600 dark:text-amber-400 tabular-nums">₱0.00</td>
                                 <td id="lpFootNetFlow" class="py-3 px-4 text-right font-mono text-indigo-600 dark:text-indigo-400 tabular-nums">₱0.00</td>
@@ -1556,7 +1570,7 @@
                         <i class="fa-solid fa-folder-open"></i>
                     </div>
                     <h3 class="text-base font-display font-bold text-slate-800 dark:text-slate-100">No transactions found</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">Unlock Admin & Settings to add a new debit or cash-out record, or restore data from a JSON backup file.</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">Unlock Admin & Settings to add a wallet entry, cash-out, or physical loan from cash or wallet, or restore a JSON backup.</p>
                     <div class="mt-5 flex items-center justify-center gap-2.5 flex-wrap">
                         <button id="lpEmptyAddBtn" onclick="lpOpenModal()" class="hidden inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm cursor-pointer">
                             <i class="fa-solid fa-plus"></i> Add Transaction
@@ -1648,9 +1662,59 @@
                 <button id="modalDeleteBtn" class="hidden px-3.5 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 border border-transparent transition items-center gap-1.5 cursor-pointer">
                     <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Delete Loan Record
                 </button>
+                <button id="modalEditLoanBtn" type="button" onclick="openLoanEditModal(activeModalLoanId)" class="hidden px-3.5 py-2 rounded-xl text-xs font-semibold text-indigo-700 hover:bg-indigo-50 border border-indigo-200 items-center gap-1.5"><i data-lucide="pencil" class="w-3.5 h-3.5"></i> Edit Loan</button>
                 <span id="modalDeleteRestrictedHint" class="text-xs text-slate-400 italic">Delete restricted (Admin only)</span>
                 <button onclick="closeLoanModal()" class="px-5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition cursor-pointer">Done</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Administrator-managed linked-loan payments: each confirmed check adds ONE real receipt. -->
+    <div id="loanInstallmentPaymentModal" onclick="if(event.target===this)closeLoanInstallmentPaymentModal()" class="fixed inset-0 z-[70] hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 text-slate-800 no-print">
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-modal" onclick="event.stopPropagation()">
+            <div class="px-5 py-4 bg-indigo-50 border-b border-indigo-100 flex justify-between items-center">
+                <h3 class="font-extrabold text-indigo-900 text-sm">Record Installment Repayment</h3>
+                <button type="button" onclick="closeLoanInstallmentPaymentModal()" class="text-slate-500 hover:text-slate-900" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            <form onsubmit="confirmLoanInstallmentPayment(event)" class="p-5 space-y-4">
+                <div class="text-xs text-slate-600" id="loanInstallmentPayContext"></div>
+                <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-3 flex items-center justify-between text-xs"><span class="text-emerald-900 font-semibold">Amount to collect</span><strong id="loanInstallmentPayAmount" class="text-emerald-800 text-lg tabular-nums">₱0.00</strong></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <label class="text-xs font-bold text-slate-600">Received Into
+                        <select id="loanInstallmentPayDestination" class="mt-1.5 w-full rounded-lg border border-slate-300 bg-white p-2 text-sm text-slate-800"><option value="cash">Cash on Hand</option><option value="wallet">Wallet</option></select>
+                    </label>
+                    <label class="text-xs font-bold text-slate-600">Date Received
+                        <input id="loanInstallmentPayDate" type="date" required class="mt-1.5 w-full rounded-lg border border-slate-300 bg-white p-2 text-sm text-slate-800">
+                    </label>
+                </div>
+                <p class="text-[11px] text-slate-500">This records an actual receipt in Cash-Flow &amp; Wallet Ledger. Only confirm after receiving the payment. It will not change transaction charges.</p>
+                <div class="flex justify-end gap-2"><button type="button" onclick="closeLoanInstallmentPaymentModal()" class="px-4 py-2 border border-slate-300 rounded-lg text-xs font-bold">Cancel</button><button type="submit" class="px-4 py-2 rounded-lg bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-700">Confirm Received &amp; Mark Paid</button></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Separate edit form preserves the Loan Ledger ID and releases already made. -->
+    <div id="loanEditModal" onclick="if(event.target===this)closeLoanEditModal()" class="fixed inset-0 z-[65] hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 text-slate-800 no-print">
+        <div class="w-full max-w-2xl max-h-[92vh] overflow-y-auto bg-white rounded-2xl shadow-2xl border border-slate-200 animate-modal" onclick="event.stopPropagation()">
+            <div class="sticky top-0 bg-slate-50 border-b border-slate-200 px-5 py-4 flex items-center justify-between z-10"><div><h3 class="font-bold text-slate-900">Edit Loan Account</h3><p id="loanEditIdLabel" class="text-xs font-mono text-indigo-600"></p></div><button type="button" onclick="closeLoanEditModal()" aria-label="Close" class="text-slate-500"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+            <form id="loanEditForm" onsubmit="saveEditedLoanAccount(event)" class="p-5 space-y-4">
+                <div id="loanEditNotice" class="text-xs bg-indigo-50 text-indigo-800 border border-indigo-200 rounded-lg p-3"></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <label class="text-xs font-semibold">Borrower Full Name *<input id="loanEditBorrower" required maxlength="120" class="ui-input mt-1 w-full p-2 rounded-lg border border-slate-300 text-sm"></label>
+                    <label class="text-xs font-semibold">Borrower ID / Contact<input id="loanEditBorrowerId" maxlength="120" class="ui-input mt-1 w-full p-2 rounded-lg border border-slate-300 text-sm"></label>
+                    <label class="text-xs font-semibold">Co-Maker Full Name *<input id="loanEditCoMaker" required maxlength="120" class="ui-input mt-1 w-full p-2 rounded-lg border border-slate-300 text-sm"></label>
+                    <label class="text-xs font-semibold">Co-Maker Relation / Contact<input id="loanEditCoMakerRelation" maxlength="120" class="ui-input mt-1 w-full p-2 rounded-lg border border-slate-300 text-sm"></label>
+                    <label class="text-xs font-semibold">Loan Principal (₱) *<input id="loanEditPrincipal" type="number" required min="0.01" step="0.01" class="ui-input mt-1 w-full p-2 rounded-lg border border-slate-300 text-sm"></label>
+                    <label class="text-xs font-semibold">Application Date *<input id="loanEditApplicationDate" type="date" required class="ui-input mt-1 w-full p-2 rounded-lg border border-slate-300 text-sm"></label>
+                    <label class="text-xs font-semibold">First Due Date *<input id="loanEditFirstDue" type="date" required class="ui-input mt-1 w-full p-2 rounded-lg border border-slate-300 text-sm"></label>
+                    <label class="text-xs font-semibold">Number of Installments *<input id="loanEditTerm" type="number" required min="1" max="360" step="1" class="ui-input mt-1 w-full p-2 rounded-lg border border-slate-300 text-sm"></label>
+                    <label class="text-xs font-semibold">Term Unit<select id="loanEditTermUnit" class="ui-input mt-1 w-full p-2 rounded-lg border border-slate-300 text-sm"><option value="months">Months</option><option value="weeks">Weeks</option></select></label>
+                    <label class="text-xs font-semibold">Interest Rate (%)<input id="loanEditRate" type="number" required min="0" max="200" step="0.01" class="ui-input mt-1 w-full p-2 rounded-lg border border-slate-300 text-sm"></label>
+                    <label class="text-xs font-semibold">Interest Period<select id="loanEditInterestPeriod" class="ui-input mt-1 w-full p-2 rounded-lg border border-slate-300 text-sm"><option value="annual">Per Year</option><option value="monthly">Per Month</option></select></label>
+                    <label class="text-xs font-semibold">Repayment Method<select id="loanEditMethod" class="ui-input mt-1 w-full p-2 rounded-lg border border-slate-300 text-sm"><option value="diminishing">Diminishing</option><option value="flat">Flat / Add-On</option><option value="interest_only">Interest-Only</option></select></label>
+                </div>
+                <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100"><button type="button" onclick="closeLoanEditModal()" class="px-4 py-2 rounded-lg border border-slate-300 text-xs font-semibold">Cancel</button><button type="submit" class="px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold">Save Loan Changes</button></div>
+            </form>
         </div>
     </div>
 
@@ -1728,7 +1792,7 @@
 
                 <div>
                     <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Date</label>
-                    <input type="date" id="lpTxDate" required class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                    <input type="date" id="lpTxDate" onchange="lpUpdateCashLoanPreview()" required class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
                 </div>
 
                 <div>
@@ -1740,15 +1804,49 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Transaction Type</label>
-                        <select id="lpTxType" onchange="lpHandleTxStatusChange()" class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all cursor-pointer">
+                        <select id="lpTxType" onchange="lpHandleTxTypeChange()" class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all cursor-pointer">
                             <option value="debit">Wallet Debit (In)</option>
                             <option value="credit">Cash-out (Credit/Out)</option>
+                            <option value="loan">Loan Released (Cash or Wallet)</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Amount (₱)</label>
                         <input type="number" step="0.01" min="0" id="lpTxAmount" oninput="lpHandleAmountInput()" placeholder="0.00" required class="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-mono text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
                     </div>
+                </div>
+
+                <div id="lpLoanFundingFields" class="hidden rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/25 p-3 space-y-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label for="lpTxLoanSource" class="block text-[11px] font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300 mb-1.5">Loan Release From</label>
+                            <select id="lpTxLoanSource" onchange="lpUpdateCashLoanPreview()" class="w-full px-3 py-2.5 rounded-lg border border-amber-300 dark:border-amber-700 bg-white dark:bg-slate-900 text-sm font-semibold text-slate-900 dark:text-white">
+                                <option value="cash">Cash on Hand (physical cash)</option>
+                                <option value="wallet">Wallet (transfer to borrower)</option>
+                            </select>
+                        </div>
+                        <div id="lpInitialLoanRepaymentField">
+                            <label for="lpTxLoanRepayTo" class="block text-[11px] font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300 mb-1.5">If Already Repaid, Received In</label>
+                            <select id="lpTxLoanRepayTo" class="w-full px-3 py-2.5 rounded-lg border border-amber-300 dark:border-amber-700 bg-white dark:bg-slate-900 text-sm text-slate-900 dark:text-white">
+                                <option value="cash">Cash on Hand</option>
+                                <option value="wallet">Wallet</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="rounded-xl border border-indigo-200 dark:border-indigo-800 bg-white/85 dark:bg-slate-900/70 p-3 space-y-3">
+                        <label for="lpTxLoanLedgerLink" class="block text-[11px] font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300">Connect to Loan Ledger</label>
+                        <select id="lpTxLoanLedgerLink" onchange="lpApplyLoanLedgerChoice()" class="w-full px-3 py-2.5 rounded-lg border border-indigo-200 dark:border-indigo-800 bg-white dark:bg-slate-900 text-sm font-semibold text-slate-900 dark:text-white">
+                            <option value="">Automatically create a new Loan Ledger record</option>
+                        </select>
+                        <div id="lpNewLoanLedgerFields" class="grid grid-cols-2 gap-2.5">
+                            <div class="col-span-2 sm:col-span-1"><label for="lpNewLoanCoMaker" class="block text-[11px] text-slate-600 dark:text-slate-300 mb-1">Co-maker (optional)</label><input id="lpNewLoanCoMaker" type="text" maxlength="120" placeholder="Not provided" class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm"></div>
+                            <div class="col-span-2 sm:col-span-1"><label for="lpNewLoanFirstDue" class="block text-[11px] text-slate-600 dark:text-slate-300 mb-1">First Due Date</label><input id="lpNewLoanFirstDue" onchange="lpHandleTxStatusChange()" type="date" class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm"></div>
+                            <div><label for="lpNewLoanTerm" class="block text-[11px] text-slate-600 dark:text-slate-300 mb-1">Term (months)</label><input id="lpNewLoanTerm" oninput="lpHandleTxStatusChange()" type="number" min="1" max="360" step="1" value="1" class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm"></div>
+                            <div><label for="lpNewLoanInterest" class="block text-[11px] text-slate-600 dark:text-slate-300 mb-1">Annual Interest (%)</label><input id="lpNewLoanInterest" oninput="lpHandleTxStatusChange()" type="number" min="0" max="200" step="0.01" value="0" class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm"></div>
+                        </div>
+                        <p id="lpLoanLedgerLinkHint" class="text-[11px] text-indigo-700 dark:text-indigo-300" aria-live="polite">This release and subsequent repayments will appear in Loan Ledger automatically.</p>
+                    </div>
+                    <p class="text-[11px] text-amber-800 dark:text-amber-300">The loan reduces only the selected funding balance. Repayments are credited only where you actually receive them. Loan interest is separate from transaction charges.</p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1772,13 +1870,19 @@
                     </div>
                 </div>
 
+                <div id="lpCashLoanPreview" class="hidden rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50/80 dark:bg-amber-950/40 p-3 text-xs text-amber-900 dark:text-amber-200" role="status" aria-live="polite">
+                    <strong id="lpCashLoanPreviewDesc">Loan release:</strong> Select the actual source of funds.
+                    <div id="lpCashLoanBalancePreview" class="font-mono font-bold mt-1">Available: ₱0.00 · Remaining: ₱0.00</div>
+                    <p class="mt-1 text-[11px]">Choose Unpaid when releasing a new loan. Record repayments through Partial or Paid, selecting Cash or Wallet each time.</p>
+                </div>
+
                 <div id="lpTxPartialPaidWrapper" class="hidden p-3.5 rounded-2xl bg-sky-50/70 dark:bg-sky-950/40 border border-sky-200/80 dark:border-sky-800/60 space-y-2">
                     <div class="flex items-center justify-between">
                         <label for="lpTxPaidAmount" class="block text-[11px] font-bold uppercase tracking-wider text-sky-700 dark:text-sky-400">Partial Amount Paid (₱)</label>
                         <span id="lpTxTotalDueHint" class="text-[11px] font-mono font-semibold text-slate-500 dark:text-slate-400">Total Due: ₱0.00</span>
                     </div>
                     <input type="number" step="0.01" min="0" id="lpTxPaidAmount" placeholder="0.00" class="w-full px-3.5 py-2 bg-white dark:bg-slate-800 border border-sky-200 dark:border-sky-700 rounded-xl text-sm font-mono text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all">
-                    <p class="text-[11px] text-slate-500 dark:text-slate-400">Cash-out repayments count toward Cash on Hand; wallet entries do not.</p>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">Cash-out collections go to Cash on Hand. Loan repayments can go to Cash on Hand or Wallet.</p>
                 </div>
 
                 <div>
@@ -1842,9 +1946,18 @@
                     <p id="lpPartialValidationError" class="hidden text-[11px] font-medium text-rose-600 dark:text-rose-400 mt-1"></p>
                 </div>
 
+                <div id="lpPartialLoanRepayToField" class="hidden">
+                    <label for="lpPartialLoanRepayTo" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Receive This Repayment In</label>
+                    <select id="lpPartialLoanRepayTo" onchange="lpUpdatePartialPreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-900 dark:text-white">
+                        <option value="cash">Cash on Hand</option>
+                        <option value="wallet">Wallet</option>
+                    </select>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Select where the repayment was actually received, regardless of how the original loan was released.</p>
+                </div>
+
                 <div class="p-3.5 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-200/70 dark:border-indigo-800/60 space-y-2 text-xs">
                     <div class="flex items-center justify-between">
-                        <span class="text-slate-600 dark:text-slate-300 font-medium">Added to Cash on Hand:</span>
+                        <span class="text-slate-600 dark:text-slate-300 font-medium"><span id="lpPreviewFundsLabel">Added to Cash on Hand:</span></span>
                         <span id="lpPreviewCashAdded" class="font-mono font-bold text-teal-600 dark:text-teal-400 tabular-nums">+₱0.00</span>
                     </div>
                     <div class="flex items-center justify-between">
@@ -1939,6 +2052,7 @@
             lpIsAdmin = isAdminUnlocked;
             lpUpdateAdminUI();
             lpRenderTable();
+            renderLedger(); // Refresh Admin-only Edit buttons when switching between Admin and Viewer.
             const clearLoanEntryBtn = document.getElementById('clearLoanEntryBtn');
             if (clearLoanEntryBtn) {
                 clearLoanEntryBtn.classList.toggle('hidden', !isAdminUnlocked);
@@ -2665,6 +2779,8 @@
                         localStorage.setItem(LP_AUDIT_STORAGE_KEY, JSON.stringify(lpAuditLogs));
                         lpRefreshAll();
                     }
+                    lpReconcileLoanLinks();
+                    renderLedger(); renderLoanStatusReport();
                     recordAuditEvent('BACKUP_RESTORE', `Restored backup covering ${parts.join(' and ')}.`, `File: ${file.name}`);
                     lpUpdateAuditBadges(); renderAuditLogs();
                     showToast(`Backup restored: ${parts.join(', ')}.`);
@@ -2874,7 +2990,9 @@
                     activePrincipal += rec.computation.principal;
                     weightedRateNumerator += (rec.computation.principal * rec.computation.annualRatePct);
                 }
-                (rec.paidInstallments || []).forEach(instNum => {
+                const linkedTx = lpLinkedLoanTx(rec);
+                if (linkedTx) totalCollected += lpGetTxPaidAmount(linkedTx);
+                else (rec.paidInstallments || []).forEach(instNum => {
                     const row = rec.computation.schedule.find(s => s.installment === instNum);
                     if (row) totalCollected += row.payment;
                 });
@@ -2987,7 +3105,9 @@
             let totalPrincipal = 0, totalInterest = 0, totalCollected = 0;
             loanRecords.forEach(rec => {
                 if (rec.status !== 'Rejected') { totalPrincipal += rec.computation.principal; totalInterest += rec.computation.totalInterest; }
-                (rec.paidInstallments || []).forEach(num => {
+                const linkedTx = lpLinkedLoanTx(rec);
+                if (linkedTx) totalCollected += lpGetTxPaidAmount(linkedTx);
+                else (rec.paidInstallments || []).forEach(num => {
                     const row = rec.computation.schedule.find(s => s.installment === num);
                     if (row) totalCollected += row.payment;
                 });
@@ -3024,7 +3144,10 @@
             container.innerHTML = filtered.map((rec, index) => {
                 const paidCount = (rec.paidInstallments || []).length;
                 const totalCount = rec.computation.term;
-                const progressPct = totalCount > 0 ? Math.round((paidCount / totalCount) * 100) : 0;
+                const linkedTx = lpLinkedLoanTx(rec);
+                const progressPct = linkedTx
+                    ? Math.min(100, Math.round(100 * lpGetTxPaidAmount(linkedTx) / Math.max(0.01, lpGetTxTotalDue(linkedTx))))
+                    : (totalCount > 0 ? Math.round((paidCount / totalCount) * 100) : 0);
                 const strokeOffset = circumference - (progressPct / 100) * circumference;
                 const cur = rec.currency || currentCurrency;
                 const initials = getInitials(rec.borrowerName);
@@ -3044,6 +3167,8 @@
                                             <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full ${STATUS_STYLES[rec.status]}">${escapeHTML(rec.status)}</span>
                                         </div>
                                         <h3 class="text-base font-bold text-slate-900 group-hover:text-brand-700 mt-1.5 transition-colors">${escapeHTML(rec.borrowerName)}</h3>
+                                        ${isAdminUnlocked ? `<button type="button" onclick="event.stopPropagation();openLoanEditModal('${escapeHTML(rec.id)}')" class="mt-1 inline-flex items-center gap-1 px-2 py-1 rounded-md border border-indigo-200 text-indigo-700 text-[11px] font-bold hover:bg-indigo-50"><i data-lucide="pencil" class="w-3 h-3"></i> Edit Loan</button>` : ''}
+                                        ${linkedTx ? `<span class="inline-block mt-1 text-[10px] font-bold text-indigo-600">↔ ${lpGetLoanSource(linkedTx) === 'wallet' ? 'Wallet' : 'Cash'} funded · ${lpFormatMoney(lpGetTxUnpaidAmount(linkedTx))} outstanding</span>` : ''}
                                         <p class="text-xs text-slate-500 flex items-center gap-1 mt-0.5"><i data-lucide="user-check" class="w-3.5 h-3.5 text-slate-400"></i> Co-Maker: <span class="font-medium text-slate-700">${escapeHTML(rec.coMakerName)}</span></p>
                                     </div>
                                 </div>
@@ -3067,7 +3192,7 @@
                         </div>
                         <div class="flex items-center justify-between text-xs pt-2 border-t border-slate-100">
                             <span class="text-slate-500">First Due: <strong class="text-slate-700">${formatDisplayDate(rec.repaymentStartDate)}</strong></span>
-                            <span class="font-bold text-emerald-700 tabular-nums">${paidCount}/${totalCount} Paid</span>
+                            <span class="font-bold text-emerald-700 tabular-nums">${linkedTx ? lpFormatMoney(lpGetTxPaidAmount(linkedTx)) + ' paid' : `${paidCount}/${totalCount} Paid`}</span>
                         </div>
                     </div>
                 `;
@@ -3083,6 +3208,7 @@
 
             document.getElementById('modalLoanId').textContent = rec.id;
             document.getElementById('modalMethodBadge').textContent = METHOD_LABELS[rec.repaymentMethod];
+            const linkedTx = lpLinkedLoanTx(rec);
             const statusBadge = document.getElementById('modalStatusBadge');
             statusBadge.textContent = rec.status;
             statusBadge.className = `text-xs font-semibold px-2.5 py-0.5 rounded-full ${STATUS_STYLES[rec.status]}`;
@@ -3096,6 +3222,10 @@
             } else {
                 decisionBar.classList.add('hidden');
             }
+
+            const editBtn = document.getElementById('modalEditLoanBtn');
+            editBtn.classList.toggle('hidden', !isAdminUnlocked);
+            editBtn.classList.toggle('inline-flex', isAdminUnlocked);
 
             const deleteBtn = document.getElementById('modalDeleteBtn');
             const deleteHint = document.getElementById('modalDeleteRestrictedHint');
@@ -3119,6 +3249,11 @@
             }
 
             document.getElementById('modalMetaGrid').innerHTML = `
+                ${linkedTx ? `<div class="col-span-2 sm:col-span-4 rounded-lg border border-indigo-200 bg-indigo-50 p-3 text-indigo-900">
+                    <strong>↔ Synced from Cash-Flow &amp; Wallet Ledger</strong>
+                    <div class="mt-1">Released via ${lpGetLoanSource(linkedTx) === 'wallet' ? 'Wallet' : 'Cash on Hand'} · ${formatDisplayDate(linkedTx.date)} · Repaid ${lpFormatMoney(lpGetTxPaidAmount(linkedTx))} · <strong>Still due ${lpFormatMoney(lpGetTxUnpaidAmount(linkedTx))}</strong></div>
+                    <button onclick="lpOpenLinkedLedgerTransaction('${escapeHTML(rec.id)}')" type="button" class="mt-2 text-xs font-bold underline text-indigo-700">View Cash-Flow &amp; Wallet transaction</button>
+                </div>` : ''}
                 <div><span class="text-slate-400 block">Application Date</span><strong class="text-slate-800">${formatDisplayDate(rec.applicationDate)}</strong></div>
                 <div><span class="text-slate-400 block">First Repayment</span><strong class="text-slate-800">${formatDisplayDate(rec.repaymentStartDate)}</strong></div>
                 <div><span class="text-slate-400 block">Co-Maker</span><strong class="text-slate-800">${escapeHTML(rec.coMakerName)}</strong></div>
@@ -3132,17 +3267,20 @@
             const paidSet = new Set(rec.paidInstallments || []);
             const paidCount = paidSet.size;
             const totalCount = rec.computation.term;
-            const pct = totalCount > 0 ? Math.round((paidCount / totalCount) * 100) : 0;
+            const pct = linkedTx ? Math.min(100, Math.round(100 * lpGetTxPaidAmount(linkedTx) / Math.max(0.01, lpGetTxTotalDue(linkedTx))))
+                : (totalCount > 0 ? Math.round((paidCount / totalCount) * 100) : 0);
             const canTogglePayments = isAdminUnlocked;
 
-            document.getElementById('modalProgressText').textContent = `${paidCount} of ${totalCount} Paid (${pct}%)`;
+            document.getElementById('modalProgressText').textContent = linkedTx
+                ? `${lpFormatMoney(lpGetTxPaidAmount(linkedTx))} collected / ${lpFormatMoney(lpGetTxTotalDue(linkedTx))} due (${pct}%)`
+                : `${paidCount} of ${totalCount} Paid (${pct}%)`;
             document.getElementById('modalProgressBar').style.width = `${pct}%`;
 
             document.getElementById('modalScheduleBody').innerHTML = rec.computation.schedule.map(row => {
                 const isPaid = paidSet.has(row.installment);
                 const checkboxHtml = canTogglePayments
-                    ? `<input type="checkbox" ${isPaid ? 'checked' : ''} onchange="toggleInstallmentPaid('${rec.id}', ${row.installment})" class="w-4 h-4 rounded text-emerald-600 cursor-pointer">`
-                    : `<input type="checkbox" ${isPaid ? 'checked' : ''} disabled class="w-4 h-4 rounded text-slate-400 bg-slate-100 cursor-not-allowed" title="Admin Only: Unlock Admin Portal to update payments">`;
+                    ? `<input type="checkbox" ${isPaid ? 'checked' : ''} onchange="toggleInstallmentPaid('${rec.id}', ${row.installment})" class="w-4 h-4 rounded text-emerald-600 cursor-pointer" title="${linkedTx ? 'Records/reverses a real Cash or Wallet loan receipt' : 'Mark installment paid or unpaid'}">`
+                    : `<input type="checkbox" ${isPaid ? 'checked' : ''} disabled class="w-4 h-4 rounded text-slate-400 bg-slate-100 cursor-not-allowed" title="Admin Only: Unlock Admin & Settings to update payments">`;
 
                 return `
                     <tr class="${isPaid ? 'bg-emerald-50/50 text-slate-500' : 'hover:bg-slate-50'} transition-colors">
@@ -3178,6 +3316,10 @@
 
             const rec = loanRecords.find(r => r.id === loanId);
             if (!rec) return;
+            if (lpLinkedLoanTx(rec)) {
+                lpHandleLinkedInstallmentCheckbox(rec, installmentNum);
+                return;
+            }
             const set = new Set(rec.paidInstallments || []);
             if (set.has(installmentNum)) set.delete(installmentNum); else set.add(installmentNum);
             rec.paidInstallments = Array.from(set).sort((a, b) => a - b);
@@ -3192,6 +3334,99 @@
             renderLedger();
             renderLoanStatusReport();
             if (isAdminUnlocked) renderAdminPortal();
+        }
+
+        let activeEditLoanId = null;
+        function openLoanEditModal(loanId) {
+            if (!isAdminUnlocked || !lpIsAdmin) {showToast('Unlock Admin & Settings to edit loans.', 'error'); return;}
+            const rec = loanRecords.find(r => r.id === loanId);
+            if (!rec) return;
+            activeEditLoanId = rec.id;
+            const linkedTx = lpLinkedLoanTx(rec);
+            const alreadyPaid = linkedTx ? lpGetTxPaidAmount(linkedTx) > 0.005 : (rec.paidInstallments || []).length > 0;
+            const fields = {
+                loanEditBorrower:rec.borrowerName,loanEditBorrowerId:rec.borrowerId,loanEditCoMaker:rec.coMakerName,
+                loanEditCoMakerRelation:rec.coMakerRelation,loanEditPrincipal:rec.loanAmount,
+                loanEditApplicationDate:rec.applicationDate,loanEditFirstDue:rec.repaymentStartDate,
+                loanEditTerm:rec.loanTerm,loanEditTermUnit:rec.termUnit,loanEditRate:rec.interestRate,
+                loanEditInterestPeriod:rec.interestPeriod,loanEditMethod:rec.repaymentMethod
+            };
+            for (const [id,value] of Object.entries(fields)) document.getElementById(id).value = value ?? '';
+            document.getElementById('loanEditIdLabel').textContent = rec.id;
+            const protectedFields = ['loanEditPrincipal','loanEditApplicationDate','loanEditFirstDue','loanEditTerm','loanEditTermUnit','loanEditRate','loanEditInterestPeriod','loanEditMethod'];
+            for (const id of protectedFields) {
+                const input = document.getElementById(id);
+                input.disabled = id === 'loanEditPrincipal' && !!linkedTx || id === 'loanEditApplicationDate' && !!linkedTx
+                    || alreadyPaid;
+                input.classList.toggle('opacity-60', input.disabled);
+            }
+            document.getElementById('loanEditNotice').textContent = alreadyPaid
+                ? 'Payments already exist: edit borrower and co-maker information only. Financial terms and the original disbursement cannot be rewritten after repayment.'
+                : linkedTx
+                    ? 'This account is linked to a real cash/wallet release. Principal and original disbursement date are locked. Changes to unpaid loan terms update the linked balance due.'
+                    : 'Update the loan details. Previously saved loan IDs remain unchanged.';
+            document.getElementById('loanEditModal').classList.remove('hidden');
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
+        function closeLoanEditModal() {
+            activeEditLoanId = null;
+            document.getElementById('loanEditModal').classList.add('hidden');
+        }
+
+        function saveEditedLoanAccount(event) {
+            event.preventDefault();
+            if (!isAdminUnlocked || !lpIsAdmin) {closeLoanEditModal();showToast('Administrator access required.','error');return;}
+            const rec = loanRecords.find(r => r.id === activeEditLoanId);
+            if (!rec) {closeLoanEditModal();return;}
+            const linkedTx = lpLinkedLoanTx(rec);
+            const collected = linkedTx ? lpGetTxPaidAmount(linkedTx) : 0;
+            const alreadyPaid = collected > 0.005 || (!linkedTx && (rec.paidInstallments || []).length > 0);
+            const get = id => document.getElementById(id).value.trim();
+            const attrs = {
+                borrowerName:get('loanEditBorrower'), borrowerId:get('loanEditBorrowerId') || 'N/A',
+                coMakerName:get('loanEditCoMaker'), coMakerRelation:get('loanEditCoMakerRelation') || 'N/A',
+                loanAmount:Number(get('loanEditPrincipal')), applicationDate:get('loanEditApplicationDate'),
+                repaymentStartDate:get('loanEditFirstDue'), loanTerm:Number(get('loanEditTerm')),
+                termUnit:get('loanEditTermUnit'), interestRate:Number(get('loanEditRate')),
+                interestPeriod:get('loanEditInterestPeriod'), repaymentMethod:get('loanEditMethod')
+            };
+            if (!attrs.borrowerName || !attrs.coMakerName || !Number.isFinite(attrs.loanAmount) || attrs.loanAmount <= 0
+                || !Number.isInteger(attrs.loanTerm) || attrs.loanTerm < 1 || attrs.loanTerm > 360
+                || !Number.isFinite(attrs.interestRate) || attrs.interestRate < 0 || attrs.interestRate > 200
+                || !/^\d{4}-\d{2}-\d{2}$/.test(attrs.applicationDate) || !/^\d{4}-\d{2}-\d{2}$/.test(attrs.repaymentStartDate)
+                || !['weeks','months'].includes(attrs.termUnit) || !['annual','monthly'].includes(attrs.interestPeriod)
+                || !['flat','diminishing','interest_only'].includes(attrs.repaymentMethod)) {
+                showToast('Please correct the required loan fields.', 'error'); return;
+            }
+            const financeFields = ['loanAmount','applicationDate','repaymentStartDate','loanTerm','termUnit','interestRate','interestPeriod','repaymentMethod'];
+            const changesToFinance = financeFields.some(k => String(attrs[k]) !== String(rec[k]));
+            if ((alreadyPaid && changesToFinance) || (linkedTx &&
+                (Math.abs(attrs.loanAmount - Number(linkedTx.amount)) > 0.005 || attrs.applicationDate !== rec.applicationDate))) {
+                showToast('Financial terms are locked after payment. Released loan principal and release date cannot change.', 'error'); return;
+            }
+            if (adminPolicies.maxLoanAmount > 0 && attrs.loanAmount > adminPolicies.maxLoanAmount && changesToFinance) {
+                showToast('Principal exceeds current lending policy limit.', 'error'); return;
+            }
+            const computation = changesToFinance ? computeLoanAmortization(attrs) : rec.computation;
+            if (!computation || !Number.isFinite(computation.totalPayable) || !computation.schedule?.length) {
+                showToast('Cannot create an amortization schedule with those terms.', 'error');return;
+            }
+            Object.assign(rec, attrs, {computation});
+            if (linkedTx) {
+                linkedTx.name = attrs.borrowerName;
+                linkedTx.loanInterest = lpRoundCents(computation.totalPayable - linkedTx.amount);
+                linkedTx.loanTerms = lpSnapshotLoanTerms(rec);
+                lpSaveTransactions();
+                lpRecordAudit('LINKED_LOAN_EDIT', `Edited account ${rec.id}`, `Transaction ${linkedTx.id}; principal release preserved.`);
+            } else saveLoanRecords();
+            recordAuditEvent('LOAN_EDITED', `Updated loan account ${rec.id} (${rec.borrowerName}).`, `Financial terms changed: ${changesToFinance ? 'yes' : 'no'}`);
+            closeLoanEditModal();
+            renderLedger();renderLoanStatusReport();
+            if (activeModalLoanId === rec.id) openLoanModal(rec.id);
+            if (isAdminUnlocked) renderAdminPortal();
+            lpRefreshAll();
+            showToast(`Loan ${rec.id} updated successfully.`);
         }
 
         function openDeleteModal(loanId) {
@@ -3222,6 +3457,11 @@
             if (!pendingDeleteLoanId) return;
             const targetId = pendingDeleteLoanId;
             const deletedRec = loanRecords.find(r => r.id === targetId);
+            if (lpLinkedLoanTx(deletedRec)) {
+                closeDeleteModal();
+                showToast('This loan is linked to a cash/wallet release. Delete the corresponding transaction in Cash-Flow Ledger first.', 'error');
+                return;
+            }
             loanRecords = loanRecords.filter(r => r.id !== targetId);
             saveLoanRecords();
             recordAuditEvent('LOAN_DELETED', `Deleted loan record ${targetId}${deletedRec ? ' (' + deletedRec.borrowerName + ')' : ''}.`);
@@ -3243,6 +3483,10 @@
                 return;
             }
             const count = loanRecords.length;
+            if (loanRecords.some(r => lpLinkedLoanTx(r))) {
+                showToast('Some loans are linked to Cash-Flow transactions. Clear or delete those ledger transactions first.', 'error');
+                return;
+            }
             lpOpenConfirmModal(
                 'Clear All Loan Entries?',
                 `Are you sure you want to permanently delete all ${count} loan ${count === 1 ? 'entry' : 'entries'}? This includes all borrowers, amortization schedules, and recorded loan payments. This action cannot be undone. Cash-Flow & Wallet Ledger records and audit history will remain. Export a backup first if necessary.`,
@@ -3291,6 +3535,8 @@
         }
 
         function lockAdminPortal() {
+            closeLoanEditModal();
+            closeLoanInstallmentPaymentModal();
             if (isAdminUnlocked) recordAuditEvent('ADMIN_LOGOUT', 'Administrator locked the unified suite.');
             isAdminUnlocked = false;
             document.getElementById('adminUnlockedWorkspace').classList.add('hidden');
@@ -3393,6 +3639,7 @@
         function approveLoanApplication(loanId) {
             const rec = loanRecords.find(r => r.id === loanId);
             if (!rec) return;
+            if (lpLinkedLoanTx(rec)) { showToast('This account is linked to an actual release and is controlled by Cash-Flow repayment records.', 'error'); return; }
             rec.status = 'Approved / Active';
             rec.rejectionReason = '';
             rec.reviewedAt = new Date().toISOString();
@@ -3405,6 +3652,10 @@
         }
 
         function openRejectModal(loanId) {
+            if (lpLinkedLoanTx(loanRecords.find(r => r.id === loanId))) {
+                showToast('This released loan is linked. Repayments and settlement must be handled through Cash-Flow Ledger.', 'error');
+                return;
+            }
             pendingRejectLoanId = loanId;
             document.getElementById('rejectTargetLoanId').textContent = loanId;
             document.getElementById('rejectReasonInput').value = '';
@@ -3437,6 +3688,12 @@
         }
 
         function adminOverrideLoanStatus(loanId, newStatus) {
+            const linkedAccount = loanRecords.find(r => r.id === loanId);
+            if (lpLinkedLoanTx(linkedAccount)) {
+                showToast('Linked loan status follows the actual Cash-Flow ledger repayments.', 'error');
+                renderAdminPortal();
+                return;
+            }
             const rec = loanRecords.find(r => r.id === loanId);
             if (!rec) return;
             rec.status = newStatus;
@@ -3700,6 +3957,7 @@
         }
 
         function lpToggleChargeMode() {
+            if (document.getElementById('lpTxType').value === 'loan') return;
             lpChargeAutoMode = !lpChargeAutoMode;
             lpUpdateChargeModeBadge();
             if (lpChargeAutoMode) {
@@ -3712,12 +3970,105 @@
         }
 
         function lpHandleAmountInput() {
-            if (lpChargeAutoMode) {
+            if (lpChargeAutoMode && document.getElementById('lpTxType').value !== 'loan') {
                 const amt = parseFloat(document.getElementById('lpTxAmount').value) || 0;
                 const autoCharge = lpGetChargeFromTable(amt);
                 document.getElementById('lpTxCharge').value = autoCharge.toFixed(2);
             }
             lpHandleTxStatusChange();
+        }
+
+        // Loan releases can be funded by physical cash or by a wallet transfer.
+        function lpHandleTxTypeChange(resetStatus = true) {
+            const isLoan = document.getElementById('lpTxType').value === 'loan';
+            const chargeInput = document.getElementById('lpTxCharge');
+            const chargeToggle = document.getElementById('lpChargeModeToggleBtn');
+            const preview = document.getElementById('lpCashLoanPreview');
+            chargeInput.disabled = isLoan;
+            chargeToggle.disabled = isLoan;
+            chargeToggle.classList.toggle('opacity-50', isLoan);
+            preview.classList.toggle('hidden', !isLoan);
+            document.getElementById('lpLoanFundingFields').classList.toggle('hidden', !isLoan);
+            if (isLoan) {
+                lpPopulateLoanLedgerOptions();
+                lpApplyLoanLedgerChoice();
+            } else {
+                document.getElementById('lpTxName').readOnly = false;
+                document.getElementById('lpTxAmount').readOnly = false;
+            }
+            if (isLoan) {
+                lpChargeAutoMode = false;
+                chargeInput.value = '0.00';
+                if (resetStatus) document.getElementById('lpTxStatus').value = 'unpaid';
+            } else if (resetStatus) {
+                lpChargeAutoMode = true;
+                chargeInput.value = lpGetChargeFromTable(parseFloat(document.getElementById('lpTxAmount').value) || 0).toFixed(2);
+            }
+            lpUpdateChargeModeBadge();
+            lpHandleTxStatusChange();
+        }
+
+        function lpGetLoanSource(tx) {
+            return tx.loanSource === 'wallet' ? 'wallet' : 'cash'; // Legacy loans were physical cash.
+        }
+
+        // Individual receipts allow some repayments to arrive in Cash and others in Wallet.
+        // Older loan records have no receipt list and are treated as Cash receipts.
+        function lpGetLoanRepaymentAmounts(tx, asOfDate = null) {
+            let remainder = Math.max(0, lpGetTxPaidAmount(tx));
+            let cash = 0, wallet = 0;
+            if (Array.isArray(tx.repayments) && tx.repayments.length) {
+                for (const receipt of tx.repayments) {
+                    const amount = Math.min(remainder, Math.max(0, Number(receipt.amount) || 0));
+                    remainder -= amount;
+                    if (asOfDate && receipt.date && receipt.date > asOfDate) continue;
+                    if (receipt.destination === 'wallet') wallet += amount;
+                    else cash += amount;
+                }
+            }
+            // Reconcile legacy paidAmount if it predates the receipt list.
+            if (remainder > 0.005 && (!asOfDate || tx.date <= asOfDate)) {
+                if (tx.repaymentDestination === 'wallet') wallet += remainder;
+                else cash += remainder;
+            }
+            return { cash: Math.round(cash * 100) / 100, wallet: Math.round(wallet * 100) / 100 };
+        }
+
+        // Check funds on the release date without counting the transaction being edited.
+        function lpFundsAvailableAtDate(source, date, ignoreIndex = -1) {
+            let cash = 0, wallet = 0;
+            lpTransactions.forEach((tx, index) => {
+                if (index === ignoreIndex || !tx.date || tx.date > date) return;
+                const amount = parseFloat(tx.amount) || 0;
+                if (tx.type === 'debit') wallet += amount;
+                else if (tx.type === 'credit') { wallet -= amount; cash += lpGetTxPaidAmount(tx); }
+                else if (tx.type === 'loan') {
+                    if (lpGetLoanSource(tx) === 'wallet') wallet -= amount;
+                    else cash -= amount;
+                    const repaid = lpGetLoanRepaymentAmounts(tx, date);
+                    wallet += repaid.wallet;
+                    cash += repaid.cash;
+                }
+            });
+            return Math.round((source === 'wallet' ? wallet : cash) * 100) / 100;
+        }
+
+        function lpCashAvailableAtDate(date, ignoreIndex = -1) {
+            return lpFundsAvailableAtDate('cash', date, ignoreIndex);
+        }
+
+        function lpUpdateCashLoanPreview() {
+            if (document.getElementById('lpTxType').value !== 'loan') return;
+            const date = document.getElementById('lpTxDate').value;
+            const ignoreIndex = parseInt(document.getElementById('lpEditIndex').value, 10);
+            const source = document.getElementById('lpTxLoanSource').value;
+            const available = lpFundsAvailableAtDate(source, date, ignoreIndex);
+            const amount = parseFloat(document.getElementById('lpTxAmount').value) || 0;
+            const remaining = Math.round((available - amount) * 100) / 100;
+            document.getElementById('lpCashLoanPreviewDesc').textContent = source === 'wallet' ? 'Wallet-funded loan:' : 'Cash-funded loan:';
+            const preview = document.getElementById('lpCashLoanBalancePreview');
+            preview.textContent = `${source === 'wallet' ? 'Wallet' : 'Cash on Hand'} available: ${lpFormatMoney(available)} · After release: ${lpFormatMoney(remaining)}`;
+            preview.classList.toggle('text-rose-600', remaining < -0.005);
         }
 
         function lpHandleManualChargeInput() {
@@ -3730,8 +4081,9 @@
 
         function lpGetTxTotalDue(tx) {
             const amt = parseFloat(tx.amount) || 0;
-            const chg = parseFloat(tx.charge) || 0;
-            return amt + chg;
+            // Loan interest belongs to Loan Ledger's amortization, never to Wallet transaction charges.
+            if (tx.type === 'loan') return Math.round((amt + Math.max(0, Number(tx.loanInterest) || 0)) * 100) / 100;
+            return amt + (parseFloat(tx.charge) || 0);
         }
 
         function lpGetTxPaidAmount(tx) {
@@ -3750,9 +4102,328 @@
             return Math.max(0, totalDue - paidAmt);
         }
 
+        // Each ledger loan has ONE Loan Ledger account, matched by stable ID (never by name).
+        // Ledger receipts are the single financial source of truth. In Admin Mode,
+        // checking a linked installment creates a tagged ledger receipt, never another loan.
+        function lpMakeLoanId() {
+            let id;
+            do { id = 'LN-LED-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2, 7).toUpperCase(); }
+            while (loanRecords.some(r => r.id === id));
+            return id;
+        }
+
+        function lpSnapshotLoanTerms(record) {
+            return {
+                applicationDate: record.applicationDate, repaymentStartDate: record.repaymentStartDate,
+                coMakerName: record.coMakerName, loanTerm: record.loanTerm, termUnit: record.termUnit,
+                interestRate: record.interestRate, interestPeriod: record.interestPeriod,
+                repaymentMethod: record.repaymentMethod, borrowerId: record.borrowerId,
+                coMakerRelation: record.coMakerRelation
+            };
+        }
+
+        function lpCreateLoanAccountForTx(tx, requestedId = null) {
+            const metadata = tx.loanTerms || {};
+            const date = tx.date || getTodayISO();
+            const terms = {
+                applicationDate: date,
+                repaymentStartDate: metadata.repaymentStartDate || addPeriodToDate(date, 1, 'months'),
+                borrowerName: tx.name,
+                borrowerId: metadata.borrowerId || 'N/A',
+                coMakerName: metadata.coMakerName || 'Not provided',
+                coMakerRelation: metadata.coMakerRelation || 'N/A',
+                loanAmount: Number(tx.amount) || 0,
+                loanTerm: Math.max(1, Math.min(360, Math.floor(Number(metadata.loanTerm) || 1))),
+                termUnit: metadata.termUnit === 'weeks' ? 'weeks' : 'months',
+                interestRate: Math.max(0, Number(metadata.interestRate) || 0),
+                interestPeriod: metadata.interestPeriod === 'monthly' ? 'monthly' : 'annual',
+                repaymentMethod: ['flat', 'diminishing', 'interest_only'].includes(metadata.repaymentMethod) ? metadata.repaymentMethod : 'flat'
+            };
+            const computation = computeLoanAmortization(terms);
+            return {
+                id: requestedId || lpMakeLoanId(), currency: 'PHP',
+                status: 'Approved / Active', rejectionReason: '', reviewedAt: new Date().toISOString(),
+                ...terms, paidInstallments: [], computation,
+                linkedTransactionId: tx.id, autoCreatedFromLedger: true
+            };
+        }
+
+        function lpLinkedLoanTx(record) {
+            return record && record.linkedTransactionId
+                ? lpTransactions.find(t => t.id === record.linkedTransactionId && t.type === 'loan') || null
+                : null;
+        }
+
+        function lpRoundCents(amount) { return Math.round((Number(amount) || 0) * 100) / 100; }
+
+        // A tagged Loan Ledger receipt pays its intended installment; existing untagged
+        // receipts from Cash-Flow are allocated oldest installment first. One payment is
+        // counted once even when the same loan is displayed in both modules.
+        function lpLoanInstallmentCoverage(record, tx) {
+            const schedule = record.computation?.schedule || [];
+            const earmarked = new Map();
+            let taggedTotal = 0;
+            for (const receipt of (Array.isArray(tx.repayments) ? tx.repayments : [])) {
+                const installment = Number(receipt.installment);
+                if (receipt.origin !== 'loan-ledger' || !Number.isInteger(installment)
+                    || !schedule.some(r => r.installment === installment)) continue;
+                const amount = Math.max(0, Number(receipt.amount) || 0);
+                taggedTotal += amount;
+                earmarked.set(installment, (earmarked.get(installment) || 0) + amount);
+            }
+            let genericRemaining = Math.max(0, lpGetTxPaidAmount(tx) - taggedTotal);
+            const allocated = new Map(), fullyPaid = [];
+            for (const row of schedule) {
+                const tagged = Math.min(row.payment, earmarked.get(row.installment) || 0);
+                const generic = Math.min(Math.max(0, row.payment - tagged), genericRemaining);
+                genericRemaining -= generic;
+                const amount = lpRoundCents(tagged + generic);
+                allocated.set(row.installment, amount);
+                if (amount + 0.005 >= row.payment) fullyPaid.push(row.installment);
+            }
+            return { allocated, fullyPaid, earmarked };
+        }
+
+        // Existing pre-feature payment totals have no individual receipt history.
+        // Materialize only the missing amount before adding a new tagged receipt.
+        function lpEnsureLoanReceiptHistory(tx) {
+            if (!Array.isArray(tx.repayments)) tx.repayments = [];
+            const recorded = tx.repayments.reduce((n,r) => n + Math.max(0,Number(r.amount) || 0),0);
+            const missing = lpRoundCents(lpGetTxPaidAmount(tx) - recorded);
+            if (missing > 0.005) {
+                tx.repayments.unshift({amount:missing, destination:tx.repaymentDestination === 'wallet' ? 'wallet' : 'cash',date:tx.date});
+            }
+        }
+
+        let pendingInstallmentPayment = null;
+        function closeLoanInstallmentPaymentModal() {
+            document.getElementById('loanInstallmentPaymentModal').classList.add('hidden');
+            pendingInstallmentPayment = null;
+        }
+
+        function lpHandleLinkedInstallmentCheckbox(rec, installmentNum) {
+            // Never treat a UI toggle as receipt without confirmation.
+            if (!isAdminUnlocked || !lpIsAdmin) { openLoanModal(rec.id); return; }
+            const tx = lpLinkedLoanTx(rec);
+            const row = rec.computation?.schedule.find(r => r.installment === installmentNum);
+            if (!tx || !row) { openLoanModal(rec.id); return; }
+            const cover = lpLoanInstallmentCoverage(rec,tx);
+            const alreadyPaid = cover.fullyPaid.includes(installmentNum);
+            const remaining = lpGetTxUnpaidAmount(tx);
+            if (alreadyPaid) {
+                const tagged = (tx.repayments || []).filter(r => r.origin === 'loan-ledger' && Number(r.installment) === installmentNum);
+                if (!tagged.length) {
+                    showToast('This installment was paid directly in Cash-Flow & Wallet Ledger. Its receipt cannot be reversed by a checkbox.', 'error');
+                    openLoanModal(rec.id);
+                    return;
+                }
+                const reversalAmount = lpRoundCents(tagged.reduce((n,r) => n + Number(r.amount),0));
+                if (!window.confirm(`Reverse the Loan Ledger receipt(s) for installment #${installmentNum} (${lpFormatMoney(reversalAmount)})?\n\nThis deducts the same amount from the original Cash/Wallet receiving balances and updates both ledgers. Only confirm to correct a mistaken payment.`)) {
+                    openLoanModal(rec.id); return;
+                }
+                if (!isAdminUnlocked || !lpIsAdmin) { openLoanModal(rec.id); return; }
+                tx.repayments = tx.repayments.filter(r => !(r.origin === 'loan-ledger' && Number(r.installment) === installmentNum));
+                const paid = Math.max(0, lpRoundCents(lpGetTxPaidAmount(tx) - reversalAmount));
+                tx.paidAmount = paid;
+                tx.status = paid <= 0.005 ? 'unpaid' : (lpGetTxTotalDue(tx) - paid <= 0.005 ? 'paid' : 'partial');
+                lpSaveTransactions();
+                lpRecordAudit('LOAN_INSTALLMENT_REVERSAL', `Reversed installment #${installmentNum} on ${rec.id}`, `Returned ${lpFormatMoney(reversalAmount)} from original repayment destinations; linked transaction ${tx.id}`);
+                recordAuditEvent('INSTALLMENT_REVERSAL', `Reversed installment #${installmentNum} on ${rec.id}`,`Linked ledger transaction: ${tx.id}`);
+                lpRefreshAll();
+                showToast(`Reversed ${lpFormatMoney(reversalAmount)} from linked Cash/Wallet receipts.`, 'info');
+                return;
+            }
+            if (rec.status === 'Pending Approval' || rec.status === 'Rejected') { openLoanModal(rec.id); showToast('Only approved loans can receive repayments.', 'error'); return; }
+            const due = lpRoundCents(row.payment - (cover.allocated.get(installmentNum) || 0));
+            if (due <= 0.005 || due > remaining + 0.01) {
+                openLoanModal(rec.id);
+                showToast('The installment amount does not match the remaining loan balance. Review the linked ledger first.', 'error');
+                return;
+            }
+            pendingInstallmentPayment = {loanId:rec.id, txId:tx.id, installment:installmentNum};
+            document.getElementById('loanInstallmentPayContext').textContent = `${rec.borrowerName} · ${rec.id} · Installment #${installmentNum} (scheduled ${formatDisplayDate(row.dueDate)})`;
+            document.getElementById('loanInstallmentPayAmount').textContent = lpFormatMoney(due);
+            document.getElementById('loanInstallmentPayDestination').value = 'cash';
+            document.getElementById('loanInstallmentPayDate').value = getTodayISO();
+            document.getElementById('loanInstallmentPaymentModal').classList.remove('hidden');
+            // Revert the checkbox until the payment is actually confirmed.
+            openLoanModal(rec.id);
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
+        function confirmLoanInstallmentPayment(event) {
+            event.preventDefault();
+            if (!isAdminUnlocked || !lpIsAdmin || !pendingInstallmentPayment) {
+                closeLoanInstallmentPaymentModal(); showToast('Admin authorization is required.', 'error'); return;
+            }
+            const {loanId, txId, installment} = pendingInstallmentPayment;
+            const rec = loanRecords.find(r => r.id === loanId);
+            const tx = lpTransactions.find(t => t.id === txId && t.type === 'loan' && t.linkedLoanId === loanId);
+            const row = rec?.computation?.schedule.find(r => r.installment === installment);
+            if (!rec || !tx || !row) {closeLoanInstallmentPaymentModal();showToast('Linked loan not found.','error');return;}
+            const date = document.getElementById('loanInstallmentPayDate').value;
+            const destination = document.getElementById('loanInstallmentPayDestination').value;
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || date < tx.date || date > getTodayISO() || !['cash','wallet'].includes(destination)) {
+                showToast('Choose a valid received date on/after loan release and not in the future.', 'error'); return;
+            }
+            const coverage = lpLoanInstallmentCoverage(rec, tx);
+            if (coverage.fullyPaid.includes(installment)) {closeLoanInstallmentPaymentModal();openLoanModal(loanId);showToast('Installment is already paid.','info');return;}
+            const amount = lpRoundCents(row.payment - (coverage.allocated.get(installment) || 0));
+            const remaining = lpGetTxUnpaidAmount(tx);
+            if (amount <= 0 || amount > remaining + 0.005) {closeLoanInstallmentPaymentModal();showToast('Payment does not fit the remaining loan balance.','error');return;}
+            lpEnsureLoanReceiptHistory(tx);
+            tx.repayments.push({amount, destination, date, origin:'loan-ledger', installment});
+            const paid = Math.min(lpGetTxTotalDue(tx), lpRoundCents(lpGetTxPaidAmount(tx) + amount));
+            tx.paidAmount = paid;
+            tx.status = lpGetTxTotalDue(tx) - paid <= 0.005 ? 'paid' : 'partial';
+            closeLoanInstallmentPaymentModal();
+            lpSaveTransactions();
+            lpRecordAudit('LOAN_INSTALLMENT_PAYMENT', `Received ${lpFormatMoney(amount)} for ${loanId}, installment #${installment}`, `Into ${destination.toUpperCase()} • Date ${date} • Transaction ${tx.id}`);
+            recordAuditEvent('INSTALLMENT_PAID', `Paid installment #${installment} of ${loanId}`, `Received ${lpFormatMoney(amount)} to ${destination} on ${date}.`);
+            lpRefreshAll();
+            showToast(`Installment #${installment} recorded: +${lpFormatMoney(amount)} to ${destination === 'wallet' ? 'Wallet' : 'Cash on Hand'}.`);
+        }
+
+        function lpSyncLoanAccountFromTx(record, tx) {
+            record.linkedTransactionId = tx.id;
+            // Apply actual received money to tagged installment rows and older generic receipts.
+            record.paidInstallments = lpLoanInstallmentCoverage(record, tx).fullyPaid;
+            const due = lpGetTxTotalDue(tx);
+            record.status = due > 0 && lpGetTxPaidAmount(tx) + 0.005 >= due
+                ? 'Settled / Paid Off' : 'Approved / Active';
+            record.disbursedFrom = lpGetLoanSource(tx);
+            record.disbursedOn = tx.date;
+        }
+
+        function lpReconcileLoanLinks() {
+            if (!Array.isArray(loanRecords)) return;
+            let dirty = false;
+            const seen = new Set();
+            for (const tx of lpTransactions) {
+                if (tx.type !== 'loan') continue;
+                if (!tx.id) { tx.id = 'tx_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9); dirty = true; }
+                let account = tx.linkedLoanId ? loanRecords.find(r => r.id === tx.linkedLoanId) : null;
+                if (account && seen.has(account.id)) account = null; // no double-linking
+                if (!account) {
+                    account = lpCreateLoanAccountForTx(tx, tx.linkedLoanId && !loanRecords.some(r => r.id === tx.linkedLoanId) ? tx.linkedLoanId : null);
+                    loanRecords.unshift(account);
+                    tx.linkedLoanId = account.id;
+                    dirty = true;
+                }
+                seen.add(account.id);
+                const desiredInterest = Math.max(0, (Number(account.computation?.totalPayable) || Number(tx.amount)) - (Number(tx.amount) || 0));
+                const roundedInterest = Math.round(desiredInterest * 100) / 100;
+                if (Math.abs((Number(tx.loanInterest) || 0) - roundedInterest) > 0.005) { tx.loanInterest = roundedInterest; dirty = true; }
+                if (!tx.loanTerms) { tx.loanTerms = lpSnapshotLoanTerms(account); dirty = true; }
+                const before = JSON.stringify([account.linkedTransactionId, account.paidInstallments, account.status, account.disbursedFrom, account.disbursedOn]);
+                lpSyncLoanAccountFromTx(account, tx);
+                if (before !== JSON.stringify([account.linkedTransactionId, account.paidInstallments, account.status, account.disbursedFrom, account.disbursedOn])) dirty = true;
+            }
+            // Wallet-only restores can remove transaction IDs. Never retain a phantom link
+            // or stale paid status when the corresponding financial event is gone.
+            loanRecords = loanRecords.filter(account => {
+                if (!account.linkedTransactionId || lpTransactions.some(tx => tx.id === account.linkedTransactionId
+                    && tx.type === 'loan' && tx.linkedLoanId === account.id)) return true;
+                dirty = true;
+                if (account.autoCreatedFromLedger) return false;
+                delete account.linkedTransactionId;
+                delete account.disbursedFrom;
+                delete account.disbursedOn;
+                account.paidInstallments = [];
+                account.status = 'Approved / Active';
+                return true;
+            });
+            if (dirty) {
+                localStorage.setItem('ledger_transactions', JSON.stringify(lpTransactions));
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(loanRecords));
+                updateNavBadges();
+            }
+        }
+
+        function lpRemoveLoanLinkForDeletedTx(tx) {
+            if (!tx || tx.type !== 'loan') return;
+            const linked = loanRecords.find(r => r.id === tx.linkedLoanId && r.linkedTransactionId === tx.id);
+            if (!linked) return;
+            if (linked.autoCreatedFromLedger) loanRecords = loanRecords.filter(r => r.id !== linked.id);
+            else {
+                delete linked.linkedTransactionId;
+                delete linked.disbursedFrom;
+                delete linked.disbursedOn;
+                linked.paidInstallments = [];
+                linked.status = 'Approved / Active';
+            }
+            saveLoanRecords();
+        }
+
+        function lpPopulateLoanLedgerOptions() {
+            const select = document.getElementById('lpTxLoanLedgerLink');
+            if (!select) return;
+            const edit = Number(document.getElementById('lpEditIndex').value);
+            const current = edit >= 0 ? lpTransactions[edit] : null;
+            const selected = current?.type === 'loan' ? current.linkedLoanId : select.value;
+            select.replaceChildren(new Option('Automatically create a new Loan Ledger record', ''));
+            const candidates = loanRecords.filter(r => r.currency === 'PHP'
+                && r.status === 'Approved / Active' && r.computation?.principal > 0
+                && (!r.paidInstallments || r.paidInstallments.length === 0)
+                && (!r.linkedTransactionId || r.linkedTransactionId === current?.id));
+            if (selected && !candidates.some(r => r.id === selected)) {
+                const active = loanRecords.find(r => r.id === selected);
+                if (active) candidates.unshift(active);
+            }
+            for (const r of candidates) select.add(new Option(`${r.id} · ${r.borrowerName} · ${lpFormatMoney(r.computation.principal)} · ${lpFormatMoney(r.computation.totalPayable)} due`, r.id));
+            select.value = selected || '';
+        }
+
+        function lpApplyLoanLedgerChoice() {
+            const link = document.getElementById('lpTxLoanLedgerLink');
+            const selected = loanRecords.find(r => r.id === link.value);
+            const editIndex = Number(document.getElementById('lpEditIndex').value);
+            const editingLinked = editIndex >= 0 && lpTransactions[editIndex]?.type === 'loan';
+            document.getElementById('lpNewLoanLedgerFields').classList.toggle('hidden', !!selected || editingLinked);
+            document.getElementById('lpTxName').readOnly = !!selected || editingLinked;
+            document.getElementById('lpTxAmount').readOnly = !!selected || editingLinked;
+            link.disabled = editingLinked;
+            if (selected) {
+                document.getElementById('lpTxName').value = selected.borrowerName;
+                document.getElementById('lpTxAmount').value = selected.computation.principal.toFixed(2);
+            }
+            document.getElementById('lpLoanLedgerLinkHint').textContent = selected
+                ? `Linked to ${selected.id}. Total repayment: ${lpFormatMoney(selected.computation.totalPayable)} (including loan interest, excluding wallet charges).`
+                : 'A matching approved Loan Ledger record will be created automatically. Choose an existing approved loan to avoid duplicates.';
+            lpHandleTxStatusChange();
+        }
+
+        function lpShowLinkedLoanByTransaction(index) {
+            const loanId = lpTransactions[index]?.linkedLoanId;
+            if (loanId) lpShowLinkedLoan(loanId);
+        }
+
+        function lpShowLinkedLoan(loanId) {
+            switchSuiteModule('loan');
+            switchView('ledger');
+            const rec = loanRecords.find(r => r.id === loanId);
+            if (rec) openLoanModal(rec.id);
+        }
+
+        function lpOpenLinkedLedgerTransaction(loanId) {
+            const rec = loanRecords.find(r => r.id === loanId);
+            if (!rec?.linkedTransactionId) return;
+            closeLoanModal();
+            switchSuiteModule('ledger');
+            lpSetTypeFilter('loan');
+            lpSetFilter('all');
+            const searchEl = document.getElementById('lpSearchInput');
+            if (searchEl) searchEl.value = rec.borrowerName;
+            lpRenderTable();
+        }
+
         function lpMigrateTransactions() {
             let changed = false;
             lpTransactions.forEach(tx => {
+                if (tx.type === 'loan' && !['cash','wallet'].includes(tx.loanSource)) {
+                    tx.loanSource = 'cash'; // Compatible with all earlier cash-only loans.
+                    changed = true;
+                }
                 if (!tx.id) {
                     tx.id = 'tx_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
                     changed = true;
@@ -3876,6 +4547,8 @@
             const quickJsonBackupBtn = document.getElementById('lpQuickJsonBackupBtn');
             const clearAuditLogsBtn = document.getElementById('lpClearAuditLogsBtn');
             const clearLedgerEntryBtn = document.getElementById('lpClearLedgerEntryBtn');
+            const releaseCashLoanBtn = document.getElementById('lpReleaseCashLoanBtn');
+            const releaseWalletLoanBtn = document.getElementById('lpReleaseWalletLoanBtn');
 
             if (lpIsAdmin) {
                 adminBtnText.textContent = 'Admin Mode';
@@ -3883,6 +4556,8 @@
                 adminDot.className = 'admin-pulse relative inline-flex rounded-full h-2 w-2 bg-emerald-500 text-emerald-500';
                 adminModeBtn.className = 'bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/70 dark:hover:bg-emerald-900/70 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60 px-3.5 py-2 rounded-xl font-semibold text-xs transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer';
                 addTxBtn.classList.remove('hidden');
+                if (releaseCashLoanBtn) releaseCashLoanBtn.classList.remove('hidden');
+                if (releaseWalletLoanBtn) releaseWalletLoanBtn.classList.remove('hidden');
                 printReportBtn.classList.remove('hidden');
                 emptyAddBtn.classList.remove('hidden');
                 // Keep the bottom shortcut in sync with the filtered records.
@@ -3901,6 +4576,8 @@
                 adminDot.className = 'relative inline-flex rounded-full h-2 w-2 bg-slate-400';
                 adminModeBtn.className = 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-3.5 py-2 rounded-xl font-medium text-xs transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer';
                 addTxBtn.classList.add('hidden');
+                if (releaseCashLoanBtn) releaseCashLoanBtn.classList.add('hidden');
+                if (releaseWalletLoanBtn) releaseWalletLoanBtn.classList.add('hidden');
                 printReportBtn.classList.add('hidden');
                 emptyAddBtn.classList.add('hidden');
                 bottomAddBar.classList.add('hidden');
@@ -3959,6 +4636,7 @@
                 () => {
                     if (!lpIsAdmin || !isAdminUnlocked) return;
                     const count = lpTransactions.length;
+                    lpTransactions.filter(t => t.type === 'loan').forEach(lpRemoveLoanLinkForDeletedTx);
                     lpTransactions = [];
                     lpSaveTransactions();
                     lpRecordAudit('DELETE', `Cleared Cash-Flow & Wallet Ledger (${count} records removed)`);
@@ -3981,42 +4659,44 @@
         }
 
         function lpSaveTransactions() {
+            lpReconcileLoanLinks();
             localStorage.setItem('ledger_transactions', JSON.stringify(lpTransactions));
             refreshSuiteOverview();
+            renderLedger();
+            renderLoanStatusReport();
+            if (activeModalLoanId && loanRecords.some(r => r.id === activeModalLoanId)) openLoanModal(activeModalLoanId);
         }
 
-        // Cash on Hand is independent from the electronic wallet balance.
-        // Only payments actually collected on Cash-Out (credit) accounts count.
-        // Unpaid cash-outs and all Wallet Debit entries contribute ₱0.00.
+        // Cash = collected cash-outs + Cash loan receipts - Cash-funded loan releases.
+        // Wallet = wallet debit in - cash-outs - Wallet-funded loan releases + Wallet loan receipts.
+        // Fees/charges NEVER change wallet running balance.
         function lpComputeSortedWithBalances() {
             const sorted = [...lpTransactions].sort((a, b) => new Date(a.date) - new Date(b.date));
             let runningBalance = 0;
             let cashOnHand = 0;
             return sorted.map(tx => {
                 const amt = parseFloat(tx.amount) || 0;
-                const chg = parseFloat(tx.charge) || 0;
-                const totalDue = amt + chg;
+                const chg = tx.type === 'loan' ? 0 : (parseFloat(tx.charge) || 0);
+                const totalDue = lpGetTxTotalDue(tx);
                 const paidAmt = lpGetTxPaidAmount(tx);
                 const unpaidAmt = lpGetTxUnpaidAmount(tx);
 
                 if (tx.type === 'debit') {
-                    // Keep wallet deposits in Running Balance, not Cash on Hand.
                     runningBalance += amt;
-                } else {
-                    // Cash-Out affects the wallet balance, but only money paid
-                    // back by a customer (including paid charges) adds cash on hand.
+                } else if (tx.type === 'credit') {
                     runningBalance -= amt;
                     cashOnHand += paidAmt;
+                } else if (tx.type === 'loan') {
+                    if (lpGetLoanSource(tx) === 'wallet') runningBalance -= amt;
+                    else cashOnHand -= amt;
+                    const receipts = lpGetLoanRepaymentAmounts(tx);
+                    cashOnHand += receipts.cash;
+                    runningBalance += receipts.wallet;
                 }
-
-                return {
-                    ...tx,
-                    totalDue,
-                    paidAmt,
-                    unpaidAmt,
-                    runningBalance,
-                    cashOnHand: Math.abs(cashOnHand) < 0.005 ? 0 : Math.round(cashOnHand * 100) / 100
-                };
+                // Round cash cents to avoid floating point display errors.
+                cashOnHand = Math.round(cashOnHand * 100) / 100;
+                runningBalance = Math.round(runningBalance * 100) / 100;
+                return { ...tx, totalDue, paidAmt, unpaidAmt, runningBalance, cashOnHand };
             });
         }
 
@@ -4052,14 +4732,25 @@
             let totalCharges = 0;
             let unpaidCreditOnly = 0;
             let unpaidCharges = 0;
+            let loansReleased = 0, loansOutstanding = 0, loanRepayments = 0;
+            let releasedCash = 0, releasedWallet = 0, repaidCash = 0, repaidWallet = 0;
 
             lpTransactions.forEach(tx => {
                 const amt = parseFloat(tx.amount) || 0;
                 const chg = parseFloat(tx.charge) || 0;
                 const unpaidAmt = lpGetTxUnpaidAmount(tx);
-                totalCharges += chg;
+                if (tx.type !== 'loan') totalCharges += chg;
 
-                if (tx.type === 'debit') {
+                if (tx.type === 'loan') {
+                    loansReleased += amt;
+                    if (lpGetLoanSource(tx) === 'wallet') releasedWallet += amt;
+                    else releasedCash += amt;
+                    const receipts = lpGetLoanRepaymentAmounts(tx);
+                    repaidCash += receipts.cash;
+                    repaidWallet += receipts.wallet;
+                    loanRepayments += lpGetTxPaidAmount(tx);
+                    loansOutstanding += unpaidAmt;
+                } else if (tx.type === 'debit') {
                     totalDebit += amt;
                     debitCount++;
                     unpaidCharges += unpaidAmt;
@@ -4077,11 +4768,17 @@
                 }
             });
 
+            const cashLoanSummary = document.getElementById('lpCashLoanSummary');
+            if (cashLoanSummary) {
+                cashLoanSummary.textContent = `Loans released: ${lpFormatMoney(loansReleased)} (Cash ${lpFormatMoney(releasedCash)} · Wallet ${lpFormatMoney(releasedWallet)}) · Repayments: Cash ${lpFormatMoney(repaidCash)} · Wallet ${lpFormatMoney(repaidWallet)} · Still owed (including loan interest): ${lpFormatMoney(loansOutstanding)}`;
+            }
+
             const totalVolume = totalDebit + totalCredit;
             const debitShare = totalVolume > 0 ? Math.round((totalDebit / totalVolume) * 100) : 0;
             const chargesGained = Math.max(0, totalCharges - unpaidCharges);
             const totalUnpaidCombined = unpaidCreditOnly + unpaidCharges;
-            const netBalance = totalDebit - totalCredit;
+            const postedBalances = lpComputeSortedWithBalances();
+            const netBalance = postedBalances.length ? postedBalances[postedBalances.length - 1].runningBalance : 0;
             const projectedBalance = netBalance + totalUnpaidCombined;
             const collectionRate = totalCharges > 0 ? Math.min(100, Math.round((chargesGained / totalCharges) * 100)) : 0;
 
@@ -4238,10 +4935,14 @@
 
             sorted.forEach(tx => {
                 const key = lpChartGranularity === 'monthly' ? (tx.date ? tx.date.slice(0, 7) : 'Unknown') : (tx.date || 'Unknown');
-                const bucket = bucketMap.get(key) || { debit: 0, credit: 0 };
+                const bucket = bucketMap.get(key) || { debit: 0, credit: 0, loanOut: 0, loanIn: 0 };
                 const amt = parseFloat(tx.amount) || 0;
                 if (tx.type === 'debit') bucket.debit += amt;
-                else bucket.credit += amt;
+                else if (tx.type === 'credit') bucket.credit += amt;
+                else if (tx.type === 'loan') {
+                    if (lpGetLoanSource(tx) === 'wallet') bucket.loanOut += amt;
+                    bucket.loanIn += lpGetLoanRepaymentAmounts(tx).wallet;
+                }
                 bucketMap.set(key, bucket);
             });
 
@@ -4260,7 +4961,7 @@
                 }
                 debitSeries.push(val.debit);
                 creditSeries.push(val.credit);
-                cumulative += (val.debit - val.credit);
+                cumulative += (val.debit - val.credit - val.loanOut + val.loanIn);
                 balanceSeries.push(cumulative);
             });
 
@@ -4346,13 +5047,13 @@
                 if (tx.type === 'debit') {
                     totalDebit += amt;
                     chargesGained += Math.max(0, chg - unpaid);
-                } else {
+                } else if (tx.type === 'credit') {
                     totalCredit += amt;
                     const creditRatio = (amt + chg) > 0 ? amt / (amt + chg) : 0;
                     const unpaidChargePortion = unpaid * (1 - creditRatio);
                     chargesGained += Math.max(0, chg - unpaidChargePortion);
                 }
-                totalUnpaid += unpaid;
+                if (tx.type !== 'loan') totalUnpaid += unpaid;
             });
 
             const distCtx = document.getElementById('lpDistributionChart');
@@ -4420,7 +5121,7 @@
             bottomAddBar.classList.toggle('hidden', !lpIsAdmin);
             bottomAddBar.classList.toggle('flex', lpIsAdmin);
 
-            let footDebit = 0, footCredit = 0, footCharges = 0, footUnpaid = 0;
+            let footDebit = 0, footCredit = 0, footLoans = 0, footCharges = 0, footUnpaid = 0;
 
             tbody.innerHTML = filteredTransactions.map((tx, idx) => {
                 const originalIndex = lpTransactions.findIndex(t => t.id === tx.id);
@@ -4431,13 +5132,18 @@
                 const unpaidAmt = tx.unpaidAmt;
 
                 if (tx.type === 'debit') footDebit += amt;
-                else footCredit += amt;
+                else if (tx.type === 'credit') footCredit += amt;
+                else if (tx.type === 'loan') footLoans += amt;
                 footCharges += chg;
                 footUnpaid += unpaidAmt;
 
                 const isDebit = tx.type === 'debit';
+                const isCredit = tx.type === 'credit';
+                const isCashLoan = tx.type === 'loan';
+                const loanFundingLabel = isCashLoan && lpGetLoanSource(tx) === 'wallet' ? 'Wallet loan' : 'Cash loan';
                 const debitDisplay = isDebit ? `<span class="font-mono font-semibold text-emerald-600 dark:text-emerald-400">+${lpFormatMoney(amt)}</span>` : '<span class="text-slate-300 dark:text-slate-700">—</span>';
-                const creditDisplay = !isDebit ? `<span class="font-mono font-semibold text-rose-600 dark:text-rose-400">-${lpFormatMoney(amt)}</span>` : '<span class="text-slate-300 dark:text-slate-700">—</span>';
+                const creditDisplay = isCredit ? `<span class="font-mono font-semibold text-rose-600 dark:text-rose-400">-${lpFormatMoney(amt)}</span>` : '<span class="text-slate-300 dark:text-slate-700">—</span>';
+                const cashLoanDisplay = isCashLoan ? `<span class="font-mono font-semibold text-orange-600 dark:text-orange-400">-${lpFormatMoney(amt)}</span>` : '<span class="text-slate-300 dark:text-slate-700">—</span>';
                 const chargeDisplay = chg > 0 ? `<span class="font-mono text-slate-600 dark:text-slate-300">${lpFormatMoney(chg)}</span>` : '<span class="text-slate-300 dark:text-slate-700">—</span>';
 
                 let unpaidDisplay = '<span class="text-slate-300 dark:text-slate-700">—</span>';
@@ -4456,7 +5162,7 @@
 
                 if (tx.status === 'paid') {
                     statusBadge = lpIsAdmin
-                        ? `<button onclick="lpToggleTxStatus(${originalIndex})" title="Admin: Click to toggle Paid / Unpaid" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-400 border border-emerald-200/70 dark:border-emerald-800/60 hover:bg-emerald-100 transition-colors cursor-pointer"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Paid</button>`
+                        ? `<button onclick="${isCashLoan ? `lpEditTransaction(${originalIndex})` : `lpToggleTxStatus(${originalIndex})`}" title="${isCashLoan ? 'Edit loan record' : 'Admin: Click to toggle Paid / Unpaid'}" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-400 border border-emerald-200/70 dark:border-emerald-800/60 hover:bg-emerald-100 transition-colors cursor-pointer"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Paid</button>`
                         : `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-400 border border-emerald-200/70 dark:border-emerald-800/60"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Paid</span>`;
                 } else if (tx.status === 'partial') {
                     statusBadge = lpIsAdmin
@@ -4464,14 +5170,14 @@
                         : `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-50 dark:bg-sky-950/80 text-sky-700 dark:text-sky-400 border border-sky-200/70 dark:border-sky-800/60"><span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>Partial (${paidPct}%)</span>`;
                 } else {
                     statusBadge = lpIsAdmin
-                        ? `<button onclick="lpToggleTxStatus(${originalIndex})" title="Admin: Click to mark full balance Paid" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 dark:bg-amber-950/80 text-amber-700 dark:text-amber-400 border border-amber-200/70 dark:border-amber-800/60 hover:bg-amber-100 transition-colors cursor-pointer"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Unpaid</button>`
+                        ? `<button onclick="${isCashLoan ? `lpHandlePaidAction(${originalIndex})` : `lpToggleTxStatus(${originalIndex})`}" title="${isCashLoan ? 'Record full repayment, choosing Cash or Wallet' : 'Admin: Click to mark full balance Paid'}" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 dark:bg-amber-950/80 text-amber-700 dark:text-amber-400 border border-amber-200/70 dark:border-amber-800/60 hover:bg-amber-100 transition-colors cursor-pointer"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Unpaid</button>`
                         : `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 dark:bg-amber-950/80 text-amber-700 dark:text-amber-400 border border-amber-200/70 dark:border-amber-800/60"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Unpaid</span>`;
                 }
 
                 // Partial, Paid, Edit and Delete actions are exclusively for unlocked administrators.
                 // Viewer Mode has no Actions column or action controls in the table DOM.
-                const canRecordPayment = tx.type === 'credit' && unpaidAmt > 0.005 && totalDue > 0;
-                const paymentActionButtons = tx.type === 'credit'
+                const canRecordPayment = (isCredit || isCashLoan) && unpaidAmt > 0.005 && totalDue > 0;
+                const paymentActionButtons = (isCredit || isCashLoan)
                     ? `<button type="button" onclick="lpHandlePartialAction(${originalIndex})" ${canRecordPayment ? '' : 'disabled'}
                             title="${canRecordPayment ? (lpIsAdmin ? 'Record a partial payment' : 'Unlock Admin & Settings to record a partial payment') : 'Already fully paid'}"
                             class="inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-[11px] font-bold transition-colors ${canRecordPayment ? 'bg-sky-50 dark:bg-sky-950/70 border-sky-200 dark:border-sky-800 text-sky-700 dark:text-sky-300 hover:bg-sky-100 dark:hover:bg-sky-900/70 cursor-pointer' : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400 dark:text-slate-500 opacity-60 cursor-not-allowed'}">
@@ -4514,6 +5220,8 @@
                         <td class="py-3.5 px-4">
                             <div class="font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2 flex-wrap">
                                 <span>${escapeHTML(tx.name)}</span>
+                                ${isCashLoan ? `<span class="text-[10px] rounded px-1.5 py-0.5 bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-200">${loanFundingLabel}</span>` : ''}
+                                ${isCashLoan && tx.linkedLoanId ? `<button type="button" onclick="lpShowLinkedLoanByTransaction(${originalIndex})" class="px-1.5 py-0.5 rounded text-[10px] font-bold text-indigo-600 dark:text-indigo-300 underline" title="Open linked Loan Ledger account">Loan ${escapeHTML(tx.linkedLoanId)}</button>` : ''}
                                 ${statusBadge}
                             </div>
                             ${tx.remarks ? `<div class="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">${escapeHTML(tx.remarks)}</div>` : ''}
@@ -4521,6 +5229,7 @@
                         </td>
                         <td class="py-3.5 px-4 text-right whitespace-nowrap tabular-nums">${debitDisplay}</td>
                         <td class="py-3.5 px-4 text-right whitespace-nowrap tabular-nums">${creditDisplay}</td>
+                        <td class="py-3.5 px-4 text-right whitespace-nowrap tabular-nums">${cashLoanDisplay}</td>
                         <td class="py-3.5 px-4 text-right whitespace-nowrap tabular-nums">${chargeDisplay}</td>
                         <td class="py-3.5 px-4 text-right whitespace-nowrap tabular-nums">${unpaidDisplay}</td>
                         <td class="py-3.5 px-4 text-right font-mono font-bold whitespace-nowrap tabular-nums ${runBalClass}">${lpFormatMoney(tx.runningBalance)}</td>
@@ -4536,6 +5245,7 @@
 
             document.getElementById('lpFootTotalDebit').textContent = '+' + lpFormatMoney(footDebit);
             document.getElementById('lpFootTotalCredit').textContent = '-' + lpFormatMoney(footCredit);
+            document.getElementById('lpFootTotalLoans').textContent = '-' + lpFormatMoney(footLoans);
             document.getElementById('lpFootTotalCharges').textContent = lpFormatMoney(footCharges);
             document.getElementById('lpFootTotalUnpaid').textContent = lpFormatMoney(footUnpaid);
             document.getElementById('lpFootNetFlow').textContent = lpFormatMoney(endSnap ? endSnap.runningBalance : 0);
@@ -4553,18 +5263,23 @@
         function lpHandlePartialAction(index) {
             if (!lpRequirePaymentAdmin()) return;
             const tx = lpTransactions[index];
-            if (!tx || tx.type !== 'credit' || lpGetTxUnpaidAmount(tx) <= 0.005) return;
+            if (!tx || !['credit', 'loan'].includes(tx.type) || lpGetTxUnpaidAmount(tx) <= 0.005) return;
             lpOpenPartialModal(index);
         }
 
         function lpHandlePaidAction(index) {
             if (!lpRequirePaymentAdmin()) return;
             const tx = lpTransactions[index];
-            if (!tx || tx.type !== 'credit' || lpGetTxUnpaidAmount(tx) <= 0.005) return;
+            if (!tx || !['credit', 'loan'].includes(tx.type) || lpGetTxUnpaidAmount(tx) <= 0.005) return;
             const remaining = lpGetTxUnpaidAmount(tx);
+            if (tx.type === 'loan') {
+                lpOpenPartialModal(index);
+                lpSetPartialQuickRatio(1);
+                return;
+            }
             lpOpenConfirmModal(
                 'Confirm Full Payment?',
-                `Confirm you received ${lpFormatMoney(remaining)} from ${tx.name} to settle the remaining cash-out balance, including any charge.`,
+                `Confirm you received ${lpFormatMoney(remaining)} from ${tx.name} to settle the remaining ${tx.type === 'loan' ? 'cash-loan principal' : 'cash-out balance, including any charge'}.`,
                 () => {
                     if (!lpIsAdmin || lpTransactions[index]?.id !== tx.id || lpGetTxUnpaidAmount(tx) <= 0.005) return;
                     const previousStatus = tx.status;
@@ -4613,6 +5328,8 @@
             const alreadyPaid = lpGetTxPaidAmount(tx);
             const remaining = lpGetTxUnpaidAmount(tx);
 
+            document.getElementById('lpPartialLoanRepayToField').classList.toggle('hidden', tx.type !== 'loan');
+            document.getElementById('lpPartialLoanRepayTo').value = 'cash';
             if (remaining <= 0) {
                 showToast('This entry is already fully paid', 'info');
                 return;
@@ -4687,7 +5404,9 @@
             const newUnpaid = Math.max(0, totalDue - cumulativePaid);
             const willBeFullyPaid = newUnpaid <= 0.005;
 
-            document.getElementById('lpPreviewCashAdded').textContent = '+' + lpFormatMoney(tx.type === 'credit' ? validPay : 0);
+            const receiptDestination = tx.type === 'loan' ? document.getElementById('lpPartialLoanRepayTo').value : 'cash';
+            document.getElementById('lpPreviewFundsLabel').textContent = `Added to ${receiptDestination === 'wallet' ? 'Wallet' : 'Cash on Hand'}:`;
+            document.getElementById('lpPreviewCashAdded').textContent = '+' + lpFormatMoney(['credit','loan'].includes(tx.type) ? validPay : 0);
             document.getElementById('lpPreviewCumulativePaid').textContent = lpFormatMoney(cumulativePaid);
             document.getElementById('lpPreviewNewUnpaid').textContent = lpFormatMoney(newUnpaid);
 
@@ -4730,6 +5449,15 @@
             const newPaidAmount = Math.min(totalDue, Math.round((alreadyPaid + payNow) * 100) / 100);
             const isNowPaid = (totalDue - newPaidAmount) <= 0.005;
 
+            if (tx.type === 'loan') {
+                // Preserve legacy repayments that predate receipt tracking.
+                if (!Array.isArray(tx.repayments)) tx.repayments = [];
+                const recorded = tx.repayments.reduce((sum, r) => sum + Math.max(0, Number(r.amount) || 0), 0);
+                if (alreadyPaid - recorded > 0.005) {
+                    tx.repayments.unshift({ amount: Math.round((alreadyPaid - recorded) * 100) / 100, destination: tx.repaymentDestination === 'wallet' ? 'wallet' : 'cash', date: tx.date });
+                }
+                tx.repayments.push({ amount: Math.round(payNow * 100) / 100, destination: document.getElementById('lpPartialLoanRepayTo').value, date: getTodayISO() });
+            }
             tx.paidAmount = isNowPaid ? totalDue : newPaidAmount;
             tx.status = isNowPaid ? 'paid' : 'partial';
 
@@ -4744,16 +5472,14 @@
             lpRecordAudit(
                 'PARTIAL_PAYMENT',
                 `Applied partial payment of ${lpFormatMoney(payNow)} to "${tx.name}"`,
-                `Cumulative paid: ${lpFormatMoney(tx.paidAmount)} / ${lpFormatMoney(totalDue)} • Status: ${tx.status.toUpperCase()}`
+                `Received into: ${tx.type === 'loan' ? document.getElementById('lpPartialLoanRepayTo').value.toUpperCase() : 'CASH'} • Cumulative paid: ${lpFormatMoney(tx.paidAmount)} / ${lpFormatMoney(totalDue)} • Status: ${tx.status.toUpperCase()}`
             );
             lpClosePartialModal();
             lpRefreshAll();
-            showToast(tx.type === 'credit'
-                ? (isNowPaid
-                    ? `Full balance settled (+${lpFormatMoney(payNow)} added to Cash on Hand)`
-                    : `Partial payment of ${lpFormatMoney(payNow)} applied to Cash on Hand`)
-                : `Wallet transaction payment recorded (Cash on Hand unchanged)`
-            );
+            const receivedInto = tx.type === 'loan' && document.getElementById('lpPartialLoanRepayTo').value === 'wallet' ? 'Wallet' : 'Cash on Hand';
+            showToast(isNowPaid
+                ? `Fully paid: +${lpFormatMoney(payNow)} to ${receivedInto}`
+                : `Partial repayment: +${lpFormatMoney(payNow)} to ${receivedInto}`);
         }
 
         function lpHandleTxStatusChange() {
@@ -4761,9 +5487,24 @@
             const wrapper = document.getElementById('lpTxPartialPaidWrapper');
             const amt = parseFloat(document.getElementById('lpTxAmount').value) || 0;
             const chg = parseFloat(document.getElementById('lpTxCharge').value) || 0;
-            const totalDue = amt + chg;
+            const selectedAccount = loanRecords.find(r => r.id === document.getElementById('lpTxLoanLedgerLink').value);
+            const editIndex = Number(document.getElementById('lpEditIndex').value);
+            const editing = editIndex >= 0 ? lpTransactions[editIndex] : null;
+            let totalDue = amt + chg;
+            if (document.getElementById('lpTxType').value === 'loan') {
+                if (selectedAccount) totalDue = selectedAccount.computation.totalPayable;
+                else if (editing?.type === 'loan') totalDue = lpGetTxTotalDue(editing);
+                else {
+                    const term = Number(document.getElementById('lpNewLoanTerm').value) || 1;
+                    const interest = Number(document.getElementById('lpNewLoanInterest').value) || 0;
+                    const firstDue = document.getElementById('lpNewLoanFirstDue').value || getTodayISO();
+                    totalDue = computeLoanAmortization({loanAmount:amt, interestRate:interest, interestPeriod:'annual',
+                        loanTerm:term, termUnit:'months', repaymentStartDate:firstDue, repaymentMethod:'flat'}).totalPayable;
+                }
+            }
 
             document.getElementById('lpTxTotalDueHint').textContent = `Total Due: ${lpFormatMoney(totalDue)}`;
+            lpUpdateCashLoanPreview();
 
             if (status === 'partial') {
                 wrapper.classList.remove('hidden');
@@ -4838,13 +5579,42 @@
                 document.getElementById('lpTxPaidAmount').value = '';
                 lpChargeAutoMode = true;
                 lpUpdateChargeModeBadge();
-                lpHandleTxStatusChange();
+                lpHandleTxTypeChange(false);
+                document.getElementById('lpTxLoanSource').value = 'cash';
+                document.getElementById('lpTxLoanRepayTo').value = 'cash';
+                document.getElementById('lpTxType').disabled = false;
+                document.getElementById('lpTxStatus').disabled = false;
+                document.getElementById('lpTxName').readOnly = false;
+                document.getElementById('lpTxAmount').readOnly = false;
+                document.getElementById('lpTxLoanLedgerLink').disabled = false;
+                document.getElementById('lpTxLoanLedgerLink').value = '';
+                document.getElementById('lpNewLoanTerm').value = '1';
+                document.getElementById('lpNewLoanInterest').value = '0';
+                document.getElementById('lpNewLoanFirstDue').value = addPeriodToDate(getTodayISO(), 1, 'months');
                 title.textContent = 'Add New Transaction';
             }
 
             modal.classList.remove('opacity-0', 'pointer-events-none');
             container.classList.remove('scale-95', 'translate-y-4');
             container.classList.add('scale-100', 'translate-y-0');
+        }
+
+        // Quick-entry shortcut: choose Cash on Hand or Wallet in the loan form.
+        function lpOpenCashLoanModal(source = 'cash') {
+            if (!lpIsAdmin || !isAdminUnlocked) {
+                showToast('Unlock Admin & Settings before releasing loans', 'error');
+                return;
+            }
+            lpOpenModal();
+            document.getElementById('lpTxType').value = 'loan';
+            document.getElementById('lpTxLoanSource').value = source === 'wallet' ? 'wallet' : 'cash';
+            lpHandleTxTypeChange();
+            lpPopulateLoanLedgerOptions();
+            lpApplyLoanLedgerChoice();
+        }
+
+        function lpOpenWalletLoanModal() {
+            lpOpenCashLoanModal('wallet');
         }
 
         function lpCloseModal() {
@@ -4871,7 +5641,61 @@
             let status = document.getElementById('lpTxStatus').value;
             const remarks = document.getElementById('lpTxRemarks').value.trim();
 
-            const totalDue = amount + charge;
+            if (!date || !name || !Number.isFinite(amount) || amount <= 0) {
+                showToast('Enter a valid date, name, and amount greater than ₱0.00', 'error');
+                return;
+            }
+            const loanSource = type === 'loan' ? document.getElementById('lpTxLoanSource').value : 'cash';
+            if (type === 'loan') {
+                const available = lpFundsAvailableAtDate(loanSource, date, editIndex);
+                if (amount > available + 0.005) {
+                    showToast(`Not enough ${loanSource === 'wallet' ? 'Wallet' : 'Cash on Hand'} balance on ${date}. Available: ${lpFormatMoney(available)}.`, 'error');
+                    lpUpdateCashLoanPreview();
+                    return;
+                }
+            }
+            const actualCharge = type === 'loan' ? 0 : charge;
+            const previous = editIndex >= 0 ? lpTransactions[editIndex] : null;
+            let selectedAccount = null, accountToCreate = null;
+            if (type === 'loan') {
+                if (previous?.type === 'loan') {
+                    selectedAccount = loanRecords.find(r => r.id === previous.linkedLoanId);
+                    if (!selectedAccount) { showToast('Linked Loan Ledger record is missing. Restore a matching backup before editing.', 'error'); return; }
+                    if (name !== previous.name || Math.abs(amount - previous.amount) > 0.005) {
+                        showToast('Linked loan borrower and principal cannot be edited here. Only source, date and notes may change.', 'error'); return;
+                    }
+                } else {
+                    const chosen = document.getElementById('lpTxLoanLedgerLink').value;
+                    if (chosen) {
+                        selectedAccount = loanRecords.find(r => r.id === chosen);
+                        if (!selectedAccount || selectedAccount.status !== 'Approved / Active' || selectedAccount.currency !== 'PHP'
+                            || selectedAccount.linkedTransactionId || (selectedAccount.paidInstallments || []).length
+                            || name !== selectedAccount.borrowerName || Math.abs(amount - selectedAccount.computation.principal) > 0.005) {
+                            showToast('This Loan Ledger account is no longer eligible or the amount differs.', 'error'); return;
+                        }
+                    } else {
+                        const loanTerm = Number(document.getElementById('lpNewLoanTerm').value);
+                        const interest = Number(document.getElementById('lpNewLoanInterest').value);
+                        const firstDue = document.getElementById('lpNewLoanFirstDue').value;
+                        if (!Number.isInteger(loanTerm) || loanTerm < 1 || loanTerm > 360
+                            || !Number.isFinite(interest) || interest < 0 || interest > 200
+                            || !/^\d{4}-\d{2}-\d{2}$/.test(firstDue) || firstDue < date) {
+                            showToast('Enter a valid term, annual interest and a first due date on or after the loan release.', 'error'); return;
+                        }
+                        accountToCreate = { loanTerm, interestRate: interest, repaymentStartDate: firstDue,
+                            coMakerName: document.getElementById('lpNewLoanCoMaker').value.trim().slice(0, 120) || 'Not provided' };
+                    }
+                }
+            }
+            let loanInterest = selectedAccount ? Math.max(0, selectedAccount.computation.totalPayable - amount) : 0;
+            if (accountToCreate) {
+                const computation = computeLoanAmortization({loanAmount: amount, interestRate: accountToCreate.interestRate,
+                    interestPeriod: 'annual', loanTerm: accountToCreate.loanTerm, termUnit: 'months',
+                    repaymentStartDate: accountToCreate.repaymentStartDate, repaymentMethod: 'flat'});
+                loanInterest = Math.max(0, computation.totalPayable - amount);
+            }
+            loanInterest = Math.round(loanInterest * 100) / 100;
+            const totalDue = amount + actualCharge + (type === 'loan' ? loanInterest : 0);
             let paidAmount = 0;
 
             if (status === 'paid') {
@@ -4896,23 +5720,48 @@
                 ? lpTransactions[editIndex].id
                 : 'tx_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
 
-            const txData = { id: existingId, date, name, type, amount, charge, status, paidAmount, remarks };
+            const txData = { id: existingId, date, name, type, amount, charge: actualCharge, status, paidAmount, remarks };
+            if (type === 'loan') {
+                if (accountToCreate) {
+                    const draft = {id: existingId, date, name, amount, loanTerms: {
+                        applicationDate: date, repaymentStartDate: accountToCreate.repaymentStartDate,
+                        coMakerName: accountToCreate.coMakerName, loanTerm: accountToCreate.loanTerm,
+                        termUnit: 'months', interestRate: accountToCreate.interestRate,
+                        interestPeriod: 'annual', repaymentMethod: 'flat' }};
+                    selectedAccount = lpCreateLoanAccountForTx(draft);
+                    loanRecords.unshift(selectedAccount);
+                    recordAuditEvent('LOAN_AUTO_CREATED', `Created ${selectedAccount.id} from ledger release for ${name}.`);
+                }
+                txData.linkedLoanId = selectedAccount.id;
+                txData.loanInterest = loanInterest;
+                txData.loanTerms = lpSnapshotLoanTerms(selectedAccount);
+                txData.loanSource = loanSource;
+                const repaymentDestination = document.getElementById('lpTxLoanRepayTo').value;
+                txData.repaymentDestination = repaymentDestination;
+                // Keep individual repayment receipts on an edit that does not change paid value.
+                if (previous && previous.type === 'loan' && Array.isArray(previous.repayments)
+                    && Math.abs(lpGetTxPaidAmount(previous) - paidAmount) < 0.005) {
+                    txData.repayments = previous.repayments.map(r => ({...r}));
+                } else if (paidAmount > 0) {
+                    txData.repayments = [{ amount: paidAmount, destination: repaymentDestination, date: date }];
+                } else txData.repayments = [];
+            }
 
             if (editIndex >= 0) {
                 const prev = lpTransactions[editIndex];
                 lpTransactions[editIndex] = txData;
                 lpRecordAudit(
                     'UPDATE',
-                    `Edited transaction for "${name}" (${type === 'debit' ? 'Wallet Debit' : 'Cash-Out'})`,
-                    `Amount: ${lpFormatMoney(amount)}, Fee: ${lpFormatMoney(charge)}, Status: ${status.toUpperCase()} (was ${prev ? lpFormatMoney(prev.amount) : '—'})`
+                    `Edited transaction for "${name}" (${type === 'debit' ? 'Wallet Debit' : type === 'loan' ? 'Cash Loan Released' : 'Cash-Out'})`,
+                    `Amount: ${lpFormatMoney(amount)}, Source: ${type === 'loan' ? loanSource : 'n/a'}, Fee: ${lpFormatMoney(charge)}, Status: ${status.toUpperCase()} (was ${prev ? lpFormatMoney(prev.amount) : '—'})`
                 );
                 showToast('Transaction updated');
             } else {
                 lpTransactions.push(txData);
                 lpRecordAudit(
                     'CREATE',
-                    `Added ${type === 'debit' ? 'Wallet Debit' : 'Cash-Out'} for "${name}"`,
-                    `Amount: ${lpFormatMoney(amount)}, Fee: ${lpFormatMoney(charge)}, Status: ${status.toUpperCase()}`
+                    `Added ${type === 'debit' ? 'Wallet Debit' : type === 'loan' ? 'Cash Loan Released' : 'Cash-Out'} for "${name}"`,
+                    `Amount: ${lpFormatMoney(amount)}, Source: ${type === 'loan' ? loanSource : 'n/a'}, Fee: ${lpFormatMoney(charge)}, Status: ${status.toUpperCase()}`
                 );
                 showToast('Transaction added');
             }
@@ -4932,6 +5781,11 @@
             document.getElementById('lpTxDate').value = tx.date;
             document.getElementById('lpTxName').value = tx.name;
             document.getElementById('lpTxType').value = tx.type;
+            document.getElementById('lpTxType').disabled = tx.type === 'loan';
+            document.getElementById('lpTxStatus').disabled = tx.type === 'loan';
+            document.getElementById('lpTxLoanSource').value = lpGetLoanSource(tx);
+            const existingReceipts = lpGetLoanRepaymentAmounts(tx);
+            document.getElementById('lpTxLoanRepayTo').value = tx.repaymentDestination === 'wallet' || existingReceipts.wallet > existingReceipts.cash ? 'wallet' : 'cash';
             document.getElementById('lpTxAmount').value = tx.amount;
             document.getElementById('lpTxCharge').value = tx.charge || '0.00';
             document.getElementById('lpTxStatus').value = tx.status;
@@ -4944,7 +5798,9 @@
             lpChargeAutoMode = Math.abs(expectedAuto - actualChg) < 0.005;
             lpUpdateChargeModeBadge();
 
-            lpHandleTxStatusChange();
+            lpHandleTxTypeChange(false);
+            lpPopulateLoanLedgerOptions();
+            lpApplyLoanLedgerChoice();
             lpOpenModal(true);
         }
 
@@ -4958,11 +5814,12 @@
                 'Delete Transaction?',
                 `Remove "${target.name}" (${lpFormatMoney(target.amount)}) from the ledger?`,
                 () => {
+                    lpRemoveLoanLinkForDeletedTx(target);
                     lpTransactions.splice(index, 1);
                     lpSaveTransactions();
                     lpRecordAudit(
                         'DELETE',
-                        `Deleted ${target.type === 'debit' ? 'Wallet Debit' : 'Cash-Out'} entry for "${target.name}"`,
+                        `Deleted ${target.type === 'debit' ? 'Wallet Debit' : target.type === 'loan' ? 'Cash Loan Released' : 'Cash-Out'} entry for "${target.name}"`,
                         `Amount: ${lpFormatMoney(target.amount)}, Fee: ${lpFormatMoney(target.charge || 0)}, Date: ${target.date}`
                     );
                     lpRefreshAll();
@@ -4983,10 +5840,11 @@
             const date = String(raw.date || '').trim();
             if (!name || !date) return null;
 
-            const type = raw.type === 'credit' ? 'credit' : 'debit';
+            const type = ['credit', 'loan'].includes(raw.type) ? raw.type : 'debit';
             const amount = Math.max(0, parseFloat(raw.amount) || 0);
-            const charge = Math.max(0, parseFloat(raw.charge) || 0);
-            const totalDue = amount + charge;
+            const charge = type === 'loan' ? 0 : Math.max(0, parseFloat(raw.charge) || 0);
+            const loanInterest = type === 'loan' ? Math.max(0, Number(raw.loanInterest) || 0) : 0;
+            const totalDue = amount + charge + loanInterest;
 
             let status = ['paid', 'partial', 'unpaid'].includes(raw.status) ? raw.status : 'unpaid';
             let paidAmount = 0;
@@ -5015,6 +5873,28 @@
                 charge,
                 status,
                 paidAmount,
+                ...(type === 'loan' ? {
+                    linkedLoanId: typeof raw.linkedLoanId === 'string' ? raw.linkedLoanId : '',
+                    loanInterest,
+                    loanTerms: raw.loanTerms && typeof raw.loanTerms === 'object' && !Array.isArray(raw.loanTerms) ? {
+                        applicationDate: String(raw.loanTerms.applicationDate || date),
+                        repaymentStartDate: String(raw.loanTerms.repaymentStartDate || date),
+                        coMakerName: String(raw.loanTerms.coMakerName || 'Not provided'),
+                        loanTerm: Math.max(1, Math.min(360, Math.floor(Number(raw.loanTerms.loanTerm) || 1))),
+                        interestRate: Math.max(0, Math.min(200, Number(raw.loanTerms.interestRate) || 0)),
+                        interestPeriod: raw.loanTerms.interestPeriod === 'monthly' ? 'monthly' : 'annual',
+                        termUnit: raw.loanTerms.termUnit === 'weeks' ? 'weeks' : 'months',
+                        repaymentMethod: ['flat', 'diminishing', 'interest_only'].includes(raw.loanTerms.repaymentMethod) ? raw.loanTerms.repaymentMethod : 'flat',
+                        borrowerId: String(raw.loanTerms.borrowerId || 'N/A'),
+                        coMakerRelation: String(raw.loanTerms.coMakerRelation || 'N/A')
+                    } : null,
+                    loanSource: raw.loanSource === 'wallet' ? 'wallet' : 'cash',
+                    repaymentDestination: raw.repaymentDestination === 'wallet' ? 'wallet' : 'cash',
+                    repayments: Array.isArray(raw.repayments) ? raw.repayments
+                        .filter(r => r && Number.isFinite(Number(r.amount)) && Number(r.amount) > 0)
+                        .map(r => ({amount: Math.round(Number(r.amount) * 100) / 100, destination: r.destination === 'wallet' ? 'wallet' : 'cash', date: /^\d{4}-\d{2}-\d{2}$/.test(String(r.date || '')) ? r.date : date,
+                            ...(r.origin === 'loan-ledger' && Number.isInteger(Number(r.installment)) && Number(r.installment) > 0 ? {origin:'loan-ledger', installment:Number(r.installment)} : {})})) : []
+                } : {}),
                 remarks: raw.remarks ? String(raw.remarks).trim() : ''
             };
         }
@@ -5035,13 +5915,20 @@
                 showToast('No transactions to export', 'error');
                 return;
             }
-            const headers = ['Date', 'Name/Description', 'Wallet Debit', 'Cash-out (Credit)', 'Transaction Charge', 'Paid Amount', 'Unpaid (Credit + Charge)', 'Running Balance', 'Cash on Hand', 'Status', 'Remarks'];
+            const headers = ['Date', 'Name/Description', 'Wallet Debit', 'Cash-out (Credit)', 'Loan Released', 'Loan Source', 'Linked Loan Ledger ID', 'Loan Interest', 'Loan Total Due', 'Loan Repaid to Cash', 'Loan Repaid to Wallet', 'Transaction Charge', 'Paid Amount', 'Unpaid (Principal + Interest / Cash-out + Charge)', 'Running Balance', 'Cash on Hand', 'Status', 'Remarks'];
             const withBalances = lpComputeSortedWithBalances();
             const rows = withBalances.map(tx => [
                 tx.date,
                 `"${tx.name.replace(/"/g, '""')}"`,
                 tx.type === 'debit' ? tx.amount : 0,
                 tx.type === 'credit' ? tx.amount : 0,
+                tx.type === 'loan' ? tx.amount : 0,
+                tx.type === 'loan' ? lpGetLoanSource(tx) : '',
+                tx.type === 'loan' ? `"${String(tx.linkedLoanId || '').replace(/"/g, '""')}"` : '',
+                tx.type === 'loan' ? (Number(tx.loanInterest) || 0) : 0,
+                tx.type === 'loan' ? lpGetTxTotalDue(tx) : 0,
+                tx.type === 'loan' ? lpGetLoanRepaymentAmounts(tx).cash : 0,
+                tx.type === 'loan' ? lpGetLoanRepaymentAmounts(tx).wallet : 0,
                 tx.charge || 0,
                 tx.paidAmt.toFixed(2),
                 tx.unpaidAmt.toFixed(2),
@@ -5110,6 +5997,8 @@
             suiteSetNumber('suiteWalletBalance', lpFormatMoney(Math.round(last.runningBalance*100)/100));
             suiteSetNumber('suiteCashOnHand', lpFormatMoney(last.cashOnHand));
             suiteSetNumber('suiteUnpaidCashout', lpFormatMoney(unpaid));
+            const unpaidCashLoans = lpTransactions.filter(t => t.type === 'loan').reduce((sum,t) => sum + lpGetTxUnpaidAmount(t), 0);
+            suiteSetNumber('suiteUnpaidCashLoans', lpFormatMoney(unpaidCashLoans));
 
             const today = getTodayISO();
             const horizon = new Date(today + 'T12:00:00');
@@ -5184,7 +6073,11 @@
                 {title:'Admin & Settings', detail:'Shared access and approvals', icon:'settings', action:()=>openUnifiedSettings()},
                 {title:'Backup & Audit Trail', detail:'Unified data export and activity', icon:'shield-check', action:()=>openUnifiedSettings('audit')},
             ];
-            if (isAdminUnlocked) commands.push({title:'Add Wallet Transaction',detail:'New debit or cash-out',icon:'plus-circle',action:()=>{switchSuiteModule('ledger');lpOpenModal();}});
+            if (isAdminUnlocked) {
+                commands.push({title:'Add Wallet Transaction',detail:'New debit or cash-out',icon:'plus-circle',action:()=>{switchSuiteModule('ledger');lpOpenModal();}});
+                commands.push({title:'Release Cash Loan',detail:'Release loan using physical Cash on Hand',icon:'hand-coins',action:()=>{switchSuiteModule('ledger');lpOpenCashLoanModal();}});
+                commands.push({title:'Release Wallet Loan',detail:'Transfer loan directly from Wallet funds',icon:'wallet',action:()=>{switchSuiteModule('ledger');lpOpenWalletLoanModal();}});
+            }
             const matches = commands.filter(c => !q || (c.title + ' ' + c.detail).toLowerCase().includes(q));
             if (q) {
                 loanRecords.filter(r => `${r.borrowerName || ''} ${r.coMakerName || ''} ${r.id || ''}`.toLowerCase().includes(q)).slice(0,8).forEach(r => matches.push({
@@ -5192,7 +6085,7 @@
                     action:()=>{suiteNavigate('loan','ledger');openLoanModal(r.id);}
                 }));
                 lpTransactions.filter(t => `${t.name || ''} ${t.remarks || ''}`.toLowerCase().includes(q)).slice(0,8).forEach(t => matches.push({
-                    title:t.name || 'Wallet Entry',detail:`${t.date} · ${t.type === 'debit' ? 'Wallet Debit' : 'Cash-Out'} · ${lpFormatMoney(t.amount)}`,icon:'receipt',
+                    title:t.name || 'Wallet Entry',detail:`${t.date} · ${t.type === 'debit' ? 'Wallet Debit' : t.type === 'loan' ? (lpGetLoanSource(t) === 'wallet' ? 'Wallet Loan' : 'Cash Loan') : 'Cash-Out'} · ${lpFormatMoney(t.amount)}`,icon:'receipt',
                     action:()=>{suiteNavigate('ledger');document.getElementById('lpSearchInput').value=t.name || '';document.getElementById('lpMonthFilter').value='all';document.getElementById('lpDateRangeFilter').value='all';lpSetTypeFilter('all');lpSetFilter('all');document.getElementById('lpLedgerTableBody').scrollIntoView({behavior:'smooth',block:'center'});}
                 }));
             }
@@ -5250,7 +6143,7 @@
             if (!lpSortAscending) records.reverse();
             return records.filter(tx => {
                 const matchesSearch = (tx.name || '').toLowerCase().includes(searchQuery) || (tx.remarks || '').toLowerCase().includes(searchQuery);
-                const matchesStatus = lpCurrentFilter === 'all' || (lpCurrentFilter === 'outstanding' ? (tx.type === 'credit' && lpGetTxUnpaidAmount(tx) > 0.005) : tx.status === lpCurrentFilter);
+                const matchesStatus = lpCurrentFilter === 'all' || (lpCurrentFilter === 'outstanding' ? (['credit','loan'].includes(tx.type) && lpGetTxUnpaidAmount(tx) > 0.005) : tx.status === lpCurrentFilter);
                 const matchesType = lpCurrentTypeFilter === 'all' || tx.type === lpCurrentTypeFilter;
                 const matchesMonth = monthFilter === 'all' || (tx.date && tx.date.startsWith(monthFilter));
                 return matchesSearch && matchesStatus && matchesType && matchesMonth && lpDateRangeMatches(tx.date);
@@ -5266,8 +6159,8 @@
                 if (/^\s*[=+@\-\t\r]/.test(str) && !/^-?\d+(\.\d+)?$/.test(str.trim())) str = "'" + str;
                 return '"' + str.replace(/"/g,'""') + '"';
             };
-            const headers = ['Date','Name','Type','Amount','Charge','Total Due','Paid Amount','Unpaid Amount','Running Balance','Cash on Hand','Status','Remarks'];
-            const data = rows.map(t => [t.date,t.name,t.type,t.amount,t.charge,t.totalDue,t.paidAmt,t.unpaidAmt,Math.round(t.runningBalance*100)/100,t.cashOnHand,t.status,t.remarks]);
+            const headers = ['Date','Name','Type','Amount','Loan Source','Loan Repaid Cash','Loan Repaid Wallet','Charge','Total Due','Paid Amount','Unpaid Amount','Running Balance','Cash on Hand','Status','Remarks'];
+            const data = rows.map(t => [t.date,t.name,t.type,t.amount,t.type === 'loan' ? lpGetLoanSource(t) : '',t.type === 'loan' ? lpGetLoanRepaymentAmounts(t).cash : 0,t.type === 'loan' ? lpGetLoanRepaymentAmounts(t).wallet : 0,t.charge,t.totalDue,t.paidAmt,t.unpaidAmt,Math.round(t.runningBalance*100)/100,t.cashOnHand,t.status,t.remarks]);
             const csv = '\ufeff' + [headers,...data].map(r => r.map(safeCell).join(',')).join('\r\n');
             downloadCSVFile(csv, `LedgerPro_Filtered_${getTodayISO()}.csv`);
             showToast(`Exported ${rows.length} filtered transaction ${rows.length === 1 ? 'record' : 'records'}.`);
@@ -5359,6 +6252,7 @@
             // Initialize Module B (LedgerPro)
             lpInitDarkMode();
             lpMigrateTransactions();
+            lpReconcileLoanLinks(); // Auto-link pre-existing Cash/Wallet loans once; preserve IDs thereafter.
             localStorage.removeItem('ledger_is_admin');
             updateSharedAdminState();
             updateUnifiedLastBackupLabel();
