@@ -206,6 +206,167 @@
             .suite-reveal{opacity:1;transform:none}
         }
         @media print{#suiteOperations,#suiteCommandOverlay,#suiteCommandBtn{display:none !important}}
+    
+/* Scrollable responsive dialogs at normal browser zoom */
+html {overflow-y:auto} body {overflow-x:hidden}
+:is(#suiteCommandOverlay,#loanDetailModal,#loanInstallmentPaymentModal,#loanEditModal,#rejectReasonModal,#deleteConfirmModal,#lpTransactionModal,#lpPartialPaymentModal,#lpConfirmModal) {overflow-y:auto;overscroll-behavior-y:contain;align-items:safe center;padding:1rem;max-height:100dvh}
+:is(#suiteCommandOverlay,#loanDetailModal,#loanInstallmentPaymentModal,#loanEditModal,#rejectReasonModal,#deleteConfirmModal,#lpTransactionModal,#lpPartialPaymentModal,#lpConfirmModal)>div {flex-shrink:0;max-height:calc(100dvh - 2rem)}
+:is(#suiteCommandOverlay,#loanInstallmentPaymentModal,#loanEditModal,#rejectReasonModal,#deleteConfirmModal,#lpTransactionModal,#lpPartialPaymentModal,#lpConfirmModal)>div {overflow-y:auto;overscroll-behavior-y:contain}
+#loanDetailModal>div {min-height:0} #suiteCommandOverlay {padding-top:1rem;padding-bottom:1rem}
+@media(max-height:650px){:is(#suiteCommandOverlay,#loanDetailModal,#loanInstallmentPaymentModal,#loanEditModal,#rejectReasonModal,#deleteConfirmModal,#lpTransactionModal,#lpPartialPaymentModal,#lpConfirmModal){align-items:flex-start}}
+@media print{#loanDetailModal,#loanDetailModal>div{max-height:none!important;overflow:visible!important}}
+
+        /* Admin authentication: genuine viewport overlay, never page-flow content. */
+        #adminAuthPopup {
+            position: fixed !important;
+            inset: 0 !important;
+            width: 100vw !important;
+            height: 100dvh !important;
+            min-height: 100vh;
+            z-index: 2147483000 !important;
+            background: rgba(2, 6, 23, 0.70) !important;
+            backdrop-filter: blur(5px);
+            padding: 16px;
+            overflow: auto !important;
+            overscroll-behavior: contain;
+            align-items: center !important;
+            justify-content: center !important;
+            box-sizing: border-box;
+        }
+        #adminAuthPopup.hidden { display: none !important; }
+        #adminAuthPopup:not(.hidden) { display: flex !important; }
+        #adminAuthPopup .admin-auth-dialog {
+            width: min(100%, 440px);
+            max-height: calc(100dvh - 32px);
+            margin: auto;
+            overflow-y: auto;
+            position: relative;
+            flex-shrink: 0;
+            border-radius: 18px;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+        }
+        #adminAuthPopup #adminLockScreen {
+            display: block !important;
+            position: relative !important;
+            width: 100%;
+            max-width: none;
+            margin: 0 !important;
+            animation: modalSpringIn 0.26s ease both;
+        }
+        #adminAuthPopup .admin-auth-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 5;
+            width: 32px;
+            height: 32px;
+            display: grid;
+            place-items: center;
+            border-radius: 9px;
+            color: white;
+            font-size: 25px;
+            line-height: 1;
+            background: rgba(255,255,255,0.14);
+            cursor: pointer;
+        }
+        #adminAuthPopup .admin-auth-close:hover { background: rgba(255,255,255,0.28); }
+        body.admin-auth-open { overflow: hidden !important; }
+        @media (max-height: 580px) {
+            #adminAuthPopup { align-items: flex-start !important; }
+        }
+        @media print { #adminAuthPopup { display: none !important; } }
+
+
+        /* Limit Transaction Ledger to ten displayed rows; keep every record scrollable. */
+        #lpLedgerScrollRegion { overscroll-behavior: contain; scrollbar-gutter: stable; }
+        #lpLedgerScrollRegion thead { position: sticky; top: 0; z-index: 20; }
+        #lpLedgerScrollRegion tfoot { position: sticky; bottom: 0; z-index: 15; }
+        @media print {
+            #lpLedgerScrollRegion { max-height: none !important; overflow: visible !important; }
+            #lpLedgerScrollRegion thead, #lpLedgerScrollRegion tfoot { position: static !important; }
+        }
+
+        /* Shared header Admin Mode: animated green unlocked, hover red lock action. */
+        @keyframes adminGreenPulse {
+            0%,100% { box-shadow: 0 0 0 0 rgba(16,185,129,.28), 0 3px 12px rgba(16,185,129,.12); }
+            50% { box-shadow: 0 0 0 6px rgba(16,185,129,0), 0 4px 16px rgba(16,185,129,.22); }
+        }
+        @keyframes adminRedPulse {
+            0%,100% { box-shadow: 0 0 0 0 rgba(244,63,94,.36), 0 4px 12px rgba(225,29,72,.16); }
+            50% { box-shadow: 0 0 0 7px rgba(244,63,94,0), 0 5px 18px rgba(225,29,72,.30); }
+        }
+        .admin-mode-toggle { position:relative; white-space:nowrap; transition: background-color .2s,color .2s,border-color .2s,transform .2s; }
+        .admin-mode-toggle:active { transform:scale(.97); }
+        .admin-toggle-locked { background:#f1f5f9; color:#334155; border-color:#cbd5e1; }
+        .admin-toggle-locked:hover { background:#e2e8f0; }
+        .dark .admin-toggle-locked { background:#1e293b; color:#e2e8f0; border-color:#475569; }
+        .admin-toggle-unlocked { background:#dcfce7; color:#166534; border-color:#4ade80; animation:adminGreenPulse 2.2s ease-in-out infinite; }
+        .dark .admin-toggle-unlocked { background:#064e3b; color:#d1fae5; border-color:#10b981; }
+        .admin-toggle-unlocked:hover,.admin-toggle-unlocked:focus-visible { background:#ffe4e6; color:#be123c; border-color:#fb7185; animation:adminRedPulse 1.1s ease-in-out infinite; }
+        .dark .admin-toggle-unlocked:hover,.dark .admin-toggle-unlocked:focus-visible { background:#881337; color:#ffe4e6; border-color:#fb7185; }
+        .admin-mode-hover-label { display:none; }
+        .admin-toggle-unlocked:hover .admin-mode-normal-label,.admin-toggle-unlocked:focus-visible .admin-mode-normal-label { display:none; }
+        .admin-toggle-unlocked:hover .admin-mode-hover-label,.admin-toggle-unlocked:focus-visible .admin-mode-hover-label { display:inline; }
+        .admin-mode-status-dot { width:7px;height:7px;border-radius:50%;background:#94a3b8;flex-shrink:0; }
+        .admin-toggle-unlocked .admin-mode-status-dot { background:#10b981; }
+        .admin-toggle-unlocked:hover .admin-mode-status-dot,.admin-toggle-unlocked:focus-visible .admin-mode-status-dot { background:#f43f5e; }
+        @media (prefers-reduced-motion:reduce) { .admin-mode-toggle { animation:none !important; } }
+
+
+        /* Pop-ups have the entire viewport: keep the fixed header's reserved
+           space, but hide the header itself until every dialog is closed. */
+        body.suite-popup-visible > header {
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+        @media print {
+            body.suite-popup-visible > header { visibility: visible !important; }
+        }
+
+        /* Instant CSS detection of open dialogs. The wallet modals animate opacity,
+           so opacity must NOT be used as the visibility/open test. */
+        body:has(#lpTransactionModal:not(.pointer-events-none)) > header,
+        body:has(#lpPartialPaymentModal:not(.pointer-events-none)) > header,
+        body:has(#lpConfirmModal:not(.pointer-events-none)) > header,
+        body:has(#adminAuthPopup:not(.hidden)) > header,
+        body:has(#lockBackupChoiceModal:not(.hidden)) > header,
+        body:has(#suiteCommandOverlay:not(.hidden)) > header,
+        body:has(#loanDetailModal:not(.hidden)) > header,
+        body:has(#loanInstallmentPaymentModal:not(.hidden)) > header,
+        body:has(#loanEditModal:not(.hidden)) > header,
+        body:has(#rejectReasonModal:not(.hidden)) > header,
+        body:has(#deleteConfirmModal:not(.hidden)) > header {
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+        /* All financial dialogs stack above the fixed navigation when displayed. */
+        #lpTransactionModal, #lpPartialPaymentModal, #lpConfirmModal,
+        #loanDetailModal, #loanInstallmentPaymentModal, #loanEditModal,
+        #rejectReasonModal, #deleteConfirmModal, #suiteCommandOverlay {
+            z-index: 100 !important;
+        }
+        @media print {
+            body:has(#loanDetailModal:not(.hidden)) > header { visibility: visible !important; }
+        }
+
+        /* Freeze only the marked top header area; the Operations Overview must scroll normally. */
+        :root { --suiteHeaderHeight: 0px; }
+        body > header {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 60 !important;
+        }
+        #suiteOperations {
+            position: relative;
+            margin-top: var(--suiteHeaderHeight) !important;
+        }
+        @media print {
+            body > header { position: static !important; }
+            #suiteOperations { margin-top: 0 !important; }
+        }
     </style>
 </head>
 <body class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased flex flex-col ambient-bg selection:bg-brand-100 selection:text-brand-900 transition-colors duration-300">
@@ -213,6 +374,7 @@
     <!-- ========================================================================= -->
     <!-- UNIFIED TOP SUITE HEADER & MODULE SWITCHER                                -->
     <!-- ========================================================================= -->
+    <!-- The top navigation stays sticky; the overview scrolls with the page. -->
     <header class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/90 dark:border-slate-800 sticky top-0 z-30 no-print transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-wrap items-center justify-between min-h-[4.25rem] py-2.5 gap-3">
@@ -264,6 +426,14 @@
                         <span id="adminPendingBadge" class="px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] tabular-nums">0</span>
                     </button>
 
+                    <!-- One Admin Mode button: unlock with password, hover to lock when active. -->
+                    <button id="adminModeToggleBtn" type="button" onclick="toggleHeaderAdminMode()" class="admin-mode-toggle admin-toggle-locked inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs sm:text-sm font-bold cursor-pointer" aria-label="Admin Mode: unlock administrator access" title="Unlock administrator access">
+                        <i id="adminModeToggleIcon" data-lucide="shield" class="w-4 h-4 shrink-0"></i>
+                        <span class="admin-mode-normal-label">Admin Mode</span>
+                        <span class="admin-mode-hover-label" aria-hidden="true">Lock All Modules</span>
+                        <span id="adminModeStatusDot" class="admin-mode-status-dot" aria-hidden="true"></span>
+                    </button>
+
                     <!-- Global Theme Toggle -->
                     <button onclick="lpToggleDarkMode()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center border border-slate-200/80 dark:border-slate-700 transition-all active:scale-95 cursor-pointer" title="Toggle Dark Mode (Cash-Flow Ledger)">
                         <i id="lpThemeIconGlobal" class="fa-solid fa-moon text-xs"></i>
@@ -272,9 +442,6 @@
             </div>
         </div>
     </header>
-
-    <!-- Toast Container -->
-    <div id="toastContainer" class="fixed bottom-5 right-5 z-[70] flex flex-col gap-2.5 pointer-events-none max-w-sm w-full px-4 sm:px-0"></div>
 
     <!-- Live cross-workspace operations board. Uses stored loan and wallet data; does not mutate balances. -->
     <section id="suiteOperations" class="suite-operations no-print" aria-label="Unified operations overview">
@@ -295,8 +462,8 @@
                 <div class="grid grid-cols-2 lg:grid-cols-6 gap-2.5 sm:gap-3">
                     <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Pending Loan Reviews</p><p id="suitePendingCount" class="suite-stat-value text-2xl font-extrabold mt-1 text-amber-600">0</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Awaiting approval</p></div>
                     <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Active Loans</p><p id="suiteActiveCount" class="suite-stat-value text-2xl font-extrabold mt-1 text-indigo-600 dark:text-indigo-300">0</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Approved accounts</p></div>
-                    <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Wallet Balance</p><p id="suiteWalletBalance" class="suite-stat-value text-xl font-extrabold mt-1 text-indigo-700 dark:text-indigo-300">₱0.00</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Wallet in − Cash-out − wallet-funded loans + wallet repayments · No fees</p></div>
-                    <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Cash on Hand</p><p id="suiteCashOnHand" class="suite-stat-value text-xl font-extrabold mt-1 text-teal-700 dark:text-teal-300">₱0.00</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Cash collections + cash loan repayments − cash-funded loans</p></div>
+                    <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Wallet Balance</p><p id="suiteWalletBalance" class="suite-stat-value text-xl font-extrabold mt-1 text-indigo-700 dark:text-indigo-300">₱0.00</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Wallet in − Cash-out − wallet loans + wallet receipts</p></div>
+                    <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Cash on Hand</p><p id="suiteCashOnHand" class="suite-stat-value text-xl font-extrabold mt-1 text-teal-700 dark:text-teal-300">₱0.00</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Cash-out receipts paid in Cash + cash loan repayments − cash-funded loans</p></div>
                     <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Unpaid Cash-Outs</p><p id="suiteUnpaidCashout" class="suite-stat-value text-xl font-extrabold mt-1 text-rose-600 dark:text-rose-400">₱0.00</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Remaining amount + charges due</p></div>
                     <div class="suite-stat p-3.5 suite-reveal col-span-2 lg:col-span-1"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Cash Loans Outstanding</p><p id="suiteUnpaidCashLoans" class="suite-stat-value text-xl font-extrabold mt-1 text-amber-600 dark:text-amber-400">₱0.00</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Cash or wallet loans still owed</p></div>
                 </div>
@@ -307,6 +474,10 @@
             </div>
         </div>
     </section>
+
+
+    <!-- Toast notifications live outside the pinned pane to avoid clipping. -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-[70] flex flex-col gap-2.5 pointer-events-none max-w-sm w-full px-4 sm:px-0"></div>
 
     <!-- Searchable, keyboard-navigable command palette; read-only search available in Viewer Mode. -->
     <div id="suiteCommandOverlay" class="fixed inset-0 hidden bg-slate-950/60 backdrop-blur-sm px-4 pt-[9vh] sm:pt-[13vh]" role="dialog" aria-modal="true" aria-labelledby="suiteCommandTitle" onclick="if(event.target===this)closeCommandCenter()">
@@ -954,6 +1125,20 @@
                             <i data-lucide="unlock" class="w-4 h-4"></i> Unlock Admin Console
                         </button>
                     </form>
+                    <div class="px-6 pb-5 -mt-2 text-center">
+                        <button type="button" id="forgotAdminPasswordBtn" onclick="toggleAdminRecovery()" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 underline underline-offset-2">Forgot Password?</button>
+                        <form id="adminRecoveryForm" onsubmit="resetAdminPasswordWithRecovery(event)" class="hidden mt-4 space-y-3 text-left rounded-xl border border-indigo-200 bg-indigo-50/70 p-4">
+                            <p class="text-xs font-semibold text-indigo-900">Reset administrator password</p>
+                            <p class="text-xs text-slate-600">Enter your recovery password and choose a new administrator password.</p>
+                            <label class="block text-xs font-semibold text-slate-700" for="adminRecoveryCode">Recovery password</label>
+                            <input id="adminRecoveryCode" type="password" autocomplete="off" required class="ui-input w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900" />
+                            <label class="block text-xs font-semibold text-slate-700" for="adminRecoveryNewPassword">New administrator password</label>
+                            <input id="adminRecoveryNewPassword" type="password" autocomplete="new-password" minlength="10" maxlength="128" required class="ui-input w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900" />
+                            <label class="block text-xs font-semibold text-slate-700" for="adminRecoveryConfirmPassword">Confirm new password</label>
+                            <input id="adminRecoveryConfirmPassword" type="password" autocomplete="new-password" minlength="10" maxlength="128" required class="ui-input w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900" />
+                            <button type="submit" class="w-full rounded-lg bg-indigo-700 hover:bg-indigo-800 px-3 py-2.5 text-sm font-semibold text-white">Reset Password</button>
+                        </form>
+                    </div>
                 </div>
 
                 <div id="adminUnlockedWorkspace" class="hidden space-y-6 animate-view">
@@ -1113,6 +1298,29 @@
                             </div>
                             <div class="px-6 py-4 bg-slate-50/80 border-t border-slate-200 flex items-center justify-end gap-3">
                                 <button type="submit" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold shadow-sm transition cursor-pointer">Save Policy Settings</button>
+                            </div>
+                        </form>
+                        <form id="adminChangePasswordForm" onsubmit="changeAdministratorPassword(event)" class="mt-5 bg-white rounded-2xl border border-slate-200/90 shadow-soft overflow-hidden">
+                            <div class="px-6 py-4 bg-slate-50/80 border-b border-slate-200">
+                                <h3 class="text-sm font-bold text-slate-900">Change Administrator Password</h3>
+                                <p class="text-xs text-slate-500 mt-1">Changes the Admin Mode unlock password on this browser. Your recovery password remains unchanged.</p>
+                            </div>
+                            <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="md:col-span-2">
+                                    <label for="adminCurrentPassword" class="block text-xs font-semibold text-slate-700 mb-1.5">Current Password</label>
+                                    <input id="adminCurrentPassword" type="password" autocomplete="current-password" required class="ui-input w-full rounded-xl border border-slate-300 px-3 py-2 text-sm text-slate-900" />
+                                </div>
+                                <div>
+                                    <label for="adminNewPassword" class="block text-xs font-semibold text-slate-700 mb-1.5">New Password</label>
+                                    <input id="adminNewPassword" type="password" autocomplete="new-password" minlength="10" maxlength="128" required class="ui-input w-full rounded-xl border border-slate-300 px-3 py-2 text-sm text-slate-900" />
+                                </div>
+                                <div>
+                                    <label for="adminConfirmPassword" class="block text-xs font-semibold text-slate-700 mb-1.5">Confirm New Password</label>
+                                    <input id="adminConfirmPassword" type="password" autocomplete="new-password" minlength="10" maxlength="128" required class="ui-input w-full rounded-xl border border-slate-300 px-3 py-2 text-sm text-slate-900" />
+                                </div>
+                            </div>
+                            <div class="px-6 py-4 border-t border-slate-200 bg-slate-50/80 flex justify-end">
+                                <button type="submit" class="rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 text-xs font-semibold">Update Administrator Password</button>
                             </div>
                         </form>
                     </div>
@@ -1511,7 +1719,7 @@
                     </div>
                     <div class="flex flex-wrap items-center justify-end gap-3">
                         <span class="text-[11px] text-slate-400 hidden md:block">
-                            Cash = cash collected + cash loan repayments − cash-funded loans · Wallet = wallet in − cash-out − wallet loans + wallet repayments
+                            Cash = cash-received payments + cash loan repayments − cash loans · Wallet = wallet in − cash-out − wallet loans + wallet-received payments
                         </span>
                         <!-- Admin-only bulk clear; keeps loan records and audit history untouched. -->
                         <button type="button" id="lpClearLedgerEntryBtn" onclick="lpPromptClearAllTransactions()" class="hidden text-[11px] font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 hover:underline items-center gap-1 cursor-pointer" title="Clear all Cash-Flow & Wallet Ledger entries" aria-label="Clear all Cash-Flow and Wallet Ledger entries">
@@ -1524,9 +1732,10 @@
                     </div>
                 </div>
 
-                <div class="overflow-x-auto">
+                <!-- Scroll through all transactions after the first 10 visible entries. -->
+                <div id="lpLedgerScrollRegion" class="overflow-x-auto overflow-y-auto" role="region" aria-label="Scrollable transaction ledger" tabindex="0">
                     <table class="w-full text-left border-collapse">
-                        <thead>
+                        <thead class="sticky top-0 z-20">
                             <tr class="bg-slate-50/80 dark:bg-slate-800/50 border-b border-slate-200/80 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-[11px] font-bold uppercase tracking-wider">
                                 <th class="py-3.5 px-4">Date</th>
                                 <th class="py-3.5 px-4">Name / Description</th>
@@ -1876,13 +2085,20 @@
                     <p class="mt-1 text-[11px]">Choose Unpaid when releasing a new loan. Record repayments through Partial or Paid, selecting Cash or Wallet each time.</p>
                 </div>
 
+                <div id="lpTxCreditPaymentDestinationField" class="hidden rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/70 dark:bg-indigo-950/30 p-3.5">
+                    <label for="lpTxCreditPaymentDestination" class="block text-[11px] font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-1.5">Payment Received In (Non-Loan)</label>
+                    <select id="lpTxCreditPaymentDestination" class="w-full rounded-xl px-3 py-2.5 border border-indigo-200 dark:border-indigo-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white">
+                        <option value="cash">Cash on Hand</option><option value="wallet">Wallet</option>
+                    </select>
+                    <p class="mt-1.5 text-[11px] text-slate-500 dark:text-slate-400">Applies to paid or partially paid Cash-Out transactions. Unpaid entries do not add funds.</p>
+                </div>
                 <div id="lpTxPartialPaidWrapper" class="hidden p-3.5 rounded-2xl bg-sky-50/70 dark:bg-sky-950/40 border border-sky-200/80 dark:border-sky-800/60 space-y-2">
                     <div class="flex items-center justify-between">
                         <label for="lpTxPaidAmount" class="block text-[11px] font-bold uppercase tracking-wider text-sky-700 dark:text-sky-400">Partial Amount Paid (₱)</label>
                         <span id="lpTxTotalDueHint" class="text-[11px] font-mono font-semibold text-slate-500 dark:text-slate-400">Total Due: ₱0.00</span>
                     </div>
                     <input type="number" step="0.01" min="0" id="lpTxPaidAmount" placeholder="0.00" class="w-full px-3.5 py-2 bg-white dark:bg-slate-800 border border-sky-200 dark:border-sky-700 rounded-xl text-sm font-mono text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all">
-                    <p class="text-[11px] text-slate-500 dark:text-slate-400">Cash-out collections go to Cash on Hand. Loan repayments can go to Cash on Hand or Wallet.</p>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">Choose Cash on Hand or Wallet above for cash-out collections. Loan repayments have their own receipt selection.</p>
                 </div>
 
                 <div>
@@ -1946,13 +2162,13 @@
                     <p id="lpPartialValidationError" class="hidden text-[11px] font-medium text-rose-600 dark:text-rose-400 mt-1"></p>
                 </div>
 
-                <div id="lpPartialLoanRepayToField" class="hidden">
+                <div id="lpPartialLoanRepayToField">
                     <label for="lpPartialLoanRepayTo" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Receive This Repayment In</label>
                     <select id="lpPartialLoanRepayTo" onchange="lpUpdatePartialPreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-900 dark:text-white">
                         <option value="cash">Cash on Hand</option>
                         <option value="wallet">Wallet</option>
                     </select>
-                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Select where the repayment was actually received, regardless of how the original loan was released.</p>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Choose where the customer actually paid. Each payment is recorded separately, including partial payments.</p>
                 </div>
 
                 <div class="p-3.5 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-200/70 dark:border-indigo-800/60 space-y-2 text-xs">
@@ -2037,14 +2253,74 @@
         }
 
 
-        // Central administrator entry point for the entire financial suite.
+        // Unlock in a compact dialog, without navigating away from the current module.
+        function ensureAdminAuthPopup() {
+            let popup = document.getElementById('adminAuthPopup');
+            if (popup) { if (popup.parentElement !== document.body) document.body.appendChild(popup); return popup; }
+            popup = document.createElement('div');
+            popup.id = 'adminAuthPopup';
+            popup.className = 'hidden';
+            popup.setAttribute('role', 'dialog');
+            popup.setAttribute('aria-modal', 'true');
+            popup.setAttribute('aria-label', 'Administrator authentication');
+            popup.innerHTML = '<div class="admin-auth-dialog"></div>';
+            popup.addEventListener('click', event => { if (event.target === popup || event.target.classList.contains('admin-auth-dialog')) closeAdminAuthPopup(); });
+            document.body.appendChild(popup);
+            const card = document.getElementById('adminLockScreen');
+            card.classList.remove('hidden');
+            card.classList.add('relative');
+            const close = document.createElement('button');
+            close.type = 'button';
+            close.className = 'admin-auth-close no-print';
+            close.setAttribute('aria-label', 'Close authentication popup');
+            close.innerHTML = '&times;';
+            close.addEventListener('click', closeAdminAuthPopup);
+            card.prepend(close);
+            popup.firstElementChild.appendChild(card);
+            return popup;
+        }
+        let adminAuthPreviousFocus = null;
+        function openAdminAuthPopup() {
+            const popup = ensureAdminAuthPopup();
+            adminAuthPreviousFocus = document.activeElement;
+            popup.classList.remove('hidden');
+            document.body.classList.add('admin-auth-open');
+            document.getElementById('adminPinInput').value = '';
+            document.getElementById('adminRecoveryForm')?.reset();
+            toggleAdminRecovery(true);
+            document.getElementById('adminPinInput').focus();
+        }
+        function closeAdminAuthPopup() {
+            const popup = document.getElementById('adminAuthPopup');
+            if (!popup) return;
+            popup.classList.add('hidden');
+            document.body.classList.remove('admin-auth-open');
+            document.getElementById('adminPinInput').value = '';
+            if (adminAuthPreviousFocus?.isConnected) adminAuthPreviousFocus.focus({ preventScroll: true });
+        }
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && document.getElementById('adminAuthPopup')?.classList.contains('hidden') === false) closeAdminAuthPopup();
+        });
         function openUnifiedSettings(subTab = 'queue') {
-            pendingSharedAdminTab = subTab === 'audit' ? 'audit' : 'queue';
+            pendingSharedAdminTab = ['queue','analytics','policies','audit'].includes(subTab) ? subTab : 'queue';
+            if (!isAdminUnlocked) {
+                showToast('Unlock Admin Mode using the Admin Mode button first.', 'info');
+                return;
+            }
+            closeAdminAuthPopup();
             switchSuiteModule('loan');
             switchView('admin');
-            if (isAdminUnlocked) switchAdminSubTab(pendingSharedAdminTab);
+            switchAdminSubTab(pendingSharedAdminTab);
             document.getElementById('sharedAdminSettingsBtn')?.setAttribute('aria-current', 'page');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleHeaderAdminMode() {
+            if (isAdminUnlocked) {
+                lockAdminPortal(); // Preserve the existing Export Backup / Later dialog.
+            } else {
+                openAdminAuthPopup(); // Unlock only: stay on the current workspace.
+            }
         }
 
         function updateSharedAdminState() {
@@ -2060,6 +2336,22 @@
             }
             const adminBtn = document.getElementById('sharedAdminSettingsBtn');
             if (adminBtn) adminBtn.title = isAdminUnlocked ? 'Unified Admin & Settings — Unlocked' : 'Unified Admin & Settings — Password Required';
+            const modeBtn = document.getElementById('adminModeToggleBtn');
+            if (modeBtn) {
+                modeBtn.classList.toggle('admin-toggle-unlocked', isAdminUnlocked);
+                modeBtn.classList.toggle('admin-toggle-locked', !isAdminUnlocked);
+                modeBtn.title = isAdminUnlocked
+                    ? 'Hover to lock all modules (with backup choice)'
+                    : 'Unlock administrator access';
+                modeBtn.setAttribute('aria-label', isAdminUnlocked
+                    ? 'Lock All Modules (choose whether to export a backup)'
+                    : 'Admin Mode: unlock administrator access');
+                const icon = document.getElementById('adminModeToggleIcon');
+                if (icon) {
+                    icon.setAttribute('data-lucide', isAdminUnlocked ? 'shield-check' : 'shield');
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
+                }
+            }
         }
 
         function showToast(message, type = 'success') {
@@ -2708,26 +3000,45 @@
             label.textContent = last ? `Last exported: ${new Date(last).toLocaleString()}` : 'No unified backup exported on this browser yet.';
         }
 
-        function exportUnifiedBackupJSON() {
-            if (!isAdminUnlocked) { showToast('Administrator access required.', 'error'); return; }
-            const now = new Date().toISOString();
-            recordAuditEvent('BACKUP_EXPORT', 'Exported complete unified financial suite backup.');
-            const safePolicies = { ...adminPolicies };
-            delete safePolicies.adminPin;
-            const payload = {
-                app: 'OSS-Credit-LedgerPro-Unified', schemaVersion: 3, exportedAt: now,
-                loan: { records: loanRecords, policies: safePolicies, auditLogs },
-                wallet: { transactions: lpTransactions, auditLogs: lpAuditLogs }
-            };
-            const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `OSS_LedgerPro_Full_Backup_${getTodayISO()}.json`;
-            document.body.appendChild(link); link.click(); link.remove(); URL.revokeObjectURL(url);
-            localStorage.setItem('unified_suite_last_backup', now);
-            renderAuditLogs();
-            updateUnifiedLastBackupLabel();
-            showToast('Full-suite loan and wallet backup exported.');
+        function exportUnifiedBackupJSON(options = {}) {
+            if (!isAdminUnlocked) { showToast('Administrator access required.', 'error'); return false; }
+            try {
+                const now = new Date().toISOString();
+                // Log the export before preparing the payload so the audit event is included.
+                recordAuditEvent('BACKUP_EXPORT', options.onLock
+                    ? 'Full-suite backup requested before locking all modules.'
+                    : 'Exported complete unified financial suite backup.');
+                const safePolicies = { ...adminPolicies };
+                delete safePolicies.adminPin;
+                const payload = {
+                    app: 'OSS-Credit-LedgerPro-Unified', schemaVersion: 3, exportedAt: now,
+                    loan: { records: loanRecords, policies: safePolicies, auditLogs },
+                    wallet: { transactions: lpTransactions, auditLogs: lpAuditLogs }
+                };
+                const contents = JSON.stringify(payload, null, 2);
+                const url = URL.createObjectURL(new Blob([contents], { type: 'application/json' }));
+                const link = document.createElement('a');
+                link.href = url;
+                // Date and time protect previous backups from being overwritten.
+                const suffix = now.replace(/[:.]/g, '-');
+                link.download = `OSS_LedgerPro_Full_Backup_${suffix}.json`;
+                document.body.appendChild(link);
+                try { link.click(); }
+                finally {
+                    link.remove();
+                    // Some browsers need the URL to stay valid while the download begins.
+                    setTimeout(() => URL.revokeObjectURL(url), 60000);
+                }
+                localStorage.setItem('unified_suite_last_backup', now);
+                renderAuditLogs();
+                updateUnifiedLastBackupLabel();
+                if (!options.onLock) showToast('Full-suite backup download started.');
+                return true;
+            } catch (error) {
+                console.error('Full-suite backup could not be prepared:', error);
+                showToast('Backup failed; the system will remain unlocked. Check your browser download permissions.', 'error');
+                return false;
+            }
         }
 
         function exportFullBackupJSON() { exportUnifiedBackupJSON(); }
@@ -3509,20 +3820,25 @@
             );
         }
 
-        function handleAdminUnlock(event) {
+        async function handleAdminUnlock(event) {
             event.preventDefault();
             const input = document.getElementById('adminPinInput');
-            if (input.value === SHARED_ADMIN_PASSWORD) {
+            let accepted = false;
+            try { accepted = await verifyAdministratorPassword(input.value); }
+            catch (error) { showToast('Password verification unavailable in this browser.', 'error'); return; }
+            if (accepted) {
                 isAdminUnlocked = true;
                 input.value = '';
-                document.getElementById('adminLockScreen').classList.add('hidden');
+                closeAdminAuthPopup();
                 document.getElementById('adminUnlockedWorkspace').classList.remove('hidden');
                 recordAuditEvent('ADMIN_LOGIN', 'Administrator unlocked the unified suite.');
                 updateSharedAdminState();
                 renderAdminPortal();
                 switchAdminSubTab(pendingSharedAdminTab);
+                // Unlock access only. Keep the current module, sub-view, and scroll position.
+                // Admin & Settings can be opened separately with its header button.
                 if (activeModalLoanId) openLoanModal(activeModalLoanId);
-                showToast('Unified administrator access unlocked for both modules.');
+                showToast('Administrator access unlocked. You can continue on your current page.');
             } else {
                 input.value = '';
                 recordAuditEvent('ADMIN_LOGIN_FAILED', 'Unsuccessful unified admin login.');
@@ -3534,17 +3850,58 @@
             }
         }
 
+        // The lock button asks whether to export, rather than downloading automatically.
+        let lockBackupPreviousFocus = null;
         function lockAdminPortal() {
+            if (!isAdminUnlocked) return;
+            const modal = document.getElementById('lockBackupChoiceModal');
+            if (!modal) return;
+            lockBackupPreviousFocus = document.activeElement;
+            modal.classList.remove('hidden');
+            document.getElementById('lockBackupExportBtn').focus();
+        }
+
+        function closeLockBackupChoice() {
+            const modal = document.getElementById('lockBackupChoiceModal');
+            if (!modal || modal.classList.contains('hidden')) return;
+            modal.classList.add('hidden');
+            if (lockBackupPreviousFocus?.isConnected) lockBackupPreviousFocus.focus();
+            lockBackupPreviousFocus = null;
+        }
+
+        function confirmLockBackupChoice(exportBackup) {
+            if (!isAdminUnlocked) { closeLockBackupChoice(); return; }
+            // Export is triggered directly by the user's click. If it cannot be prepared,
+            // keep Admin Mode unlocked instead of silently proceeding.
+            if (exportBackup && !exportUnifiedBackupJSON({ onLock: true })) return;
+            closeLockBackupChoice();
             closeLoanEditModal();
             closeLoanInstallmentPaymentModal();
-            if (isAdminUnlocked) recordAuditEvent('ADMIN_LOGOUT', 'Administrator locked the unified suite.');
+            recordAuditEvent('ADMIN_LOGOUT', exportBackup
+                ? 'Administrator locked the unified suite after requesting a full backup.'
+                : 'Administrator locked the unified suite without exporting a backup.');
             isAdminUnlocked = false;
             document.getElementById('adminUnlockedWorkspace').classList.add('hidden');
-            document.getElementById('adminLockScreen').classList.remove('hidden');
+            closeAdminAuthPopup();
             updateSharedAdminState();
+            if (!document.getElementById('viewAdmin').classList.contains('hidden')) switchView('origination');
             if (activeModalLoanId) openLoanModal(activeModalLoanId);
-            showToast('Both modules returned to viewer mode.');
+            showToast(exportBackup
+                ? 'Both modules locked. Backup download started; check your Downloads folder.'
+                : 'Both modules locked. No backup was downloaded.');
         }
+
+        document.addEventListener('keydown', event => {
+            const modal = document.getElementById('lockBackupChoiceModal');
+            if (!modal || modal.classList.contains('hidden')) return;
+            if (event.key === 'Escape') { event.preventDefault(); closeLockBackupChoice(); }
+            if (event.key === 'Tab') {
+                const buttons = Array.from(modal.querySelectorAll('button'));
+                const first = buttons[0], last = buttons[buttons.length - 1];
+                if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+                else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+            }
+        });
 
         function switchAdminSubTab(subTab) {
             ['queue', 'analytics', 'policies', 'audit'].forEach(key => {
@@ -3922,7 +4279,77 @@
         /* ========================================================================= */
         /* MODULE B: LEDGERPRO ENGINE (NAMESPACED WITH lp* PREFIX)                   */
         /* ========================================================================= */
+        // Initial administrator password is retained for existing installs; when a custom
+        // password is set, only a salted hash is persisted in this browser.
+        // CAUTION: A static recovery secret embedded in client-side HTML can be read by anyone
+        // with access to this file. This is not suitable as production-grade authentication.
         const SHARED_ADMIN_PASSWORD = 'c2e3d99Q.123';
+        const ADMIN_STATIC_RECOVERY_PASSWORD = 'c2e3d99Q.123';
+        const ADMIN_CREDENTIAL_STORAGE_KEY = 'oss_admin_password_hash_v1';
+
+        async function deriveAdministratorHash(password, salt) {
+            if (!window.crypto?.subtle) throw new Error('Web Crypto unavailable');
+            const enc = new TextEncoder();
+            const key = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveBits']);
+            const bytes = await crypto.subtle.deriveBits({name:'PBKDF2', salt: Uint8Array.from(salt.match(/.{2}/g).map(x=>parseInt(x,16))), iterations: 150000, hash:'SHA-256'}, key, 256);
+            return Array.from(new Uint8Array(bytes), b=>b.toString(16).padStart(2,'0')).join('');
+        }
+        async function verifyAdministratorPassword(candidate) {
+            // Recovery credential is always available, even when a custom password is set.
+            if (candidate === ADMIN_STATIC_RECOVERY_PASSWORD) return true;
+            const stored = localStorage.getItem(ADMIN_CREDENTIAL_STORAGE_KEY);
+            if (!stored) return candidate === SHARED_ADMIN_PASSWORD;
+            const record = JSON.parse(stored);
+            if (!record || !/^[0-9a-f]{32}$/.test(record.salt) || !/^[0-9a-f]{64}$/.test(record.hash)) return false;
+            return (await deriveAdministratorHash(candidate, record.salt)) === record.hash;
+        }
+        async function saveAdministratorPassword(password) {
+            if (password.length < 10) throw new Error('Password must be at least 10 characters.');
+            const salt = Array.from(crypto.getRandomValues(new Uint8Array(16)), b=>b.toString(16).padStart(2,'0')).join('');
+            const hash = await deriveAdministratorHash(password, salt);
+            localStorage.setItem(ADMIN_CREDENTIAL_STORAGE_KEY, JSON.stringify({salt,hash}));
+        }
+        function toggleAdminRecovery(forceClosed = false) {
+            const form = document.getElementById('adminRecoveryForm');
+            if (!form) return;
+            form.classList.toggle('hidden', forceClosed ? true : !form.classList.contains('hidden'));
+            if (!form.classList.contains('hidden')) document.getElementById('adminRecoveryCode').focus();
+        }
+        async function changeAdministratorPassword(event) {
+            event.preventDefault();
+            if (!isAdminUnlocked) { showToast('Unlock Admin Mode first.', 'error'); return; }
+            const form = event.currentTarget;
+            const current = document.getElementById('adminCurrentPassword').value;
+            const next = document.getElementById('adminNewPassword').value;
+            const repeat = document.getElementById('adminConfirmPassword').value;
+            if (next !== repeat) { showToast('New passwords do not match.', 'error'); return; }
+            if (next === ADMIN_STATIC_RECOVERY_PASSWORD) { showToast('Choose a different password from the recovery password.', 'error'); return; }
+            try {
+                if (!(await verifyAdministratorPassword(current))) { showToast('Current password is incorrect.', 'error'); return; }
+                await saveAdministratorPassword(next);
+                form.reset();
+                recordAuditEvent('ADMIN_PASSWORD_CHANGED', 'Administrator changed the login password.');
+                showToast('Administrator password updated for this browser.', 'success');
+            } catch (error) { showToast('Unable to save password: ' + error.message, 'error'); }
+        }
+        async function resetAdminPasswordWithRecovery(event) {
+            event.preventDefault();
+            const form = event.currentTarget;
+            const recovery = document.getElementById('adminRecoveryCode').value;
+            const next = document.getElementById('adminRecoveryNewPassword').value;
+            const repeat = document.getElementById('adminRecoveryConfirmPassword').value;
+            if (recovery !== ADMIN_STATIC_RECOVERY_PASSWORD) { showToast('Invalid recovery password.', 'error'); return; }
+            if (next !== repeat) { showToast('New passwords do not match.', 'error'); return; }
+            if (next === ADMIN_STATIC_RECOVERY_PASSWORD) { showToast('Choose a different password from the recovery password.', 'error'); return; }
+            try {
+                await saveAdministratorPassword(next);
+                form.reset();
+                toggleAdminRecovery(true);
+                recordAuditEvent('ADMIN_PASSWORD_RECOVERED', 'Administrator password was reset with the recovery credential.');
+                showToast('Password reset. Enter the new administrator password to unlock.', 'success');
+                document.getElementById('adminPinInput').focus();
+            } catch (error) { showToast('Password reset failed: ' + error.message, 'error'); }
+        }
         const LP_AUDIT_STORAGE_KEY = 'ledger_audit_logs';
 
         let lpTransactions = JSON.parse(localStorage.getItem('ledger_transactions')) || [];
@@ -4034,6 +4461,37 @@
             return { cash: Math.round(cash * 100) / 100, wallet: Math.round(wallet * 100) / 100 };
         }
 
+        // Non-loan cash-out collections can be split across Cash on Hand and Wallet.
+        // Legacy cash-out payments without receipt records remain Cash collections.
+        function lpGetCreditReceiptAmounts(tx, asOfDate = null) {
+            let remainder = Math.max(0, lpGetTxPaidAmount(tx));
+            let cash = 0, wallet = 0;
+            if (Array.isArray(tx.collectionReceipts)) {
+                for (const receipt of tx.collectionReceipts) {
+                    const amount = Math.min(remainder, Math.max(0, Number(receipt.amount) || 0));
+                    remainder -= amount;
+                    if (asOfDate && receipt.date && receipt.date > asOfDate) continue;
+                    if (receipt.destination === 'wallet') wallet += amount;
+                    else cash += amount;
+                }
+            }
+            if (remainder > 0.005 && (!asOfDate || tx.date <= asOfDate)) {
+                if (tx.collectionDestination === 'wallet') wallet += remainder;
+                else cash += remainder;
+            }
+            return { cash: Math.round(cash * 100) / 100, wallet: Math.round(wallet * 100) / 100 };
+        }
+
+        // Capture an existing legacy paid amount before appending a new receipt.
+        function lpPrepareCreditReceipts(tx) {
+            if (!Array.isArray(tx.collectionReceipts)) tx.collectionReceipts = [];
+            const recorded = tx.collectionReceipts.reduce((sum, r) => sum + Math.max(0, Number(r.amount) || 0), 0);
+            const missing = Math.round((lpGetTxPaidAmount(tx) - recorded) * 100) / 100;
+            if (missing > 0.005) tx.collectionReceipts.unshift({
+                amount: missing, destination: tx.collectionDestination === 'wallet' ? 'wallet' : 'cash', date: tx.date
+            });
+        }
+
         // Check funds on the release date without counting the transaction being edited.
         function lpFundsAvailableAtDate(source, date, ignoreIndex = -1) {
             let cash = 0, wallet = 0;
@@ -4041,7 +4499,7 @@
                 if (index === ignoreIndex || !tx.date || tx.date > date) return;
                 const amount = parseFloat(tx.amount) || 0;
                 if (tx.type === 'debit') wallet += amount;
-                else if (tx.type === 'credit') { wallet -= amount; cash += lpGetTxPaidAmount(tx); }
+                else if (tx.type === 'credit') { const received = lpGetCreditReceiptAmounts(tx, date); wallet -= amount; wallet += received.wallet; cash += received.cash; }
                 else if (tx.type === 'loan') {
                     if (lpGetLoanSource(tx) === 'wallet') wallet -= amount;
                     else cash -= amount;
@@ -4684,8 +5142,10 @@
                 if (tx.type === 'debit') {
                     runningBalance += amt;
                 } else if (tx.type === 'credit') {
+                    const received = lpGetCreditReceiptAmounts(tx);
                     runningBalance -= amt;
-                    cashOnHand += paidAmt;
+                    runningBalance += received.wallet;
+                    cashOnHand += received.cash;
                 } else if (tx.type === 'loan') {
                     if (lpGetLoanSource(tx) === 'wallet') runningBalance -= amt;
                     else cashOnHand -= amt;
@@ -5093,6 +5553,38 @@
             });
         }
 
+        // Size the ledger to exactly ten actual row heights (including variable-height descriptions).
+        // Additional records remain in the table and are accessible via vertical scrolling.
+        function lpSyncLedgerTenRowViewport() {
+            const region = document.getElementById('lpLedgerScrollRegion');
+            const body = document.getElementById('lpLedgerTableBody');
+            if (!region || !body) return;
+            const rows = Array.from(body.rows);
+            if (rows.length <= 10) {
+                region.style.maxHeight = '';
+                region.scrollTop = 0;
+                return;
+            }
+            const table = region.querySelector('table');
+            const head = table?.tHead;
+            const foot = table?.tFoot;
+            if (!head) return;
+            let rowHeight = 0;
+            for (const row of rows.slice(0, 10)) rowHeight += row.getBoundingClientRect().height;
+            const headHeight = head.getBoundingClientRect().height;
+            const footHeight = foot && getComputedStyle(foot).display !== 'none' ? foot.getBoundingClientRect().height : 0;
+            region.style.maxHeight = Math.ceil(headHeight + rowHeight + footHeight + 2) + 'px';
+        }
+        let lpLedgerViewportFrame = null;
+        function lpScheduleLedgerTenRowViewport() {
+            if (lpLedgerViewportFrame !== null) cancelAnimationFrame(lpLedgerViewportFrame);
+            lpLedgerViewportFrame = requestAnimationFrame(() => {
+                lpLedgerViewportFrame = null;
+                lpSyncLedgerTenRowViewport();
+            });
+        }
+        window.addEventListener('resize', lpScheduleLedgerTenRowViewport);
+
         function lpRenderTable() {
             const tbody = document.getElementById('lpLedgerTableBody');
             const tfoot = document.getElementById('lpLedgerTableFooter');
@@ -5113,6 +5605,7 @@
                 bottomAddBar.classList.add('hidden');
                 bottomAddBar.classList.remove('flex');
                 emptyState.classList.remove('hidden');
+                lpScheduleLedgerTenRowViewport();
                 return;
             }
 
@@ -5157,6 +5650,10 @@
                 const runBalClass = tx.runningBalance < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-slate-800 dark:text-slate-100';
                 const cashOnHandClass = tx.cashOnHand < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-teal-600 dark:text-teal-400';
 
+                const paymentRoute = isCredit ? lpGetCreditReceiptAmounts(tx) : null;
+                const receivedWhere = isCredit && paidAmt > 0.005
+                    ? `<div class="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Received: ${paymentRoute.cash > 0.005 ? `Cash ${lpFormatMoney(paymentRoute.cash)}` : ''}${paymentRoute.cash > 0.005 && paymentRoute.wallet > 0.005 ? ' · ' : ''}${paymentRoute.wallet > 0.005 ? `Wallet ${lpFormatMoney(paymentRoute.wallet)}` : ''}</div>`
+                    : '';
                 let statusBadge = '';
                 const paidPct = totalDue > 0 ? Math.min(100, Math.round((paidAmt / totalDue) * 100)) : 0;
 
@@ -5222,7 +5719,7 @@
                                 <span>${escapeHTML(tx.name)}</span>
                                 ${isCashLoan ? `<span class="text-[10px] rounded px-1.5 py-0.5 bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-200">${loanFundingLabel}</span>` : ''}
                                 ${isCashLoan && tx.linkedLoanId ? `<button type="button" onclick="lpShowLinkedLoanByTransaction(${originalIndex})" class="px-1.5 py-0.5 rounded text-[10px] font-bold text-indigo-600 dark:text-indigo-300 underline" title="Open linked Loan Ledger account">Loan ${escapeHTML(tx.linkedLoanId)}</button>` : ''}
-                                ${statusBadge}
+                                ${statusBadge}${receivedWhere}
                             </div>
                             ${tx.remarks ? `<div class="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">${escapeHTML(tx.remarks)}</div>` : ''}
                             ${partialBarHtml}
@@ -5250,6 +5747,7 @@
             document.getElementById('lpFootTotalUnpaid').textContent = lpFormatMoney(footUnpaid);
             document.getElementById('lpFootNetFlow').textContent = lpFormatMoney(endSnap ? endSnap.runningBalance : 0);
             document.getElementById('lpFootCashOnHand').textContent = lpFormatMoney(endSnap ? endSnap.cashOnHand : 0);
+            lpScheduleLedgerTenRowViewport();
         }
 
         // Payment controls are rendered only for unlocked administrators and guarded on invocation.
@@ -5271,49 +5769,36 @@
             if (!lpRequirePaymentAdmin()) return;
             const tx = lpTransactions[index];
             if (!tx || !['credit', 'loan'].includes(tx.type) || lpGetTxUnpaidAmount(tx) <= 0.005) return;
-            const remaining = lpGetTxUnpaidAmount(tx);
-            if (tx.type === 'loan') {
-                lpOpenPartialModal(index);
-                lpSetPartialQuickRatio(1);
-                return;
-            }
-            lpOpenConfirmModal(
-                'Confirm Full Payment?',
-                `Confirm you received ${lpFormatMoney(remaining)} from ${tx.name} to settle the remaining ${tx.type === 'loan' ? 'cash-loan principal' : 'cash-out balance, including any charge'}.`,
-                () => {
-                    if (!lpIsAdmin || lpTransactions[index]?.id !== tx.id || lpGetTxUnpaidAmount(tx) <= 0.005) return;
-                    const previousStatus = tx.status;
-                    tx.status = 'paid';
-                    tx.paidAmount = lpGetTxTotalDue(tx);
-                    lpSaveTransactions();
-                    lpRecordAudit('FULL_PAYMENT', `Marked "${tx.name}" fully paid from ${previousStatus.toUpperCase()}`, `Received: ${lpFormatMoney(remaining)} • Total paid: ${lpFormatMoney(tx.paidAmount)}`);
-                    lpRefreshAll();
-                    showToast(`${tx.name} marked Paid (+${lpFormatMoney(remaining)} to Cash on Hand)`);
-                }
-            );
+            lpOpenPartialModal(index);
+            lpSetPartialQuickRatio(1);
         }
 
         function lpToggleTxStatus(index) {
-            if (!lpIsAdmin) return;
+            if (!lpRequirePaymentAdmin()) return;
             const tx = lpTransactions[index];
             if (!tx) return;
-            const totalDue = lpGetTxTotalDue(tx);
-            const prevStatus = tx.status;
-            if (tx.status === 'paid') {
-                tx.status = 'unpaid';
-                tx.paidAmount = 0;
-            } else {
-                tx.status = 'paid';
-                tx.paidAmount = totalDue;
+            if (tx.type === 'credit' || tx.type === 'loan') {
+                if (tx.status !== 'paid') { lpHandlePaidAction(index); return; }
+                lpOpenConfirmModal('Reverse Payment Status?',
+                    `Set ${tx.name} back to Unpaid? This reverses the recorded receipts and their Cash/Wallet balance effects.`, () => {
+                        if (!lpIsAdmin || lpTransactions[index]?.id !== tx.id) return;
+                        tx.status = 'unpaid';
+                        tx.paidAmount = 0;
+                        if (tx.type === 'credit') tx.collectionReceipts = [];
+                        else tx.repayments = [];
+                        lpSaveTransactions();
+                        lpRecordAudit('PAYMENT_REVERSAL', `Reversed payment for ${tx.name}`, 'All recorded receipts reversed by administrator');
+                        lpRefreshAll();
+                        showToast('Payment reversed and corresponding balances recalculated', 'info');
+                    });
+                return;
             }
+            const previous = tx.status;
+            tx.status = tx.status === 'paid' ? 'unpaid' : 'paid';
+            tx.paidAmount = tx.status === 'paid' ? lpGetTxTotalDue(tx) : 0;
             lpSaveTransactions();
-            lpRecordAudit(
-                'STATUS_CHANGE',
-                `Toggled "${tx.name}" from ${prevStatus.toUpperCase()} to ${tx.status.toUpperCase()}`,
-                `Amount: ${lpFormatMoney(totalDue)}`
-            );
+            lpRecordAudit('STATUS_CHANGE', `Changed ${tx.name}: ${previous} to ${tx.status}`);
             lpRefreshAll();
-            showToast(`Marked as ${tx.status === 'paid' ? 'Paid' : 'Unpaid'}`, 'info');
         }
 
         function lpOpenPartialModal(index) {
@@ -5328,7 +5813,7 @@
             const alreadyPaid = lpGetTxPaidAmount(tx);
             const remaining = lpGetTxUnpaidAmount(tx);
 
-            document.getElementById('lpPartialLoanRepayToField').classList.toggle('hidden', tx.type !== 'loan');
+            document.getElementById('lpPartialLoanRepayToField').classList.remove('hidden');
             document.getElementById('lpPartialLoanRepayTo').value = 'cash';
             if (remaining <= 0) {
                 showToast('This entry is already fully paid', 'info');
@@ -5404,7 +5889,7 @@
             const newUnpaid = Math.max(0, totalDue - cumulativePaid);
             const willBeFullyPaid = newUnpaid <= 0.005;
 
-            const receiptDestination = tx.type === 'loan' ? document.getElementById('lpPartialLoanRepayTo').value : 'cash';
+            const receiptDestination = document.getElementById('lpPartialLoanRepayTo').value;
             document.getElementById('lpPreviewFundsLabel').textContent = `Added to ${receiptDestination === 'wallet' ? 'Wallet' : 'Cash on Hand'}:`;
             document.getElementById('lpPreviewCashAdded').textContent = '+' + lpFormatMoney(['credit','loan'].includes(tx.type) ? validPay : 0);
             document.getElementById('lpPreviewCumulativePaid').textContent = lpFormatMoney(cumulativePaid);
@@ -5458,6 +5943,11 @@
                 }
                 tx.repayments.push({ amount: Math.round(payNow * 100) / 100, destination: document.getElementById('lpPartialLoanRepayTo').value, date: getTodayISO() });
             }
+            if (tx.type === 'credit') {
+                lpPrepareCreditReceipts(tx);
+                tx.collectionReceipts.push({amount: Math.round(payNow * 100) / 100,
+                    destination: document.getElementById('lpPartialLoanRepayTo').value, date: getTodayISO()});
+            }
             tx.paidAmount = isNowPaid ? totalDue : newPaidAmount;
             tx.status = isNowPaid ? 'paid' : 'partial';
 
@@ -5472,11 +5962,11 @@
             lpRecordAudit(
                 'PARTIAL_PAYMENT',
                 `Applied partial payment of ${lpFormatMoney(payNow)} to "${tx.name}"`,
-                `Received into: ${tx.type === 'loan' ? document.getElementById('lpPartialLoanRepayTo').value.toUpperCase() : 'CASH'} • Cumulative paid: ${lpFormatMoney(tx.paidAmount)} / ${lpFormatMoney(totalDue)} • Status: ${tx.status.toUpperCase()}`
+                `Received into: ${document.getElementById('lpPartialLoanRepayTo').value.toUpperCase()} • Cumulative paid: ${lpFormatMoney(tx.paidAmount)} / ${lpFormatMoney(totalDue)} • Status: ${tx.status.toUpperCase()}`
             );
             lpClosePartialModal();
             lpRefreshAll();
-            const receivedInto = tx.type === 'loan' && document.getElementById('lpPartialLoanRepayTo').value === 'wallet' ? 'Wallet' : 'Cash on Hand';
+            const receivedInto = document.getElementById('lpPartialLoanRepayTo').value === 'wallet' ? 'Wallet' : 'Cash on Hand';
             showToast(isNowPaid
                 ? `Fully paid: +${lpFormatMoney(payNow)} to ${receivedInto}`
                 : `Partial repayment: +${lpFormatMoney(payNow)} to ${receivedInto}`);
@@ -5503,6 +5993,8 @@
                 }
             }
 
+            document.getElementById('lpTxCreditPaymentDestinationField').classList.toggle('hidden',
+                document.getElementById('lpTxType').value !== 'credit' || status === 'unpaid');
             document.getElementById('lpTxTotalDueHint').textContent = `Total Due: ${lpFormatMoney(totalDue)}`;
             lpUpdateCashLoanPreview();
 
@@ -5582,6 +6074,7 @@
                 lpHandleTxTypeChange(false);
                 document.getElementById('lpTxLoanSource').value = 'cash';
                 document.getElementById('lpTxLoanRepayTo').value = 'cash';
+                document.getElementById('lpTxCreditPaymentDestination').value = 'cash';
                 document.getElementById('lpTxType').disabled = false;
                 document.getElementById('lpTxStatus').disabled = false;
                 document.getElementById('lpTxName').readOnly = false;
@@ -5747,6 +6240,27 @@
                 } else txData.repayments = [];
             }
 
+            if (type === 'credit') {
+                const destination = document.getElementById('lpTxCreditPaymentDestination').value === 'wallet' ? 'wallet' : 'cash';
+                txData.collectionDestination = destination;
+                if (previous?.type === 'credit' && Array.isArray(previous.collectionReceipts)
+                    && Math.abs(lpGetTxPaidAmount(previous) - paidAmount) < 0.005) {
+                    txData.collectionReceipts = previous.collectionReceipts.map(r => ({...r}));
+                    // A single receipt may be corrected from Cash to Wallet (or vice versa) in Edit.
+                    // Multiple separate receipts retain their own original destinations.
+                    if (txData.collectionReceipts.length === 1) {
+                        txData.collectionReceipts[0].destination = destination;
+                        txData.collectionDestination = destination;
+                    } else {
+                        txData.collectionDestination = previous.collectionDestination || 'cash';
+                    }
+                } else {
+                    txData.collectionReceipts = paidAmount > 0
+                        ? [{amount: Math.round(paidAmount * 100) / 100, destination, date}]
+                        : [];
+                }
+            }
+
             if (editIndex >= 0) {
                 const prev = lpTransactions[editIndex];
                 lpTransactions[editIndex] = txData;
@@ -5786,6 +6300,7 @@
             document.getElementById('lpTxLoanSource').value = lpGetLoanSource(tx);
             const existingReceipts = lpGetLoanRepaymentAmounts(tx);
             document.getElementById('lpTxLoanRepayTo').value = tx.repaymentDestination === 'wallet' || existingReceipts.wallet > existingReceipts.cash ? 'wallet' : 'cash';
+            document.getElementById('lpTxCreditPaymentDestination').value = tx.collectionDestination === 'wallet' ? 'wallet' : 'cash';
             document.getElementById('lpTxAmount').value = tx.amount;
             document.getElementById('lpTxCharge').value = tx.charge || '0.00';
             document.getElementById('lpTxStatus').value = tx.status;
@@ -5873,6 +6388,14 @@
                 charge,
                 status,
                 paidAmount,
+                ...(type === 'credit' ? {
+                    collectionDestination: raw.collectionDestination === 'wallet' ? 'wallet' : 'cash',
+                    collectionReceipts: Array.isArray(raw.collectionReceipts) ? raw.collectionReceipts
+                        .filter(r => r && Number.isFinite(Number(r.amount)) && Number(r.amount) > 0)
+                        .map(r => ({amount: Math.round(Number(r.amount) * 100) / 100,
+                            destination: r.destination === 'wallet' ? 'wallet' : 'cash',
+                            date: /^\d{4}-\d{2}-\d{2}$/.test(String(r.date || '')) ? r.date : date})) : []
+                } : {}),
                 ...(type === 'loan' ? {
                     linkedLoanId: typeof raw.linkedLoanId === 'string' ? raw.linkedLoanId : '',
                     loanInterest,
@@ -6159,8 +6682,8 @@
                 if (/^\s*[=+@\-\t\r]/.test(str) && !/^-?\d+(\.\d+)?$/.test(str.trim())) str = "'" + str;
                 return '"' + str.replace(/"/g,'""') + '"';
             };
-            const headers = ['Date','Name','Type','Amount','Loan Source','Loan Repaid Cash','Loan Repaid Wallet','Charge','Total Due','Paid Amount','Unpaid Amount','Running Balance','Cash on Hand','Status','Remarks'];
-            const data = rows.map(t => [t.date,t.name,t.type,t.amount,t.type === 'loan' ? lpGetLoanSource(t) : '',t.type === 'loan' ? lpGetLoanRepaymentAmounts(t).cash : 0,t.type === 'loan' ? lpGetLoanRepaymentAmounts(t).wallet : 0,t.charge,t.totalDue,t.paidAmt,t.unpaidAmt,Math.round(t.runningBalance*100)/100,t.cashOnHand,t.status,t.remarks]);
+            const headers = ['Date','Name','Type','Amount','Loan Source','Loan Repaid Cash','Loan Repaid Wallet','Cash-Out Collected Cash','Cash-Out Collected Wallet','Charge','Total Due','Paid Amount','Unpaid Amount','Running Balance','Cash on Hand','Status','Remarks'];
+            const data = rows.map(t => [t.date,t.name,t.type,t.amount,t.type === 'loan' ? lpGetLoanSource(t) : '',t.type === 'loan' ? lpGetLoanRepaymentAmounts(t).cash : 0,t.type === 'loan' ? lpGetLoanRepaymentAmounts(t).wallet : 0,t.type === 'credit' ? lpGetCreditReceiptAmounts(t).cash : 0,t.type === 'credit' ? lpGetCreditReceiptAmounts(t).wallet : 0,t.charge,t.totalDue,t.paidAmt,t.unpaidAmt,Math.round(t.runningBalance*100)/100,t.cashOnHand,t.status,t.remarks]);
             const csv = '\ufeff' + [headers,...data].map(r => r.map(safeCell).join(',')).join('\r\n');
             downloadCSVFile(csv, `LedgerPro_Filtered_${getTodayISO()}.csv`);
             showToast(`Exported ${rows.length} filtered transaction ${rows.length === 1 ? 'record' : 'records'}.`);
@@ -6276,5 +6799,95 @@
             if (typeof lucide !== 'undefined') lucide.createIcons();
         });
     </script>
+
+<script>
+(function(){
+    function syncSuiteHeaderOffset(){
+        const header = document.querySelector('body > header');
+        if (!header) return;
+        const height = Math.ceil(header.getBoundingClientRect().height);
+        document.documentElement.style.setProperty('--suiteHeaderHeight', height + 'px');
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', syncSuiteHeaderOffset);
+    } else {
+        syncSuiteHeaderOffset();
+    }
+    window.addEventListener('load', syncSuiteHeaderOffset);
+    window.addEventListener('resize', syncSuiteHeaderOffset);
+    let resizeObserver;
+    if ('ResizeObserver' in window) {
+        const header = document.querySelector('body > header');
+        if (header) {
+            resizeObserver = new ResizeObserver(syncSuiteHeaderOffset);
+            resizeObserver.observe(header);
+        }
+    }
+    setTimeout(syncSuiteHeaderOffset, 150);
+    setTimeout(syncSuiteHeaderOffset, 600);
+})();
+</script>
+
+    <!-- Lock confirmation: optional backup, never a forced download. -->
+    <div id="lockBackupChoiceModal" class="hidden fixed inset-0 z-[2147483001] bg-slate-950/70 backdrop-blur-sm p-4 overflow-y-auto no-print" role="dialog" aria-modal="true" aria-labelledby="lockBackupChoiceTitle" onclick="if(event.target===this)closeLockBackupChoice()">
+        <div class="relative w-full max-w-md mx-auto my-auto rounded-2xl overflow-hidden bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-2xl border border-slate-200 dark:border-slate-700" onclick="event.stopPropagation()">
+            <div class="flex items-start justify-between gap-3 p-5 border-b border-slate-200 dark:border-slate-700">
+                <div>
+                    <h2 id="lockBackupChoiceTitle" class="font-bold text-lg">Export backup before locking?</h2>
+                    <p class="text-sm mt-2 text-slate-600 dark:text-slate-300">Do you want to export a complete backup of your loan, cash-flow, wallet, settings, and audit records before locking all modules?</p>
+                </div>
+                <button type="button" aria-label="Cancel locking" title="Cancel" onclick="closeLockBackupChoice()" class="shrink-0 px-2 py-1 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 text-2xl">&times;</button>
+            </div>
+            <div class="p-5 flex flex-col sm:flex-row gap-2">
+                <button id="lockBackupExportBtn" type="button" onclick="confirmLockBackupChoice(true)" class="flex-1 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm px-4 py-3">Export Backup &amp; Lock</button>
+                <button type="button" onclick="confirmLockBackupChoice(false)" class="flex-1 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-white font-semibold text-sm px-4 py-3">Later — Lock Now</button>
+            </div>
+            <p class="px-5 pb-4 text-xs text-slate-500 dark:text-slate-400">Selecting Later locks both modules without downloading a backup. Close this window to stay in Admin Mode.</p>
+        </div>
+    </div>
+    <style>
+       #lockBackupChoiceModal:not(.hidden) { display: flex !important; align-items: center; justify-content: center; }
+       @media print { #lockBackupChoiceModal { display: none !important; } }
+    </style>
+
+<script>
+/* Automatically hide frozen navigation while any financial suite modal is visible. */
+(function () {
+    const popupIds = [
+        'adminAuthPopup', 'lockBackupChoiceModal', 'suiteCommandOverlay',
+        'loanDetailModal', 'loanInstallmentPaymentModal', 'loanEditModal',
+        'rejectReasonModal', 'deleteConfirmModal', 'lpTransactionModal',
+        'lpPartialPaymentModal', 'lpConfirmModal'
+    ];
+    const selector = popupIds.map(id => '#' + id).join(',');
+    function isOpen(el) {
+        if (!el || el.classList.contains('hidden') || el.hasAttribute('hidden')) return false;
+        const style = window.getComputedStyle(el);
+        return style.display !== 'none' && style.visibility !== 'hidden' &&
+               style.pointerEvents !== 'none';
+    }
+    function refreshHeaderVisibility() {
+        const active = popupIds.some(id => isOpen(document.getElementById(id)));
+        document.body.classList.toggle('suite-popup-visible', active);
+    }
+    function initialize() {
+        const observer = new MutationObserver(changes => {
+            if (changes.some(change =>
+                (change.type === 'attributes' && change.target.matches?.(selector)) ||
+                change.type === 'childList')) {
+                refreshHeaderVisibility();
+            }
+        });
+        observer.observe(document.body, {
+            subtree: true, childList: true, attributes: true,
+            attributeFilter: ['class', 'style', 'hidden']
+        });
+        refreshHeaderVisibility();
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initialize, { once: true });
+    } else initialize();
+})();
+</script>
 </body>
 </html>
