@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSS Credit Corporation Pro & LedgerPro | Unified Financial Suite</title>
+    <title>OSS Credit Corporation Pro & LedgerPro | Unified Financial Suite Plus</title>
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Inter, Plus Jakarta Sans & JetBrains Mono -->
@@ -172,6 +172,40 @@
             body.printing-modal > div#moduleLedgerWorkspace { display: none !important; }
             .animate-card, .animate-row { opacity: 1 !important; animation: none !important; transform: none !important; }
         }
+
+
+        /* FINANCIAL SUITE PLUS: layered motion, accessible interaction and subtle depth */
+        @keyframes suiteFloat { 0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-9px,0)} }
+        @keyframes suiteGradient { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+        @keyframes suitePop { 0%{transform:scale(.985);opacity:.55} 75%{transform:scale(1.015);opacity:1} 100%{transform:scale(1)} }
+        @keyframes suiteDot { 0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.3)} 50%{box-shadow:0 0 0 6px rgba(16,185,129,0)} }
+        @keyframes suiteShimmer { from{transform:translateX(-130%) skewX(-18deg)} to{transform:translateX(320%) skewX(-18deg)} }
+        .suite-operations { position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(115deg,#f8fbff 0%,#f1f5ff 48%,#f0fdf9 100%);border-bottom:1px solid rgba(148,163,184,.22) }
+        .dark .suite-operations {background:linear-gradient(115deg,#0f172a 0%,#172044 48%,#102b2a 100%);border-color:#334155}
+        .suite-orb{position:absolute;pointer-events:none;border-radius:999px;filter:blur(5px);opacity:.55;animation:suiteFloat 9s ease-in-out infinite}
+        .suite-orb.one{width:170px;height:170px;right:12%;top:-130px;background:radial-gradient(circle,rgba(99,102,241,.2),transparent 70%)}
+        .suite-orb.two{width:170px;height:170px;left:8%;bottom:-130px;background:radial-gradient(circle,rgba(16,185,129,.17),transparent 70%);animation-delay:-4s}
+        .suite-stat{position:relative;overflow:hidden;min-width:0;background:rgba(255,255,255,.8);border:1px solid rgba(203,213,225,.7);box-shadow:0 4px 18px rgba(30,41,59,.035);border-radius:16px;transition:transform .28s cubic-bezier(.2,.7,.2,1),box-shadow .28s,border-color .28s}
+        .suite-stat:hover{transform:translateY(-4px);border-color:rgba(99,102,241,.42);box-shadow:0 13px 28px rgba(30,41,59,.10)}
+        .suite-stat::after{content:'';position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-130%) skewX(-18deg)}
+        .suite-stat:hover::after{animation:suiteShimmer .8s ease-out 1}
+        .dark .suite-stat{background:rgba(15,23,42,.7);border-color:rgba(71,85,105,.55)}
+        .suite-stat-value{font-variant-numeric:tabular-nums;letter-spacing:-.035em}
+        .suite-number-pop{animation:suitePop .42s cubic-bezier(.22,1,.36,1)}
+        .suite-live-dot{animation:suiteDot 2.8s ease-in-out infinite}
+        .suite-spotlight{background-size:220% 220%;animation:suiteGradient 14s ease infinite}
+        .suite-command-item{transition:background-color .14s,transform .14s;border:1px solid transparent}
+        .suite-command-item:hover,.suite-command-item[aria-selected="true"]{background:#eef2ff;border-color:#c7d2fe;transform:translateX(2px)}
+        .dark .suite-command-item:hover,.dark .suite-command-item[aria-selected="true"]{background:#312e81;border-color:#4f46e5}
+        .suite-reveal{opacity:0;transform:translateY(12px);transition:opacity .55s cubic-bezier(.2,.8,.2,1),transform .55s cubic-bezier(.2,.8,.2,1)}
+        .suite-reveal.suite-in-view{opacity:1;transform:none}
+        button:focus-visible,[role="button"]:focus-visible{outline:3px solid rgba(99,102,241,.6);outline-offset:3px}
+        #suiteCommandOverlay{z-index:90}
+        @media (prefers-reduced-motion:reduce){
+            *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:.01ms !important}
+            .suite-reveal{opacity:1;transform:none}
+        }
+        @media print{#suiteOperations,#suiteCommandOverlay,#suiteCommandBtn{display:none !important}}
     </style>
 </head>
 <body class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased flex flex-col ambient-bg selection:bg-brand-100 selection:text-brand-900 transition-colors duration-300">
@@ -217,6 +251,12 @@
                         </button>
                     </div>
 
+                    <!-- Cross-workspace search and keyboard command center -->
+                    <button id="suiteCommandBtn" type="button" onclick="openCommandCenter()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-700 bg-white/85 dark:bg-slate-800 text-slate-700 dark:text-slate-100 hover:border-indigo-300 dark:hover:border-indigo-500 hover:shadow-md transition-all active:scale-95" title="Quick Find (Ctrl+K)" aria-keyshortcuts="Control+K Meta+K">
+                        <i data-lucide="search" class="w-4 h-4 text-indigo-500"></i><span>Quick Find</span>
+                        <kbd class="hidden lg:inline text-[10px] px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 font-mono">Ctrl K</kbd>
+                    </button>
+
                     <!-- Single administrator entry point shared by both workspaces -->
                     <button id="sharedAdminSettingsBtn" type="button" onclick="openUnifiedSettings()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-indigo-200 bg-indigo-50 text-indigo-800 dark:bg-indigo-950/50 dark:text-indigo-200 dark:border-indigo-800 text-xs sm:text-sm font-bold hover:bg-indigo-100 dark:hover:bg-indigo-900 transition cursor-pointer" title="Shared Administrator Settings">
                         <i data-lucide="settings-2" class="w-4 h-4"></i>
@@ -235,6 +275,46 @@
 
     <!-- Toast Container -->
     <div id="toastContainer" class="fixed bottom-5 right-5 z-[70] flex flex-col gap-2.5 pointer-events-none max-w-sm w-full px-4 sm:px-0"></div>
+
+    <!-- Live cross-workspace operations board. Uses stored loan and wallet data; does not mutate balances. -->
+    <section id="suiteOperations" class="suite-operations no-print" aria-label="Unified operations overview">
+        <div class="suite-orb one" aria-hidden="true"></div><div class="suite-orb two" aria-hidden="true"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 relative z-[1]">
+            <div class="flex items-center justify-between flex-wrap gap-3 mb-3">
+                <div class="flex items-center gap-2.5">
+                    <div class="h-8 w-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-sm"><i data-lucide="activity" class="w-4 h-4"></i></div>
+                    <div><div class="flex items-center gap-2"><h2 class="font-display font-bold text-sm text-slate-900 dark:text-white">Operations Overview</h2><span class="suite-live-dot h-1.5 w-1.5 rounded-full bg-emerald-500" aria-label="Live local data"></span><span class="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Live</span></div>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">Combined loan and wallet snapshot · Stored in this browser</p></div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="openCommandCenter()" class="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-[11px] font-semibold text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-950 transition"><i data-lucide="command" class="w-3.5 h-3.5"></i> Shortcuts</button>
+                    <button type="button" id="suiteOverviewToggle" onclick="toggleSuiteOverview()" class="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-[11px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-white/70 dark:hover:bg-slate-800 transition" aria-expanded="true"><i data-lucide="chevron-up" class="w-3.5 h-3.5"></i><span id="suiteOverviewToggleLabel">Collapse</span></button>
+                </div>
+            </div>
+            <div id="suiteOverviewContent" class="space-y-3">
+                <div class="grid grid-cols-2 lg:grid-cols-5 gap-2.5 sm:gap-3">
+                    <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Pending Loan Reviews</p><p id="suitePendingCount" class="suite-stat-value text-2xl font-extrabold mt-1 text-amber-600">0</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Awaiting approval</p></div>
+                    <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Active Loans</p><p id="suiteActiveCount" class="suite-stat-value text-2xl font-extrabold mt-1 text-indigo-600 dark:text-indigo-300">0</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Approved accounts</p></div>
+                    <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Wallet Balance</p><p id="suiteWalletBalance" class="suite-stat-value text-xl font-extrabold mt-1 text-indigo-700 dark:text-indigo-300">₱0.00</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Debit in − Cash-out · No charges</p></div>
+                    <div class="suite-stat p-3.5 suite-reveal"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Cash on Hand</p><p id="suiteCashOnHand" class="suite-stat-value text-xl font-extrabold mt-1 text-teal-700 dark:text-teal-300">₱0.00</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Cash-out repayments collected</p></div>
+                    <div class="suite-stat p-3.5 suite-reveal col-span-2 lg:col-span-1"><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Unpaid Cash-Outs</p><p id="suiteUnpaidCashout" class="suite-stat-value text-xl font-extrabold mt-1 text-rose-600 dark:text-rose-400">₱0.00</p><p class="text-[10px] mt-1 text-slate-500 dark:text-slate-400">Remaining amount + charges due</p></div>
+                </div>
+                <div class="rounded-xl border border-indigo-100 dark:border-indigo-900/60 bg-white/65 dark:bg-slate-900/60 px-3.5 py-2.5 flex items-center justify-between flex-wrap gap-3 suite-reveal" id="suiteAlertStrip">
+                    <div class="flex items-start gap-2.5 min-w-0"><i data-lucide="bell-ring" class="w-4 h-4 text-indigo-600 dark:text-indigo-400 mt-0.5 shrink-0"></i><p class="text-xs text-slate-700 dark:text-slate-200" id="suiteAlertText">Your loan and wallet updates will appear here.</p></div>
+                    <div class="flex gap-1.5 flex-wrap"><button onclick="suiteJumpTo('pending')" class="px-2.5 py-1 text-[11px] rounded-lg font-semibold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 hover:bg-amber-200 transition">Review Loans</button><button onclick="suiteJumpTo('unpaid')" class="px-2.5 py-1 text-[11px] rounded-lg font-semibold bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 hover:bg-indigo-200 transition">Unpaid Ledger</button></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Searchable, keyboard-navigable command palette; read-only search available in Viewer Mode. -->
+    <div id="suiteCommandOverlay" class="fixed inset-0 hidden bg-slate-950/60 backdrop-blur-sm px-4 pt-[9vh] sm:pt-[13vh]" role="dialog" aria-modal="true" aria-labelledby="suiteCommandTitle" onclick="if(event.target===this)closeCommandCenter()">
+        <div class="animate-modal max-w-xl mx-auto w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-3xl shadow-2xl overflow-hidden text-slate-900 dark:text-white">
+            <div class="px-4 sm:px-5 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center gap-3"><i data-lucide="search" class="w-5 h-5 text-indigo-500 shrink-0"></i><div class="flex-1 min-w-0"><label id="suiteCommandTitle" for="suiteCommandInput" class="sr-only">Search across the financial suite</label><input id="suiteCommandInput" type="search" class="w-full outline-none bg-transparent text-sm placeholder:text-slate-400 dark:placeholder:text-slate-500" oninput="renderCommandResults()" onkeydown="handleCommandKeydown(event)" placeholder="Search loans, wallet accounts, or type an action…" autocomplete="off" aria-controls="suiteCommandResults" aria-autocomplete="list"></div><button onclick="closeCommandCenter()" type="button" class="px-2 py-1 rounded-md text-[11px] text-slate-500 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800">ESC</button></div>
+            <div id="suiteCommandResults" role="listbox" class="p-2.5 max-h-[50vh] overflow-y-auto" aria-label="Search results"></div>
+            <div class="border-t border-slate-100 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900 p-3 flex gap-4 text-[10px] text-slate-500 dark:text-slate-400"><span>↑ ↓ Navigate</span><span>Enter Select</span><span>Esc Close</span><span class="ml-auto">Alt+1 Loan · Alt+2 Wallet</span></div>
+        </div>
+    </div>
 
     <!-- ========================================================================= -->
     <!-- MODULE A: OSS CREDIT CORPORATION PRO (LOAN ORIGINATION & UNDERWRITING)    -->
@@ -833,6 +913,11 @@
                             <option value="interest_only">Interest-Only + Balloon</option>
                         </select>
 
+                        <!-- Available to an authenticated administrator only -->
+                        <button type="button" id="clearLoanEntryBtn" onclick="promptClearAllLoans()" class="hidden px-3 py-2 rounded-xl border border-rose-200 bg-rose-50 text-rose-600 hover:bg-rose-100 hover:text-rose-700 text-xs font-semibold transition items-center gap-1.5 cursor-pointer no-print" title="Clear all loan records" aria-label="Clear all Loan Ledger entries">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i> Clear Loan Entry
+                        </button>
+
                         <button onclick="switchView('origination')" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-sm cursor-pointer">
                             <i data-lucide="plus" class="w-4 h-4"></i> New Loan
                         </button>
@@ -1387,10 +1472,15 @@
                         <button onclick="lpSetFilter('paid')" id="lpFilterBtnPaid" class="lp-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition-all cursor-pointer">Paid</button>
                         <button onclick="lpSetFilter('partial')" id="lpFilterBtnPartial" class="lp-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition-all cursor-pointer">Partial</button>
                         <button onclick="lpSetFilter('unpaid')" id="lpFilterBtnUnpaid" class="lp-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition-all cursor-pointer">Unpaid</button>
+                        <button onclick="lpSetFilter('outstanding')" id="lpFilterBtnOutstanding" class="lp-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition-all cursor-pointer" title="Show unpaid and partially paid cash-outs">Outstanding</button>
                     </div>
 
                     <select id="lpMonthFilter" onchange="lpFilterTransactions()" class="px-3 py-1.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer">
                         <option value="all">All Months</option>
+                    </select>
+
+                    <select id="lpDateRangeFilter" onchange="lpFilterTransactions()" aria-label="Filter ledger by recent date range" class="px-3 py-1.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer">
+                        <option value="all">All Dates</option><option value="7">Last 7 Days</option><option value="30">Last 30 Days</option><option value="90">Last 90 Days</option>
                     </select>
 
                     <button onclick="lpToggleSortOrder()" id="lpSortOrderBtn" class="px-3 py-1.5 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 flex items-center gap-1.5 transition-all cursor-pointer" title="Toggle Chronological Sort">
@@ -1407,10 +1497,15 @@
                         <span class="text-xs font-display font-bold text-slate-700 dark:text-slate-200">Transaction Ledger</span>
                         <span id="lpVisibleCountBadge" class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">0 records</span>
                     </div>
-                    <div class="flex items-center gap-3">
+                    <div class="flex flex-wrap items-center justify-end gap-3">
                         <span class="text-[11px] text-slate-400 hidden md:block">
                             Cash on Hand = cash-out repayments collected only (wallet excluded)
                         </span>
+                        <!-- Admin-only bulk clear; keeps loan records and audit history untouched. -->
+                        <button type="button" id="lpClearLedgerEntryBtn" onclick="lpPromptClearAllTransactions()" class="hidden text-[11px] font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 hover:underline items-center gap-1 cursor-pointer" title="Clear all Cash-Flow & Wallet Ledger entries" aria-label="Clear all Cash-Flow and Wallet Ledger entries">
+                            <i class="fa-solid fa-trash-can text-[10px]"></i> Clear Ledger Entry
+                        </button>
+                        <button onclick="lpExportFilteredCSV()" type="button" class="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1 cursor-pointer"><i class="fa-solid fa-file-csv text-[11px]"></i> Export Filtered CSV</button>
                         <button onclick="openUnifiedSettings('audit')" class="text-[11px] font-semibold text-violet-600 dark:text-violet-400 hover:underline flex items-center gap-1 cursor-pointer">
                             <i class="fa-solid fa-clock-rotate-left text-[10px]"></i> View Audit Trail
                         </button>
@@ -1449,7 +1544,7 @@
                 </div>
 
                 <!-- Admin-only shortcut at the end of the transaction records. -->
-                <div id="lpBottomAddEntryBar" class="hidden no-print items-center justify-between gap-3 px-5 py-3.5 border-t border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/70">
+                <div id="lpBottomAddEntryBar" class="hidden no-print flex-col items-center justify-center gap-2 px-5 py-3.5 border-t border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/70">
                     <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400">End of transaction records</span>
                     <button type="button" id="lpBottomAddEntryBtn" onclick="lpOpenModal()" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white px-4 py-2 rounded-xl font-semibold text-xs shadow-sm transition-all active:scale-95 cursor-pointer">
                         <i class="fa-solid fa-plus text-xs" aria-hidden="true"></i> Add Entry
@@ -1825,6 +1920,7 @@
                 btnLoan.className = 'flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all duration-200 cursor-pointer';
                 lpRefreshAll();
             }
+            refreshSuiteOverview();
         }
 
 
@@ -1843,6 +1939,11 @@
             lpIsAdmin = isAdminUnlocked;
             lpUpdateAdminUI();
             lpRenderTable();
+            const clearLoanEntryBtn = document.getElementById('clearLoanEntryBtn');
+            if (clearLoanEntryBtn) {
+                clearLoanEntryBtn.classList.toggle('hidden', !isAdminUnlocked);
+                clearLoanEntryBtn.classList.toggle('inline-flex', isAdminUnlocked);
+            }
             const adminBtn = document.getElementById('sharedAdminSettingsBtn');
             if (adminBtn) adminBtn.title = isAdminUnlocked ? 'Unified Admin & Settings — Unlocked' : 'Unified Admin & Settings — Password Required';
         }
@@ -2460,6 +2561,7 @@
         function saveLoanRecords() {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(loanRecords));
             updateNavBadges();
+            refreshSuiteOverview();
         }
 
         function saveAdminPolicies() {
@@ -3131,6 +3233,38 @@
             showToast(`Loan ${targetId} permanently deleted.`);
         }
 
+        function promptClearAllLoans() {
+            if (!isAdminUnlocked) {
+                showToast('Administrator access is required to clear loan entries.', 'error');
+                return;
+            }
+            if (loanRecords.length === 0) {
+                showToast('The Loan Ledger is already empty.', 'info');
+                return;
+            }
+            const count = loanRecords.length;
+            lpOpenConfirmModal(
+                'Clear All Loan Entries?',
+                `Are you sure you want to permanently delete all ${count} loan ${count === 1 ? 'entry' : 'entries'}? This includes all borrowers, amortization schedules, and recorded loan payments. This action cannot be undone. Cash-Flow & Wallet Ledger records and audit history will remain. Export a backup first if necessary.`,
+                () => {
+                    // Check authentication again, in case access changed while the dialog was open.
+                    if (!isAdminUnlocked) {
+                        showToast('Administrator access is required.', 'error');
+                        return;
+                    }
+                    const deletedCount = loanRecords.length;
+                    if (!deletedCount) return;
+                    loanRecords = [];
+                    saveLoanRecords();
+                    recordAuditEvent('LOANS_CLEARED', `Administrator cleared all ${deletedCount} Loan Ledger entries.`);
+                    renderLedger();
+                    renderLoanStatusReport();
+                    renderAdminPortal();
+                    showToast(`${deletedCount} loan ${deletedCount === 1 ? 'entry' : 'entries'} cleared.`, 'info');
+                }
+            );
+        }
+
         function handleAdminUnlock(event) {
             event.preventDefault();
             const input = document.getElementById('adminPinInput');
@@ -3741,6 +3875,7 @@
             const footActionSpacer = document.getElementById('lpFootActionSpacer');
             const quickJsonBackupBtn = document.getElementById('lpQuickJsonBackupBtn');
             const clearAuditLogsBtn = document.getElementById('lpClearAuditLogsBtn');
+            const clearLedgerEntryBtn = document.getElementById('lpClearLedgerEntryBtn');
 
             if (lpIsAdmin) {
                 adminBtnText.textContent = 'Admin Mode';
@@ -3759,6 +3894,7 @@
                 footActionSpacer.classList.remove('hidden');
                 if (quickJsonBackupBtn) quickJsonBackupBtn.classList.remove('hidden');
                 if (clearAuditLogsBtn) clearAuditLogsBtn.classList.remove('hidden');
+                if (clearLedgerEntryBtn) { clearLedgerEntryBtn.classList.remove('hidden'); clearLedgerEntryBtn.classList.add('inline-flex'); }
             } else {
                 adminBtnText.textContent = 'Viewer Mode';
                 adminIcon.className = 'fa-solid fa-lock text-xs text-slate-500';
@@ -3773,6 +3909,7 @@
                 footActionSpacer.classList.add('hidden');
                 if (quickJsonBackupBtn) quickJsonBackupBtn.classList.add('hidden');
                 if (clearAuditLogsBtn) clearAuditLogsBtn.classList.add('hidden');
+                if (clearLedgerEntryBtn) { clearLedgerEntryBtn.classList.add('hidden'); clearLedgerEntryBtn.classList.remove('inline-flex'); }
             }
             adminModeBtn.classList.remove('cursor-pointer');
         }
@@ -3808,18 +3945,25 @@
         });
 
         function lpPromptClearAllTransactions() {
-            if (!lpIsAdmin) return;
-            lpCloseAdminModal();
+            if (!lpIsAdmin || !isAdminUnlocked) {
+                showToast('Administrator access is required to clear the ledger', 'error');
+                return;
+            }
+            if (lpTransactions.length === 0) {
+                showToast('The Cash-Flow & Wallet Ledger is already empty', 'info');
+                return;
+            }
             lpOpenConfirmModal(
-                'Clear Entire Ledger?',
-                'This will permanently erase all recorded transactions from local storage. Consider exporting a JSON backup first.',
+                'Clear All Cash-Flow Ledger Entries?',
+                `This will permanently delete all ${lpTransactions.length} Cash-Flow & Wallet Ledger entries. Loan records and audit history will be retained. Export a backup first if needed.`,
                 () => {
+                    if (!lpIsAdmin || !isAdminUnlocked) return;
                     const count = lpTransactions.length;
                     lpTransactions = [];
                     lpSaveTransactions();
-                    lpRecordAudit('DELETE', `Cleared entire ledger (${count} records removed)`);
+                    lpRecordAudit('DELETE', `Cleared Cash-Flow & Wallet Ledger (${count} records removed)`);
                     lpRefreshAll();
-                    showToast('All transactions cleared', 'info');
+                    showToast(`${count} ledger ${count === 1 ? 'entry' : 'entries'} cleared`, 'info');
                 }
             );
         }
@@ -3838,6 +3982,7 @@
 
         function lpSaveTransactions() {
             localStorage.setItem('ledger_transactions', JSON.stringify(lpTransactions));
+            refreshSuiteOverview();
         }
 
         // Cash on Hand is independent from the electronic wallet balance.
@@ -4257,19 +4402,7 @@
 
             document.getElementById('lpClearSearchBtn').classList.toggle('hidden', searchQuery.length === 0);
 
-            const transactionsWithBalances = lpComputeSortedWithBalances();
-            if (!lpSortAscending) {
-                transactionsWithBalances.reverse();
-            }
-
-            const filteredTransactions = transactionsWithBalances.filter(tx => {
-                const matchesSearch = tx.name.toLowerCase().includes(searchQuery) ||
-                                      (tx.remarks && tx.remarks.toLowerCase().includes(searchQuery));
-                const matchesStatus = lpCurrentFilter === 'all' || tx.status === lpCurrentFilter;
-                const matchesType = lpCurrentTypeFilter === 'all' || tx.type === lpCurrentTypeFilter;
-                const matchesMonth = monthFilter === 'all' || (tx.date && tx.date.startsWith(monthFilter));
-                return matchesSearch && matchesStatus && matchesType && matchesMonth;
-            });
+            const filteredTransactions = lpGetFilteredTransactionsWithBalances();
 
             document.getElementById('lpVisibleCountBadge').textContent = `${filteredTransactions.length} ${filteredTransactions.length === 1 ? 'record' : 'records'}`;
 
@@ -4938,6 +5071,237 @@
             lpRenderCharts();
             lpRenderTable();
             lpUpdateAuditBadges();
+            refreshSuiteOverview();
+        }
+
+
+        /* ==================================================================== */
+        /* SUITE PLUS: OPERATIONS OVERVIEW, COMMAND CENTER & QUICK EXPORT         */
+        /* ==================================================================== */
+        let suiteCommandItems = [];
+        let suiteCommandIndex = 0;
+        let suiteFocusReturn = null;
+
+        function suiteSetNumber(id, value) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const next = String(value);
+            if (el.textContent === next) return;
+            const wasReady = el.dataset.suiteReady === 'true';
+            el.textContent = next;
+            el.dataset.suiteReady = 'true';
+            if (wasReady && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                el.classList.remove('suite-number-pop');
+                void el.offsetWidth;
+                el.classList.add('suite-number-pop');
+            }
+        }
+
+        function refreshSuiteOverview() {
+            if (!document.getElementById('suitePendingCount') || typeof lpTransactions === 'undefined') return;
+            const pending = loanRecords.filter(r => r.status === 'Pending Approval').length;
+            const active = loanRecords.filter(r => r.status === 'Approved / Active').length;
+            const balances = lpComputeSortedWithBalances();
+            const last = balances.length ? balances[balances.length - 1] : { runningBalance:0, cashOnHand:0 };
+            const unpaid = lpTransactions.filter(t => t.type === 'credit').reduce((sum,t) => sum + lpGetTxUnpaidAmount(t), 0);
+            const unpaidCount = lpTransactions.filter(t => t.type === 'credit' && lpGetTxUnpaidAmount(t) > 0.005).length;
+            suiteSetNumber('suitePendingCount', pending);
+            suiteSetNumber('suiteActiveCount', active);
+            suiteSetNumber('suiteWalletBalance', lpFormatMoney(Math.round(last.runningBalance*100)/100));
+            suiteSetNumber('suiteCashOnHand', lpFormatMoney(last.cashOnHand));
+            suiteSetNumber('suiteUnpaidCashout', lpFormatMoney(unpaid));
+
+            const today = getTodayISO();
+            const horizon = new Date(today + 'T12:00:00');
+            horizon.setDate(horizon.getDate() + 7);
+            const maxDate = [horizon.getFullYear(), String(horizon.getMonth()+1).padStart(2,'0'), String(horizon.getDate()).padStart(2,'0')].join('-');
+            let overdue = 0, upcoming = 0;
+            loanRecords.filter(r => r.status === 'Approved / Active').forEach(r => {
+                const paid = new Set(r.paidInstallments || []);
+                ((r.computation && r.computation.schedule) || []).forEach(inst => {
+                    if (paid.has(inst.installment) || !inst.dueDate) return;
+                    if (inst.dueDate < today) overdue++;
+                    else if (inst.dueDate <= maxDate) upcoming++;
+                });
+            });
+            document.getElementById('suiteAlertText').textContent =
+                `${pending} pending loan ${pending === 1 ? 'review' : 'reviews'} · ${overdue} overdue installments · ${upcoming} due in the next 7 days · ${unpaidCount} unpaid cash-out ${unpaidCount === 1 ? 'account' : 'accounts'}`;
+        }
+
+        function toggleSuiteOverview() {
+            const section = document.getElementById('suiteOverviewContent');
+            const button = document.getElementById('suiteOverviewToggle');
+            const willCollapse = !section.classList.contains('hidden');
+            section.classList.toggle('hidden', willCollapse);
+            button.setAttribute('aria-expanded', String(!willCollapse));
+            button.querySelector('i')?.setAttribute('data-lucide', willCollapse ? 'chevron-down' : 'chevron-up');
+            document.getElementById('suiteOverviewToggleLabel').textContent = willCollapse ? 'Expand' : 'Collapse';
+            localStorage.setItem('suite_plus_overview_collapsed', String(willCollapse));
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
+        function suiteJumpTo(target) {
+            if (target === 'pending') { openUnifiedSettings('queue'); return; }
+            if (target === 'unpaid') {
+                switchSuiteModule('ledger');
+                document.getElementById('lpSearchInput').value = '';
+                document.getElementById('lpMonthFilter').value = 'all';
+                document.getElementById('lpDateRangeFilter').value = 'all';
+                lpSetTypeFilter('credit');
+                lpSetFilter('outstanding');
+                document.getElementById('lpLedgerTableBody').scrollIntoView({ behavior:'smooth',block:'start' });
+            }
+        }
+
+        function suiteNavigate(module, view) {
+            switchSuiteModule(module);
+            if (module === 'loan' && view) switchView(view);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openCommandCenter() {
+            const overlay = document.getElementById('suiteCommandOverlay');
+            if (!overlay.classList.contains('hidden')) return;
+            suiteFocusReturn = document.activeElement;
+            overlay.classList.remove('hidden');
+            document.getElementById('suiteCommandInput').value = '';
+            renderCommandResults();
+            document.getElementById('suiteCommandInput').focus();
+        }
+
+        function closeCommandCenter() {
+            document.getElementById('suiteCommandOverlay').classList.add('hidden');
+            if (suiteFocusReturn && typeof suiteFocusReturn.focus === 'function') suiteFocusReturn.focus();
+        }
+
+        function renderCommandResults() {
+            const q = document.getElementById('suiteCommandInput').value.trim().toLowerCase();
+            const commands = [
+                {title:'New Loan Application', detail:'Loan Origination', icon:'calculator', action:()=>suiteNavigate('loan','origination')},
+                {title:'Loan Status Report', detail:'Portfolio Analytics', icon:'chart-no-axes-column', action:()=>suiteNavigate('loan','report')},
+                {title:'Loan Ledger', detail:'View borrower accounts', icon:'landmark', action:()=>suiteNavigate('loan','ledger')},
+                {title:'Cash-Flow & Wallet Ledger', detail:'Transactions and balances', icon:'wallet', action:()=>suiteNavigate('ledger')},
+                {title:'Admin & Settings', detail:'Shared access and approvals', icon:'settings', action:()=>openUnifiedSettings()},
+                {title:'Backup & Audit Trail', detail:'Unified data export and activity', icon:'shield-check', action:()=>openUnifiedSettings('audit')},
+            ];
+            if (isAdminUnlocked) commands.push({title:'Add Wallet Transaction',detail:'New debit or cash-out',icon:'plus-circle',action:()=>{switchSuiteModule('ledger');lpOpenModal();}});
+            const matches = commands.filter(c => !q || (c.title + ' ' + c.detail).toLowerCase().includes(q));
+            if (q) {
+                loanRecords.filter(r => `${r.borrowerName || ''} ${r.coMakerName || ''} ${r.id || ''}`.toLowerCase().includes(q)).slice(0,8).forEach(r => matches.push({
+                    title:r.borrowerName || r.id, detail:`Loan ${r.id} · ${r.status}`,icon:'file-text',
+                    action:()=>{suiteNavigate('loan','ledger');openLoanModal(r.id);}
+                }));
+                lpTransactions.filter(t => `${t.name || ''} ${t.remarks || ''}`.toLowerCase().includes(q)).slice(0,8).forEach(t => matches.push({
+                    title:t.name || 'Wallet Entry',detail:`${t.date} · ${t.type === 'debit' ? 'Wallet Debit' : 'Cash-Out'} · ${lpFormatMoney(t.amount)}`,icon:'receipt',
+                    action:()=>{suiteNavigate('ledger');document.getElementById('lpSearchInput').value=t.name || '';document.getElementById('lpMonthFilter').value='all';document.getElementById('lpDateRangeFilter').value='all';lpSetTypeFilter('all');lpSetFilter('all');document.getElementById('lpLedgerTableBody').scrollIntoView({behavior:'smooth',block:'center'});}
+                }));
+            }
+            suiteCommandItems = matches.slice(0,20);
+            suiteCommandIndex = 0;
+            paintCommandResults();
+        }
+
+        function paintCommandResults() {
+            const list = document.getElementById('suiteCommandResults');
+            if (!suiteCommandItems.length) {
+                list.innerHTML = '<div class="text-center px-4 py-10"><p class="font-bold text-sm text-slate-700 dark:text-slate-100">No matches found</p><p class="text-xs text-slate-500 mt-1">Try a borrower, account name, or workspace.</p></div>';
+                return;
+            }
+            list.innerHTML = suiteCommandItems.map((c,i) => `<button type="button" role="option" aria-selected="${i === suiteCommandIndex}" data-command-index="${i}" class="suite-command-item w-full rounded-xl px-3.5 py-2.5 flex items-center gap-3 text-left cursor-pointer mb-0.5"><span class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-300 flex items-center justify-center shrink-0"><i data-lucide="${c.icon}" class="w-4 h-4"></i></span><span class="min-w-0 flex-1"><span class="block text-xs font-bold truncate text-slate-800 dark:text-slate-100">${escapeHTML(c.title)}</span><span class="block text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">${escapeHTML(c.detail)}</span></span><i data-lucide="arrow-up-left" class="w-3.5 h-3.5 text-slate-400"></i></button>`).join('');
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
+        function executeSuiteCommand(index) {
+            const item = suiteCommandItems[index];
+            if (!item) return;
+            closeCommandCenter();
+            item.action();
+        }
+
+        function handleCommandKeydown(e) {
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (!suiteCommandItems.length) return;
+                suiteCommandIndex = (suiteCommandIndex + (e.key === 'ArrowDown' ? 1 : -1) + suiteCommandItems.length) % suiteCommandItems.length;
+                paintCommandResults();
+                document.querySelector(`[data-command-index="${suiteCommandIndex}"]`)?.scrollIntoView({block:'nearest'});
+            } else if (e.key === 'Enter') {e.preventDefault();executeSuiteCommand(suiteCommandIndex);}
+            else if (e.key === 'Escape') {e.preventDefault();closeCommandCenter();}
+        }
+
+        function lpDateRangeMatches(isoDate) {
+            const range = document.getElementById('lpDateRangeFilter')?.value || 'all';
+            if (range === 'all') return true;
+            if (!isoDate) return false;
+            const date = new Date(isoDate + 'T12:00:00');
+            if (Number.isNaN(date.getTime())) return false;
+            const today = new Date(getTodayISO() + 'T12:00:00');
+            const earliest = new Date(today);
+            earliest.setDate(earliest.getDate() - Number(range) + 1);
+            return date >= earliest && date <= today;
+        }
+
+        // Compute balances across the FULL chronological ledger before applying display filters.
+        // Charge is never included in Running Balance. Filtering never recomputes that balance.
+        function lpGetFilteredTransactionsWithBalances() {
+            const searchQuery = (document.getElementById('lpSearchInput')?.value || '').toLowerCase();
+            const monthFilter = document.getElementById('lpMonthFilter')?.value || 'all';
+            const records = lpComputeSortedWithBalances();
+            if (!lpSortAscending) records.reverse();
+            return records.filter(tx => {
+                const matchesSearch = (tx.name || '').toLowerCase().includes(searchQuery) || (tx.remarks || '').toLowerCase().includes(searchQuery);
+                const matchesStatus = lpCurrentFilter === 'all' || (lpCurrentFilter === 'outstanding' ? (tx.type === 'credit' && lpGetTxUnpaidAmount(tx) > 0.005) : tx.status === lpCurrentFilter);
+                const matchesType = lpCurrentTypeFilter === 'all' || tx.type === lpCurrentTypeFilter;
+                const matchesMonth = monthFilter === 'all' || (tx.date && tx.date.startsWith(monthFilter));
+                return matchesSearch && matchesStatus && matchesType && matchesMonth && lpDateRangeMatches(tx.date);
+            });
+        }
+
+        function lpExportFilteredCSV() {
+            const rows = lpGetFilteredTransactionsWithBalances();
+            if (!rows.length) {showToast('No visible transactions to export.', 'info');return;}
+            // Quote every cell and neutralize user-provided formula-like spreadsheet cells.
+            const safeCell = (v) => {
+                let str = String(v == null ? '' : v);
+                if (/^\s*[=+@\-\t\r]/.test(str) && !/^-?\d+(\.\d+)?$/.test(str.trim())) str = "'" + str;
+                return '"' + str.replace(/"/g,'""') + '"';
+            };
+            const headers = ['Date','Name','Type','Amount','Charge','Total Due','Paid Amount','Unpaid Amount','Running Balance','Cash on Hand','Status','Remarks'];
+            const data = rows.map(t => [t.date,t.name,t.type,t.amount,t.charge,t.totalDue,t.paidAmt,t.unpaidAmt,Math.round(t.runningBalance*100)/100,t.cashOnHand,t.status,t.remarks]);
+            const csv = '\ufeff' + [headers,...data].map(r => r.map(safeCell).join(',')).join('\r\n');
+            downloadCSVFile(csv, `LedgerPro_Filtered_${getTodayISO()}.csv`);
+            showToast(`Exported ${rows.length} filtered transaction ${rows.length === 1 ? 'record' : 'records'}.`);
+        }
+
+        function initSuitePlus() {
+            const collapsed = localStorage.getItem('suite_plus_overview_collapsed') === 'true';
+            if (collapsed) toggleSuiteOverview();
+            refreshSuiteOverview();
+            document.getElementById('suiteCommandResults').addEventListener('click',e => {
+                const row = e.target.closest('[data-command-index]');
+                if (row) executeSuiteCommand(Number(row.dataset.commandIndex));
+            });
+            document.addEventListener('keydown',e => {
+                const active = document.activeElement;
+                const typing = active && (['INPUT','TEXTAREA','SELECT'].includes(active.tagName) || active.isContentEditable);
+                if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                    e.preventDefault();
+                    if (document.getElementById('suiteCommandOverlay').classList.contains('hidden')) openCommandCenter();
+                    else closeCommandCenter();
+                } else if (e.key === 'Escape' && !document.getElementById('suiteCommandOverlay').classList.contains('hidden')) {
+                    e.preventDefault();closeCommandCenter();
+                } else if (e.altKey && !e.ctrlKey && !e.metaKey && !typing && e.key === '1') {
+                    e.preventDefault();suiteNavigate('loan','origination');
+                } else if (e.altKey && !e.ctrlKey && !e.metaKey && !typing && e.key === '2') {
+                    e.preventDefault();suiteNavigate('ledger');
+                }
+            });
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {if(entry.isIntersecting){entry.target.classList.add('suite-in-view');observer.unobserve(entry.target);}});
+                },{threshold:0.07});
+                document.querySelectorAll('.suite-reveal').forEach(el => observer.observe(el));
+            } else document.querySelectorAll('.suite-reveal').forEach(el => el.classList.add('suite-in-view'));
         }
 
         /* ========================================================================= */
@@ -4999,6 +5363,7 @@
             updateSharedAdminState();
             updateUnifiedLastBackupLabel();
             lpRefreshAll();
+            initSuitePlus();
 
             // Global Escape key handler for all active modals
             document.addEventListener('keydown', (e) => {
