@@ -467,6 +467,108 @@ html {overflow-y:auto} body {overflow-x:hidden}
   .dark #moduleLoanWorkspace [class~="text-slate-900"], .dark #moduleLoanWorkspace [class~="text-slate-800"] {color:#0f172a !important;}
 }
 
+
+/* Dark-mode readability patch: text, controls, popups and ledger data.
+   Only applies when the global dark theme is active. */
+.dark #moduleLoanWorkspace [class~="text-amber-900"],
+.dark #moduleLoanWorkspace [class~="text-amber-800"],
+.dark #moduleLoanWorkspace [class~="text-orange-900"] { color:#fcd9a0 !important; }
+.dark #moduleLoanWorkspace [class~="text-indigo-900"],
+.dark #moduleLoanWorkspace [class~="text-indigo-800"],
+.dark #moduleLoanWorkspace [class~="text-blue-900"],
+.dark #moduleLoanWorkspace [class~="text-blue-800"] { color:#b9ccff !important; }
+.dark #moduleLoanWorkspace [class~="text-emerald-900"],
+.dark #moduleLoanWorkspace [class~="text-teal-900"] { color:#a7f3d0 !important; }
+.dark #moduleLoanWorkspace [class~="text-rose-900"],
+.dark #moduleLoanWorkspace [class~="text-red-900"] { color:#fecdd3 !important; }
+/* Any unthemed ledger cards/rows retain a dark surface. */
+.dark #moduleLedgerWorkspace [class~="bg-white"]:not([class*="dark:bg-"]),
+.dark #moduleLedgerWorkspace [class~="bg-slate-50"]:not([class*="dark:bg-"]) {background-color:#182437 !important;}
+.dark #moduleLedgerWorkspace [class~="text-slate-900"]:not([class*="dark:text-"]),
+.dark #moduleLedgerWorkspace [class~="text-slate-800"]:not([class*="dark:text-"]),
+.dark #moduleLedgerWorkspace [class~="text-slate-700"]:not([class*="dark:text-"]) {color:#f1f5f9 !important;}
+.dark #moduleLedgerWorkspace [class~="text-slate-600"]:not([class*="dark:text-"]),
+.dark #moduleLedgerWorkspace [class~="text-slate-500"]:not([class*="dark:text-"]) {color:#cbd5e1 !important;}
+.dark #moduleLedgerWorkspace [class~="text-indigo-900"]:not([class*="dark:text-"]),
+.dark #moduleLedgerWorkspace [class~="text-indigo-800"]:not([class*="dark:text-"]),
+.dark #moduleLedgerWorkspace [class~="text-indigo-700"]:not([class*="dark:text-"]),
+.dark #moduleLedgerWorkspace [class~="text-indigo-600"]:not([class*="dark:text-"]) {color:#a5b4fc !important;}
+/* Popup bodies are portaled outside the main workspaces. */
+.dark :is(#adminAuthPopup,#loanDetailModal,#loanEditModal,#loanInstallmentPaymentModal,#rejectReasonModal,#deleteConfirmModal)
+  :is([class~="text-slate-900"],[class~="text-slate-800"],[class~="text-slate-700"]):not([class*="dark:text-"]):not([class*="bg-slate-900"]):not([class*="bg-gradient-"]) {color:#f1f5f9 !important;}
+.dark :is(#adminAuthPopup,#loanDetailModal,#loanEditModal,#loanInstallmentPaymentModal,#rejectReasonModal,#deleteConfirmModal)
+  :is([class~="text-slate-600"],[class~="text-slate-500"]):not([class*="dark:text-"]) {color:#cbd5e1 !important;}
+.dark :is(#adminAuthPopup,#loanDetailModal,#loanEditModal,#loanInstallmentPaymentModal,#rejectReasonModal,#deleteConfirmModal)
+  :is([class~="bg-white"],[class~="bg-slate-50"],[class~="bg-indigo-50/70"]):not(button):not([class*="dark:bg-"]) {background-color:#152137 !important;}
+.dark :is(#adminAuthPopup,#loanDetailModal,#loanEditModal,#loanInstallmentPaymentModal,#rejectReasonModal,#deleteConfirmModal)
+  [class~="text-indigo-900"] {color:#c7d2fe !important;}
+.dark #adminAuthPopup [class~="text-amber-900"] {color:#fde68a !important;}
+.dark #adminAuthPopup [class~="bg-amber-50/90"] {background-color:#422c15 !important;}
+.dark :is(#loanDetailModal,#loanEditModal,#loanInstallmentPaymentModal,#rejectReasonModal,#deleteConfirmModal)
+  [class~="bg-amber-50"] {background-color:#37291c !important;}
+.dark :is(#moduleLoanWorkspace,#moduleLedgerWorkspace,#adminAuthPopup,#loanDetailModal,#loanEditModal,#loanInstallmentPaymentModal,#rejectReasonModal,#deleteConfirmModal,#lpTransactionModal,#lpPartialPaymentModal,#lpConfirmModal)
+  :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),select,textarea) {
+  color:#f8fafc !important;
+  caret-color:#f8fafc;
+}
+.dark :is(#moduleLoanWorkspace,#moduleLedgerWorkspace,#adminAuthPopup,#loanDetailModal,#loanEditModal,#loanInstallmentPaymentModal,#rejectReasonModal,#deleteConfirmModal,#lpTransactionModal,#lpPartialPaymentModal,#lpConfirmModal)
+  :is(input,select,textarea):not([class*="dark:bg-"]) {background-color:#1e293b !important;border-color:#475569 !important;}
+.dark :is(#moduleLoanWorkspace,#moduleLedgerWorkspace,#adminAuthPopup,#loanDetailModal,#loanEditModal,#loanInstallmentPaymentModal,#rejectReasonModal,#deleteConfirmModal,#lpTransactionModal,#lpPartialPaymentModal,#lpConfirmModal)
+  :is(input,textarea)::placeholder {color:#a6b6cb !important;opacity:1;}
+.dark :is(#moduleLoanWorkspace,#moduleLedgerWorkspace,#adminAuthPopup,#loanDetailModal,#loanEditModal,#loanInstallmentPaymentModal,#rejectReasonModal,#deleteConfirmModal,#lpTransactionModal,#lpPartialPaymentModal,#lpConfirmModal)
+  :is(select,option) {color-scheme:dark;}
+.dark :is(#moduleLoanWorkspace,#moduleLedgerWorkspace,#adminAuthPopup,#loanDetailModal,#loanEditModal,#loanInstallmentPaymentModal,#rejectReasonModal,#deleteConfirmModal,#lpTransactionModal,#lpPartialPaymentModal,#lpConfirmModal)
+  :is(input,select,textarea):disabled {opacity:.7;}
+@media print {
+  .dark #moduleLedgerWorkspace [class~="bg-white"],
+  .dark #moduleLedgerWorkspace [class~="bg-slate-50"] {background-color:#fff !important;}
+  .dark #moduleLedgerWorkspace [class~="text-slate-900"],
+  .dark #moduleLedgerWorkspace [class~="text-slate-800"] {color:#0f172a !important;}
+}
+
+
+/* Loan account popup: complete dark palette for the account header,
+   metadata grid, amortization table, repayment summary and footer. */
+.dark #loanDetailModal { color:#e2e8f0 !important; }
+.dark #loanDetailModal > div { background:#111c30 !important; border-color:#475569 !important; color:#e2e8f0 !important; }
+.dark #loanDetailModal :is([class~="bg-slate-50/90"],[class~="bg-slate-50"],[class~="bg-slate-100"],[class~="bg-slate-200/80"],[class~="bg-slate-200"],[class~="bg-emerald-50/50"]) { background-color:#1c2940 !important; }
+.dark #loanDetailModal :is([class~="bg-indigo-50"],[class~="bg-indigo-50/70"],[class~="bg-brand-100"]) { background-color:#25375c !important; }
+.dark #loanDetailModal :is([class~="bg-amber-100"],[class~="bg-amber-50"]) { background-color:#443318 !important; }
+.dark #loanDetailModal :is([class~="bg-rose-50"],[class~="bg-rose-100"]) { background-color:#48242f !important; }
+.dark #loanDetailModal :is([class~="text-slate-900"],[class~="text-slate-800"],[class~="text-slate-700"],[class~="text-slate-600"]) { color:#eaf0f9 !important; }
+.dark #loanDetailModal :is([class~="text-slate-500"],[class~="text-slate-400"]) { color:#bdcce0 !important; }
+.dark #loanDetailModal :is([class~="text-brand-700"],[class~="text-brand-800"],[class~="text-indigo-700"],[class~="text-indigo-900"]) { color:#b4c7ff !important; }
+.dark #loanDetailModal :is([class~="text-amber-600"],[class~="text-amber-700"],[class~="text-amber-800"]) { color:#fcd48a !important; }
+.dark #loanDetailModal :is([class~="text-emerald-700"],[class~="text-emerald-800"]) { color:#86efac !important; }
+.dark #loanDetailModal :is([class~="text-rose-600"],[class~="text-rose-700"],[class~="text-rose-800"]) { color:#fda4af !important; }
+.dark #loanDetailModal :is([class~="border-slate-200"],[class~="border-slate-200/80"],[class~="border-indigo-200"],[class~="divide-slate-100"]) { border-color:#3d506c !important; }
+.dark #loanDetailModal #modalScheduleBody tr { color:#dce6f5 !important; }
+.dark #loanDetailModal #modalScheduleBody tr:hover { background-color:#263754 !important; }
+.dark #loanDetailModal #modalMetaGrid { background-color:#1c2940 !important; }
+.dark #loanDetailModal #modalMetaGrid > div { color:#e2e8f0; }
+.dark #loanDetailModal #modalAdminDecisionBar { background-color:#0f172a !important; color:#fff !important; }
+.dark #loanDetailModal #modalAdminDecisionBar button { color:#fff !important; }
+.dark #loanDetailModal button[class~="bg-slate-900"] { background-color:#334155 !important; color:#fff !important; }
+.dark #loanDetailModal button[class~="bg-white"] { background-color:#25334a !important; color:#eaf0f9 !important; }
+@media print {
+  .dark #loanDetailModal, .dark #loanDetailModal > div { background:#fff !important; color:#0f172a !important; }
+  .dark #loanDetailModal :is([class~="bg-slate-50/90"],[class~="bg-slate-50"],[class~="bg-slate-100"],[class~="bg-emerald-50/50"]) { background:#f8fafc !important; }
+  .dark #loanDetailModal :is([class~="text-slate-900"],[class~="text-slate-800"],[class~="text-slate-700"],[class~="text-slate-600"]),
+  .dark #loanDetailModal #modalScheduleBody tr { color:#0f172a !important; }
+  .dark #loanDetailModal :is([class~="text-slate-500"],[class~="text-slate-400"]) { color:#475569 !important; }
+}
+
+
+/* Scoped calculator controls: strong contrast in light and dark themes. */
+#suiteCalcKeys button { min-height:49px; border-radius:12px; background:#f1f5f9; color:#0f172a; font-weight:700; font-size:18px; border:1px solid #e2e8f0; transition:background .14s,transform .14s; }
+#suiteCalcKeys button:hover { background:#e2e8f0; }
+#suiteCalcKeys button:active { transform:scale(.95); }
+.dark #suiteCalcKeys button { background:#25334a; color:#f8fafc; border-color:#475569; }
+.dark #suiteCalcKeys button:hover { background:#334155; }
+#suiteCalcKeys button[data-calc="equals"] { background:#4f46e5; color:#fff; border-color:#4338ca; }
+#suiteCalcKeys button[data-calc="equals"]:hover { background:#4338ca; }
+#suiteCalcKeys button[data-calc="clear"] { color:#be123c; }
+.dark #suiteCalcKeys button[data-calc="clear"] { color:#fda4af; }
     </style>
 </head>
 <body class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased flex flex-col ambient-bg selection:bg-brand-100 selection:text-brand-900 transition-colors duration-300">
@@ -532,10 +634,66 @@ html {overflow-y:auto} body {overflow-x:hidden}
                     <button onclick="lpToggleDarkMode()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center border border-slate-200/80 dark:border-slate-700 transition-all active:scale-95 cursor-pointer" title="Toggle Dark Mode (Cash-Flow Ledger)">
                         <i id="lpThemeIconGlobal" class="fa-solid fa-moon text-xs"></i>
                     </button>
+                    <!-- Upcoming loan payment alerts: available to Viewer and Admin -->
+                    <div id="dueBellWrap" class="relative no-print">
+                        <button id="dueBellButton" type="button" onclick="toggleDueNotifications()" aria-label="Loan due reminders" aria-expanded="false" aria-controls="dueBellPanel" title="Upcoming loan dues (next 7 days)" class="relative w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-100 flex items-center justify-center border border-slate-200/80 dark:border-slate-700 transition-all active:scale-95 cursor-pointer">
+                            <i data-lucide="bell" class="w-4 h-4"></i>
+                            <span id="dueBellCount" class="hidden absolute -top-2 -right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-rose-600 text-white text-[10px] font-bold flex items-center justify-center border-2 border-white dark:border-slate-900">0</span>
+                        </button>
+                        <div id="dueBellPanel" role="region" aria-label="Upcoming loan due dates" class="hidden absolute right-0 top-[calc(100%+12px)] w-[min(90vw,380px)] max-h-[65vh] overflow-hidden rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-700 shadow-2xl z-[95]">
+                            <div class="flex justify-between items-center gap-2 px-4 py-3 border-b border-slate-200 dark:border-slate-700">
+                                <div><h3 class="font-bold text-sm">Loan Due Reminders</h3><p class="text-xs text-slate-600 dark:text-slate-300">Due today or in the next 7 days</p></div>
+                                <button type="button" onclick="closeDueNotifications()" aria-label="Close loan due reminders" class="rounded-md p-1 text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">✕</button>
+                            </div>
+                            <div id="dueBellItems" class="max-h-[50vh] overflow-y-auto p-2" aria-live="polite"></div>
+                        </div>
+                    </div>
+                    <!-- Live Philippine digital clock, visible in Viewer and Admin modes -->
+                    <div id="suiteLiveClock" role="timer" aria-label="Philippine standard time" title="Philippine Standard Time (Asia/Manila)" class="no-print flex shrink-0 items-center gap-2 rounded-xl border border-slate-200/80 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 text-slate-800 dark:text-slate-100 shadow-sm">
+                        <i data-lucide="clock-3" class="w-4 h-4 text-indigo-600 dark:text-indigo-300 shrink-0" aria-hidden="true"></i>
+                        <div class="flex flex-col leading-tight">
+                            <span id="suiteClockTime" class="font-mono text-sm font-bold tracking-wide tabular-nums whitespace-nowrap">--:--:-- --</span>
+                            <span id="suiteClockDate" class="text-[10px] font-medium text-slate-600 dark:text-slate-300 whitespace-nowrap">Philippine Time</span>
+                        </div>
+                    </div>
+                    <!-- Floating calculator: available in Viewer Mode, beside live date/time. -->
+                    <button id="suiteCalculatorButton" type="button" onclick="suiteCalcOpen()" title="Open calculator" aria-label="Open calculator" aria-haspopup="dialog" aria-controls="suiteCalculatorModal" class="no-print w-9 h-9 shrink-0 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-100 flex items-center justify-center border border-slate-200/80 dark:border-slate-700 transition-all active:scale-95 cursor-pointer">
+                        <i data-lucide="calculator" class="w-4 h-4"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- Calculator panel operates independently of Admin / Viewer permissions. -->
+    <div id="suiteCalculatorModal" class="hidden fixed inset-0 z-[2147483001] bg-slate-950/60 backdrop-blur-[2px] p-4 overflow-y-auto no-print" role="dialog" aria-modal="true" aria-labelledby="suiteCalculatorTitle" onclick="if(event.target===this)suiteCalcClose()">
+        <div class="relative w-full max-w-[330px] mx-auto my-[max(4vh,12px)] rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl text-slate-900 dark:text-slate-100 p-4">
+            <div class="flex justify-between items-center mb-3">
+                <h2 id="suiteCalculatorTitle" class="flex items-center gap-2 text-sm font-bold"><i data-lucide="calculator" class="w-4 h-4 text-indigo-600 dark:text-indigo-300"></i> Calculator</h2>
+                <button type="button" onclick="suiteCalcClose()" aria-label="Close calculator" class="rounded-lg px-2 py-1 text-slate-600 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">✕</button>
+            </div>
+            <input id="suiteCalcDisplay" type="text" inputmode="none" readonly aria-label="Calculator expression and result" value="0" class="block w-full mb-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white px-3 py-3 text-right font-mono text-2xl font-bold tabular-nums overflow-hidden" />
+            <div class="grid grid-cols-4 gap-2" id="suiteCalcKeys">
+                <button type="button" data-calc="clear">AC</button><button type="button" data-calc="back">⌫</button><button type="button" data-calc="%">%</button><button type="button" data-calc="/">÷</button>
+                <button type="button" data-calc="7">7</button><button type="button" data-calc="8">8</button><button type="button" data-calc="9">9</button><button type="button" data-calc="*">×</button>
+                <button type="button" data-calc="4">4</button><button type="button" data-calc="5">5</button><button type="button" data-calc="6">6</button><button type="button" data-calc="-">−</button>
+                <button type="button" data-calc="1">1</button><button type="button" data-calc="2">2</button><button type="button" data-calc="3">3</button><button type="button" data-calc="+">+</button>
+                <button type="button" data-calc="neg">±</button><button type="button" data-calc="0">0</button><button type="button" data-calc=".">.</button><button type="button" data-calc="equals">=</button>
+            </div>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-3">Keyboard: 0–9, +, −, *, /, %, Enter, Backspace, Esc</p>
+        </div>
+    </div>
+
+    <!-- One small reminder per local calendar day when the site opens. Visible in Viewer Mode. -->
+    <div id="dueDailyToast" role="status" aria-live="polite" class="hidden fixed right-4 top-[calc(var(--suiteHeaderHeight,72px)+12px)] z-[85] w-[min(380px,calc(100vw-2rem))] rounded-2xl border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-slate-900 shadow-2xl text-slate-900 dark:text-slate-100 p-4 no-print">
+        <div class="flex gap-3 items-start">
+            <span class="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-200"><i data-lucide="bell-ring" class="w-5 h-5"></i></span>
+            <div class="flex-1 min-w-0"><strong id="dueDailyToastTitle" class="block text-sm font-bold">Upcoming loan dues</strong><p id="dueDailyToastMessage" class="text-xs mt-1 text-slate-700 dark:text-slate-200"></p>
+                <button onclick="openDueNotificationsFromToast()" type="button" class="mt-2 text-xs font-bold text-indigo-700 dark:text-indigo-300 underline">View reminders</button>
+            </div>
+            <button type="button" onclick="dismissDueDailyToast()" class="text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white" aria-label="Dismiss reminder">✕</button>
+        </div>
+    </div>
 
     <!-- Live cross-workspace operations board. Uses stored loan and wallet data; does not mutate balances. -->
     <section id="suiteOperations" class="suite-operations no-print" aria-label="Unified operations overview">
@@ -808,8 +966,8 @@ html {overflow-y:auto} body {overflow-x:hidden}
                                         <div class="flex rounded-xl border border-slate-300 overflow-hidden focus-within:border-brand-600 focus-within:ring-3 focus-within:ring-brand-500/15 transition">
                                             <input type="number" id="interestRate" value="0" min="0" max="200" step="0.01" required class="w-full px-3 py-2 text-sm font-bold text-slate-900 tabular-nums outline-none">
                                             <select id="interestPeriod" class="bg-slate-50 text-xs font-semibold text-slate-700 px-2.5 border-l border-slate-200 outline-none cursor-pointer">
-                                                <option value="annual" selected>/ Year</option>
-                                                <option value="monthly">/ Month</option>
+                                                <option value="monthly" selected>/ Month</option>
+                                                <option value="annual">/ Year</option>
                                             </select>
                                         </div>
                                         <input type="range" id="interestRateSlider" min="0" max="36" step="0.5" value="0" class="fintech-slider w-full mt-2" aria-label="Interest Rate Slider">
@@ -2145,15 +2303,15 @@ html {overflow-y:auto} body {overflow-x:hidden}
                             <div class="col-span-2 sm:col-span-1"><label for="lpNewLoanCoMaker" class="block text-[11px] text-slate-600 dark:text-slate-300 mb-1">Co-maker (optional)</label><input id="lpNewLoanCoMaker" type="text" maxlength="120" placeholder="Not provided" class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm"></div>
                             <div class="col-span-2 sm:col-span-1"><label for="lpNewLoanFirstDue" class="block text-[11px] text-slate-600 dark:text-slate-300 mb-1">First Due Date</label><input id="lpNewLoanFirstDue" onchange="lpHandleTxStatusChange()" type="date" class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm"></div>
                             <div><label for="lpNewLoanTerm" class="block text-[11px] text-slate-600 dark:text-slate-300 mb-1">Term (months)</label><input id="lpNewLoanTerm" oninput="lpHandleTxStatusChange()" type="number" min="1" max="360" step="1" value="1" class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm"></div>
-                            <div><label for="lpNewLoanInterest" class="block text-[11px] text-slate-600 dark:text-slate-300 mb-1">Annual Interest (%)</label><input id="lpNewLoanInterest" oninput="lpHandleTxStatusChange()" type="number" min="0" max="200" step="0.01" value="0" class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm"></div>
+                            <div><label for="lpNewLoanInterest" class="block text-[11px] text-slate-600 dark:text-slate-300 mb-1">Interest (% per month)</label><input id="lpNewLoanInterest" oninput="lpHandleTxStatusChange()" type="number" min="0" max="200" step="0.01" value="0" class="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm"></div>
                         </div>
                         <p id="lpLoanLedgerLinkHint" class="text-[11px] text-indigo-700 dark:text-indigo-300" aria-live="polite">This release and subsequent repayments will appear in Loan Ledger automatically.</p>
                     </div>
-                    <p class="text-[11px] text-amber-800 dark:text-amber-300">The loan reduces only the selected funding balance. Repayments are credited only where you actually receive them. Loan interest is separate from transaction charges.</p>
+                    <p class="text-[11px] text-amber-800 dark:text-amber-300">The loan reduces only the selected funding balance. Repayments are credited only where you actually receive them. New loan releases calculate simple monthly interest as principal × monthly rate × term in months. Loan releases have no transaction charge; only the loan principal and calculated interest are due.</p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
+                    <div id="lpTransactionChargeField">
                         <div class="flex items-center justify-between mb-1.5">
                             <label for="lpTxCharge" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Transaction Charge (₱)</label>
                             <button type="button" id="lpChargeModeToggleBtn" onclick="lpToggleChargeMode()" title="Click to toggle between Auto Range (₱5 per ₱250) and Manual charge entry" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-400 border border-indigo-200/70 dark:border-indigo-800/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/70 transition-colors cursor-pointer">
@@ -2639,8 +2797,8 @@ html {overflow-y:auto} body {overflow-x:hidden}
             document.getElementById('coMakerName').value = 'Clarissa Mae Reyes';
             document.getElementById('coMakerRelation').value = 'Spouse';
             document.getElementById('loanAmount').value = 75000;
-            document.getElementById('interestRate').value = adminPolicies.defaultInterestRate || 12;
-            document.getElementById('interestPeriod').value = 'annual';
+            document.getElementById('interestRate').value = Number(((adminPolicies.defaultInterestRate || 12) / 12).toFixed(4));
+            document.getElementById('interestPeriod').value = 'monthly';
             document.getElementById('loanTerm').value = 12;
             document.getElementById('termUnit').value = 'months';
             selectRepaymentMethod('diminishing');
@@ -3074,6 +3232,7 @@ html {overflow-y:auto} body {overflow-x:hidden}
             localStorage.setItem(STORAGE_KEY, JSON.stringify(loanRecords));
             updateNavBadges();
             refreshSuiteOverview();
+            if (typeof refreshDueNotifications === 'function') refreshDueNotifications();
         }
 
         function saveAdminPolicies() {
@@ -4376,7 +4535,7 @@ html {overflow-y:auto} body {overflow-x:hidden}
             document.getElementById('coMakerRelation').value = '';
             document.getElementById('loanAmount').value = '0';
             document.getElementById('interestRate').value = '0';
-            document.getElementById('interestPeriod').value = 'annual';
+            document.getElementById('interestPeriod').value = 'monthly';
             document.getElementById('loanTerm').value = '0';
             document.getElementById('termUnit').value = 'months';
             selectRepaymentMethod('diminishing');
@@ -4519,6 +4678,8 @@ html {overflow-y:auto} body {overflow-x:hidden}
             const chargeInput = document.getElementById('lpTxCharge');
             const chargeToggle = document.getElementById('lpChargeModeToggleBtn');
             const preview = document.getElementById('lpCashLoanPreview');
+            // Loan releases (Cash or Wallet) never carry a transaction charge.
+            document.getElementById('lpTransactionChargeField').classList.toggle('hidden', isLoan);
             chargeInput.disabled = isLoan;
             chargeToggle.disabled = isLoan;
             chargeToggle.classList.toggle('opacity-50', isLoan);
@@ -5256,6 +5417,7 @@ html {overflow-y:auto} body {overflow-x:hidden}
             renderLedger();
             renderLoanStatusReport();
             if (activeModalLoanId && loanRecords.some(r => r.id === activeModalLoanId)) openLoanModal(activeModalLoanId);
+            if (typeof refreshDueNotifications === 'function') refreshDueNotifications();
         }
 
         // Cash = collected cash-outs + Cash loan receipts - Cash-funded loan releases.
@@ -6109,7 +6271,7 @@ html {overflow-y:auto} body {overflow-x:hidden}
             const status = document.getElementById('lpTxStatus').value;
             const wrapper = document.getElementById('lpTxPartialPaidWrapper');
             const amt = parseFloat(document.getElementById('lpTxAmount').value) || 0;
-            const chg = parseFloat(document.getElementById('lpTxCharge').value) || 0;
+            const chg = document.getElementById('lpTxType').value === 'loan' ? 0 : (parseFloat(document.getElementById('lpTxCharge').value) || 0);
             const selectedAccount = loanRecords.find(r => r.id === document.getElementById('lpTxLoanLedgerLink').value);
             const editIndex = Number(document.getElementById('lpEditIndex').value);
             const editing = editIndex >= 0 ? lpTransactions[editIndex] : null;
@@ -6121,14 +6283,16 @@ html {overflow-y:auto} body {overflow-x:hidden}
                     const term = Number(document.getElementById('lpNewLoanTerm').value) || 1;
                     const interest = Number(document.getElementById('lpNewLoanInterest').value) || 0;
                     const firstDue = document.getElementById('lpNewLoanFirstDue').value || getTodayISO();
-                    totalDue = computeLoanAmortization({loanAmount:amt, interestRate:interest, interestPeriod:'annual',
+                    totalDue = computeLoanAmortization({loanAmount:amt, interestRate:interest, interestPeriod:'monthly',
                         loanTerm:term, termUnit:'months', repaymentStartDate:firstDue, repaymentMethod:'flat'}).totalPayable;
                 }
             }
 
             document.getElementById('lpTxCreditPaymentDestinationField').classList.toggle('hidden',
                 document.getElementById('lpTxType').value !== 'credit' || status === 'unpaid');
-            document.getElementById('lpTxTotalDueHint').textContent = `Total Due: ${lpFormatMoney(totalDue)}`;
+            document.getElementById('lpTxTotalDueHint').textContent = document.getElementById('lpTxType').value === 'loan'
+                ? `Loan Interest: ${lpFormatMoney(Math.max(0, totalDue - amt))} · Total Due: ${lpFormatMoney(totalDue)}`
+                : `Total Due: ${lpFormatMoney(totalDue)}`;
             lpUpdateCashLoanPreview();
 
             if (status === 'partial') {
@@ -6263,7 +6427,7 @@ html {overflow-y:auto} body {overflow-x:hidden}
             const name = document.getElementById('lpTxName').value.trim();
             const type = document.getElementById('lpTxType').value;
             const amount = parseFloat(document.getElementById('lpTxAmount').value) || 0;
-            const charge = parseFloat(document.getElementById('lpTxCharge').value) || 0;
+            const charge = type === 'loan' ? 0 : (parseFloat(document.getElementById('lpTxCharge').value) || 0);
             let status = document.getElementById('lpTxStatus').value;
             const remarks = document.getElementById('lpTxRemarks').value.trim();
 
@@ -6306,7 +6470,7 @@ html {overflow-y:auto} body {overflow-x:hidden}
                         if (!Number.isInteger(loanTerm) || loanTerm < 1 || loanTerm > 360
                             || !Number.isFinite(interest) || interest < 0 || interest > 200
                             || !/^\d{4}-\d{2}-\d{2}$/.test(firstDue) || firstDue < date) {
-                            showToast('Enter a valid term, annual interest and a first due date on or after the loan release.', 'error'); return;
+                            showToast('Enter a valid term, monthly interest rate and a first due date on or after the loan release.', 'error'); return;
                         }
                         accountToCreate = { loanTerm, interestRate: interest, repaymentStartDate: firstDue,
                             coMakerName: document.getElementById('lpNewLoanCoMaker').value.trim().slice(0, 120) || 'Not provided' };
@@ -6316,7 +6480,7 @@ html {overflow-y:auto} body {overflow-x:hidden}
             let loanInterest = selectedAccount ? Math.max(0, selectedAccount.computation.totalPayable - amount) : 0;
             if (accountToCreate) {
                 const computation = computeLoanAmortization({loanAmount: amount, interestRate: accountToCreate.interestRate,
-                    interestPeriod: 'annual', loanTerm: accountToCreate.loanTerm, termUnit: 'months',
+                    interestPeriod: 'monthly', loanTerm: accountToCreate.loanTerm, termUnit: 'months',
                     repaymentStartDate: accountToCreate.repaymentStartDate, repaymentMethod: 'flat'});
                 loanInterest = Math.max(0, computation.totalPayable - amount);
             }
@@ -6353,7 +6517,7 @@ html {overflow-y:auto} body {overflow-x:hidden}
                         applicationDate: date, repaymentStartDate: accountToCreate.repaymentStartDate,
                         coMakerName: accountToCreate.coMakerName, loanTerm: accountToCreate.loanTerm,
                         termUnit: 'months', interestRate: accountToCreate.interestRate,
-                        interestPeriod: 'annual', repaymentMethod: 'flat' }};
+                        interestPeriod: 'monthly', repaymentMethod: 'flat' }};
                     selectedAccount = lpCreateLoanAccountForTx(draft);
                     loanRecords.unshift(selectedAccount);
                     recordAuditEvent('LOAN_AUTO_CREATED', `Created ${selectedAccount.id} from ledger release for ${name}.`);
@@ -6400,7 +6564,7 @@ html {overflow-y:auto} body {overflow-x:hidden}
                 lpRecordAudit(
                     'UPDATE',
                     `Edited transaction for "${name}" (${type === 'debit' ? 'Wallet Debit' : type === 'loan' ? 'Cash Loan Released' : 'Cash-Out'})`,
-                    `Amount: ${lpFormatMoney(amount)}, Source: ${type === 'loan' ? loanSource : 'n/a'}, Fee: ${lpFormatMoney(charge)}, Status: ${status.toUpperCase()} (was ${prev ? lpFormatMoney(prev.amount) : '—'})`
+                    `Amount: ${lpFormatMoney(amount)}, Source: ${type === 'loan' ? loanSource : 'n/a'}, Fee: ${lpFormatMoney(actualCharge)}, Status: ${status.toUpperCase()} (was ${prev ? lpFormatMoney(prev.amount) : '—'})`
                 );
                 showToast('Transaction updated');
             } else {
@@ -6408,7 +6572,7 @@ html {overflow-y:auto} body {overflow-x:hidden}
                 lpRecordAudit(
                     'CREATE',
                     `Added ${type === 'debit' ? 'Wallet Debit' : type === 'loan' ? 'Cash Loan Released' : 'Cash-Out'} for "${name}"`,
-                    `Amount: ${lpFormatMoney(amount)}, Source: ${type === 'loan' ? loanSource : 'n/a'}, Fee: ${lpFormatMoney(charge)}, Status: ${status.toUpperCase()}`
+                    `Amount: ${lpFormatMoney(amount)}, Source: ${type === 'loan' ? loanSource : 'n/a'}, Fee: ${lpFormatMoney(actualCharge)}, Status: ${status.toUpperCase()}`
                 );
                 showToast('Transaction added');
             }
@@ -7026,6 +7190,249 @@ html {overflow-y:auto} body {overflow-x:hidden}
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initialize, { once: true });
     } else initialize();
+})();
+</script>
+<script>
+/* Loan due reminder center. All read-only, including in Viewer Mode. */
+(function () {
+    'use strict';
+    const DAY_MS = 86400000;
+    const DAILY_NOTICE_KEY = 'oss_suite_due_notice_last_day_v1';
+    const byId = id => document.getElementById(id);
+    let upcoming = [];
+    function dateOrdinal(iso) {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(String(iso || ''))) return NaN;
+        const [y, m, d] = iso.split('-').map(Number);
+        const date = new Date(Date.UTC(y, m - 1, d));
+        if (date.getUTCFullYear() !== y || date.getUTCMonth() !== m - 1 || date.getUTCDate() !== d) return NaN;
+        return date.getTime() / DAY_MS;
+    }
+    function localToday() {
+        const d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+    function esc(value) {
+        return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+    function getUpcoming() {
+        const loans = (typeof loanRecords !== 'undefined' && Array.isArray(loanRecords)) ? loanRecords : [];
+        const todayN = dateOrdinal(localToday());
+        const results = [];
+        for (const loan of loans) {
+            if (loan.status !== 'Approved / Active') continue;
+            const schedule = Array.isArray(loan.computation?.schedule) ? loan.computation.schedule : [];
+            const paid = new Set((loan.paidInstallments || []).map(Number));
+            // Linked ledger receipts can be partial and may not have completed an installment.
+            let allocations = null;
+            if (typeof lpLinkedLoanTx === 'function' && typeof lpLoanInstallmentCoverage === 'function') {
+                const tx = lpLinkedLoanTx(loan);
+                if (tx) allocations = lpLoanInstallmentCoverage(loan, tx).allocated;
+            }
+            for (const item of schedule) {
+                const days = dateOrdinal(item.dueDate) - todayN;
+                if (!Number.isFinite(days) || days < 0 || days > 7) continue;
+                const amount = Math.max(0, Number(item.payment) || 0);
+                const remaining = allocations
+                    ? Math.max(0, amount - (Number(allocations.get(item.installment)) || 0))
+                    : paid.has(Number(item.installment)) ? 0 : amount;
+                if (remaining < 0.005) continue;
+                results.push({ loanId: loan.id, borrower: loan.borrowerName || 'Borrower', installment: item.installment,
+                    dueDate: item.dueDate, days, amount: remaining, currency: loan.currency || 'PHP' });
+            }
+        }
+        return results.sort((a,b) => a.days-b.days || String(a.borrower).localeCompare(String(b.borrower)) || a.installment-b.installment);
+    }
+    function money(item) {
+        if (typeof formatCurrency === 'function') return formatCurrency(item.amount, item.currency);
+        return `${item.currency} ${item.amount.toFixed(2)}`;
+    }
+    function when(item) {
+        return item.days === 0 ? 'Due today' : item.days === 1 ? 'Due tomorrow' : `Due in ${item.days} days`;
+    }
+    function renderItems() {
+        byId('dueBellItems').innerHTML = upcoming.length ? upcoming.map(item => `
+            <div class="px-3 py-3 mb-1 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
+                <div class="flex justify-between gap-2 items-start"><strong class="text-sm font-semibold break-words">${esc(item.borrower)}</strong><span class="shrink-0 text-[11px] font-bold ${item.days===0?'text-rose-700 dark:text-rose-300':'text-amber-700 dark:text-amber-300'}">${when(item)}</span></div>
+                <p class="mt-1 text-xs text-slate-600 dark:text-slate-300">${esc(item.loanId)} · Installment ${esc(item.installment)}</p>
+                <p class="mt-1 text-xs text-slate-700 dark:text-slate-200">${esc(item.dueDate)} · Remaining <strong>${esc(money(item))}</strong></p>
+            </div>`).join('') : '<p class="p-4 text-sm text-slate-600 dark:text-slate-300">No unpaid installments due within the next 7 days.</p>';
+    }
+    window.refreshDueNotifications = function () {
+        if (!byId('dueBellCount')) return;
+        upcoming = getUpcoming();
+        const count = byId('dueBellCount');
+        count.textContent = upcoming.length > 99 ? '99+' : String(upcoming.length);
+        count.classList.toggle('hidden', upcoming.length === 0);
+        byId('dueBellButton').setAttribute('aria-label', `${upcoming.length} upcoming loan installments due within 7 days`);
+        renderItems();
+    };
+    window.closeDueNotifications = function () {
+        byId('dueBellPanel').classList.add('hidden');
+        byId('dueBellButton').setAttribute('aria-expanded', 'false');
+    };
+    window.toggleDueNotifications = function () {
+        refreshDueNotifications();
+        const isOpen = byId('dueBellPanel').classList.toggle('hidden') === false;
+        byId('dueBellButton').setAttribute('aria-expanded', String(isOpen));
+    };
+    window.dismissDueDailyToast = function () { byId('dueDailyToast').classList.add('hidden'); };
+    window.openDueNotificationsFromToast = function () {
+        dismissDueDailyToast();
+        refreshDueNotifications();
+        byId('dueBellPanel').classList.remove('hidden');
+        byId('dueBellButton').setAttribute('aria-expanded', 'true');
+        byId('dueBellButton').focus();
+    };
+    function showDailyIfNeeded() {
+        refreshDueNotifications();
+        if (!upcoming.length) return;
+        const today = localToday();
+        try {
+            if (localStorage.getItem(DAILY_NOTICE_KEY) === today) return;
+            localStorage.setItem(DAILY_NOTICE_KEY, today);
+        } catch (_) { /* Reminders still work if local storage is blocked. */ }
+        const dueNow = upcoming.filter(item => item.days === 0).length;
+        byId('dueDailyToastTitle').textContent = `${upcoming.length} loan installment${upcoming.length===1?'':'s'} coming due`;
+        byId('dueDailyToastMessage').textContent = `${dueNow ? `${dueNow} due today. ` : ''}${upcoming.length} unpaid installment${upcoming.length===1?' is':'s are'} due within the next 7 days. Select View reminders for details.`;
+        byId('dueDailyToast').classList.remove('hidden');
+    }
+    function init() {
+        // This listener runs after the app's existing DOM-ready initialization.
+        showDailyIfNeeded();
+        document.addEventListener('click', event => {
+            if (!byId('dueBellWrap').contains(event.target)) closeDueNotifications();
+        });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') closeDueNotifications();
+        });
+        window.addEventListener('storage', event => {
+            if (event.key === 'ledger_transactions' || (typeof STORAGE_KEY !== 'undefined' && event.key === STORAGE_KEY)) refreshDueNotifications();
+        });
+        // Update if left open across midnight or after edits not routed through save methods.
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshDueNotifications(); });
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+})();
+</script>
+<script>
+/* Header clock: live Philippine Standard Time, independent of account privileges. */
+(function () {
+    'use strict';
+    const timeFmt = new Intl.DateTimeFormat('en-PH', {
+        timeZone: 'Asia/Manila', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+    });
+    const dateFmt = new Intl.DateTimeFormat('en-PH', {
+        timeZone: 'Asia/Manila', weekday: 'short', month: 'short', day: 'numeric'
+    });
+    function updateClock() {
+        const clockTime = document.getElementById('suiteClockTime');
+        const clockDate = document.getElementById('suiteClockDate');
+        if (!clockTime || !clockDate) return;
+        const now = new Date();
+        clockTime.textContent = timeFmt.format(now);
+        clockDate.textContent = dateFmt.format(now) + ' · PHT';
+    }
+    function init() {
+        updateClock();
+        window.setInterval(updateClock, 1000);
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) updateClock(); });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+    else init();
+})();
+</script>
+<script>
+/* Standalone header calculator. No eval, no storage, no financial mutations. */
+(function () {
+    'use strict';
+    let expression = '0';
+    let resultShown = false;
+    const modal = () => document.getElementById('suiteCalculatorModal');
+    const display = () => document.getElementById('suiteCalcDisplay');
+    function paint() { if (display()) display().value = expression.replace(/\*/g, '×').replace(/\//g, '÷'); }
+    function calculate(src) {
+        // Tokenize and parse only numbers and the four arithmetic operators.
+        const tokens = src.match(/(?:\d+(?:\.\d*)?|\.\d+)|[+\-*/]/g);
+        if (!tokens || tokens.join('') !== src) throw new Error('Invalid input');
+        let i = 0;
+        function factor() {
+            if (tokens[i] === '-') { i++; return -factor(); }
+            if (tokens[i] === '+') { i++; return factor(); }
+            const t = tokens[i++];
+            if (!t || !/^(?:\d+(?:\.\d*)?|\.\d+)$/.test(t)) throw new Error('Incomplete expression');
+            return Number(t);
+        }
+        function term() {
+            let n = factor();
+            while (tokens[i] === '*' || tokens[i] === '/') {
+                const op = tokens[i++], rhs = factor();
+                if (op === '/' && rhs === 0) throw new Error('Cannot divide by zero');
+                n = op === '*' ? n * rhs : n / rhs;
+            }
+            return n;
+        }
+        function sum() {
+            let n = term();
+            while (tokens[i] === '+' || tokens[i] === '-') {
+                const op = tokens[i++], rhs = term();
+                n = op === '+' ? n + rhs : n - rhs;
+            }
+            return n;
+        }
+        const answer = sum();
+        if (i !== tokens.length || !Number.isFinite(answer)) throw new Error('Invalid result');
+        return String(Number(answer.toPrecision(12)));
+    }
+    function apply(key) {
+        if (key === 'clear') { expression = '0'; resultShown = false; }
+        else if (key === 'back') { expression = resultShown ? '0' : (expression.slice(0, -1) || '0'); resultShown = false; }
+        else if (key === 'equals') {
+            try { expression = calculate(expression); resultShown = true; }
+            catch (_) { expression = 'Error'; resultShown = true; }
+        } else if (key === 'neg') {
+            if (expression === 'Error') expression = '0';
+            else if (/^-?\d+(?:\.\d*)?$/.test(expression)) expression = String(-Number(expression));
+            else expression = '-' + expression;
+            resultShown = false;
+        } else if (key === '%') {
+            try { expression = String(Number((calculate(expression) / 100).toPrecision(12))); resultShown = true; }
+            catch (_) { expression = 'Error'; resultShown = true; }
+        } else if (/^[0-9.]$/.test(key)) {
+            if (resultShown || expression === 'Error') { expression = '0'; resultShown = false; }
+            const segment = expression.split(/[+\-*/]/).pop();
+            if (key === '.' && segment.includes('.')) return;
+            if (key === '.') expression += segment === '' ? '0.' : '.';
+            else expression = expression === '0' ? key : expression + key;
+        } else if (/^[+\-*/]$/.test(key)) {
+            if (expression === 'Error') expression = '0';
+            if (/[+\-*/]$/.test(expression) && !(/^-?$/.test(expression))) expression = expression.slice(0,-1) + key;
+            else expression += key;
+            resultShown = false;
+        }
+        paint();
+    }
+    window.suiteCalcOpen = function () {
+        modal().classList.remove('hidden');
+        expression = '0'; resultShown = false; paint();
+        modal().querySelector('[data-calc="clear"]').focus();
+    };
+    window.suiteCalcClose = function () { modal().classList.add('hidden'); document.getElementById('suiteCalculatorButton')?.focus(); };
+    document.addEventListener('click', function (event) {
+        const button = event.target.closest('#suiteCalcKeys button[data-calc]');
+        if (button) apply(button.dataset.calc);
+    });
+    document.addEventListener('keydown', function (event) {
+        if (!modal() || modal().classList.contains('hidden')) return;
+        let key = event.key;
+        if (key === 'Escape') { event.preventDefault(); window.suiteCalcClose(); return; }
+        if (key === 'Enter' || key === '=') key = 'equals';
+        else if (key === 'Backspace') key = 'back';
+        else if (key.toLowerCase() === 'c' || key === 'Delete') key = 'clear';
+        else if (!/^[0-9.+\-*/%]$/.test(key)) return;
+        event.preventDefault(); apply(key);
+    });
 })();
 </script>
 </body>
